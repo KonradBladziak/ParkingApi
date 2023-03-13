@@ -1,4 +1,4 @@
-using DAL.Data;
+using DAL.DataContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
