@@ -8,7 +8,6 @@ namespace DAL.Entity
     {
         [Key]
         public int Id { get; set; }
-
         public DateTime Od { get; set; }
         public DateTime Do { get; set; }
         public int IdMiejsca { get; set; }  

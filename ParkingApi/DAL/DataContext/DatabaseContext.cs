@@ -1,32 +1,31 @@
 ﻿using DAL.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Configuration;
 using System.ComponentModel;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DAL.DataContext
 {
     public class DatabaseContext : DbContext
     {
-        public class OptionsBuild
-        {
-            public OptionsBuild() 
-            {
-                settings = new AppConfiguration();
-                opsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
-                opsBuilder.UseSqlServer(settings.SqlConnectionString);
-                dbOptions = opsBuilder.Options;
+        private readonly IConfiguration configuration_;
 
-            }
-            public DbContextOptionsBuilder<DatabaseContext> opsBuilder { get; set; }
-            public DbContextOptions<DatabaseContext> dbOptions { get; set; }
-            public AppConfiguration settings { get; set; }
+        public DatabaseContext(IConfiguration configuration)
+        {
+            configuration_ = configuration;
         }
-        
-        public static OptionsBuild ops = new OptionsBuild();
-
-        public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseSqlServer(configuration_.GetConnectionString("Database"));
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.Entity<Miasto>().Property(x => x.Nazwa).HasDefaultValue("Kato");
             
         }
 
@@ -37,22 +36,7 @@ namespace DAL.DataContext
         public DbSet<Opiekun> Opiekunowie { get; set; }
         public DbSet<Rezerwacja> Rezerwacje { get; set; }
 
-        //private readonly IConfiguration configuration_;
-
-        //public DatabaseContext(IConfiguration configuration)
-        //{
-        //    configuration_ = configuration;
-        //}
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(configuration_.GetConnectionString("Database"));
-
-        //}
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        //}
+        
 
 
     }
