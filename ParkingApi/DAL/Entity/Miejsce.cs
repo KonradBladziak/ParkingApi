@@ -8,9 +8,6 @@ namespace DAL.Entity
     {
         [Key]
         public int Id { get; set; }
-
-        public bool Inwalidzkie { get; set; }
-       
         public int ParkingId { get; set; }
         [ForeignKey(nameof(ParkingId))]
         public Parking parking { get; set; }

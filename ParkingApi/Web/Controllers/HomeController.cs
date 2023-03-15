@@ -1,5 +1,6 @@
 ﻿using DAL.DataContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using Web.Models;
@@ -11,14 +12,20 @@ namespace Web.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private readonly DatabaseContext databaseContext;
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(DatabaseContext dbContext)
         {
-            _logger = logger;
+            this.databaseContext = dbContext;
         }
+
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
 
         public IActionResult Index()
         {
+            var miasto1 = databaseContext.Miasta.FirstOrDefault(x => x.Nazwa == "Katowice");
+            Console.WriteLine(databaseContext.Parkingi.FirstOrDefault(x => x.IdMiasta == 1).Nazwa); 
             return View();
             var miasta = databaseContext.Miasta;
 
