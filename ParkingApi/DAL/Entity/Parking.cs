@@ -23,6 +23,5 @@ namespace DAL.Entity
 
         public ICollection<Miejsce> Miejsca { get; set; }
 
-
     }
 }

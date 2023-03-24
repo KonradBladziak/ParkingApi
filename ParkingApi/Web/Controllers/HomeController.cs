@@ -24,12 +24,7 @@ namespace Web.Controllers
 
         public IActionResult Index()
         {
-            var miasto1 = databaseContext.Miasta.FirstOrDefault(x => x.Nazwa == "Katowice");
-            Console.WriteLine(databaseContext.Parkingi.FirstOrDefault(x => x.IdMiasta == 1).Nazwa); 
             return View();
-            var miasta = databaseContext.Miasta;
-
-            Console.WriteLine(miasta.FirstOrDefault().Nazwa);
         }
 
         public IActionResult Privacy()
