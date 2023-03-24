@@ -25,8 +25,7 @@ namespace DAL.DataContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            //modelBuilder.Entity<Miasto>().Property(x => x.Nazwa).ValueGeneratedOnAddOrUpdate();
-            
+            //modelBuilder.Entity<Miasto>().Property(x => x.Nazwa).ValueGeneratedOnAddOrUpdate(); 
         }
 
         public DbSet<Miasto> Miasta { get; set; }
