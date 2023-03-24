@@ -9,7 +9,7 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
 
         private readonly DatabaseContext databaseContext;
         public HomeController(DatabaseContext dbContext)
