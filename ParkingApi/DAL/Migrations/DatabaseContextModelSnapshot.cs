@@ -42,7 +42,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Miasto");
+                    b.ToTable("Miasto", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entity.Miejsce", b =>
@@ -65,7 +65,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ParkingId");
 
-                    b.ToTable("Miejsce");
+                    b.ToTable("Miejsce", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entity.MiejsceInwalidzkie", b =>
@@ -90,7 +90,7 @@ namespace DAL.Migrations
                     b.HasIndex("Miejsce")
                         .IsUnique();
 
-                    b.ToTable("MiejsceInwalidzkie");
+                    b.ToTable("MiejsceInwalidzkie", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entity.Opiekun", b =>
@@ -111,7 +111,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Opiekun");
+                    b.ToTable("Opiekun", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entity.Parking", b =>
@@ -139,7 +139,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("IdMiasta");
 
-                    b.ToTable("Parking");
+                    b.ToTable("Parking", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entity.Rezerwacja", b =>
@@ -171,7 +171,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("IdMiejsca");
 
-                    b.ToTable("Rezerwacja");
+                    b.ToTable("Rezerwacja", (string)null);
                 });
 
             modelBuilder.Entity("OpiekunParking", b =>
@@ -186,7 +186,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ParkingiId");
 
-                    b.ToTable("OpiekunParking");
+                    b.ToTable("OpiekunParking", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entity.Miejsce", b =>
