@@ -10,12 +10,12 @@ namespace DAL.DataContext
 {
     public class DatabaseContext : DbContext
     {
-        private readonly IConfiguration configuration_;
+        //private readonly IConfiguration configuration_;
 
-        public DatabaseContext(IConfiguration configuration)
-        {
-            configuration_ = configuration;
-        }
+        //public DatabaseContext(IConfiguration configuration)
+        //{
+        //    configuration_ = configuration;
+        //}
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(configuration_.GetConnectionString("Database"));
