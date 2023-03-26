@@ -14,11 +14,12 @@ namespace DAL.UnitOfWork
     {
         private DatabaseContext _context = new DatabaseContext();
         private IMiastoRepository miastoRepository;
-        private IMiastoRepository miejsceRepository;
-        private IMiastoRepository inwalidzkieRepository;
-        private IMiastoRepository parkingRepository;
-        private IMiastoRepository opiekunRepository;
-        private IMiastoRepository rezerwacjaRepository;
+        private IMiejsceRepository miejsceRepository;
+        private IInwalidzkieRepository inwalidzkieRepository;
+        private IParkingRepository parkingRepository;
+        private IOpiekunRepository opiekunRepository;
+        private IRezerwacjaRepository rezerwacjaRepository;
+        private bool disposed = false;
         public IMiastoRepository MiastoRepository
         {
             get
@@ -43,17 +44,68 @@ namespace DAL.UnitOfWork
             }
         }
 
-        public IInwalidzkieRepository InwalidzkieRepository => throw new NotImplementedException();
+        public IInwalidzkieRepository InwalidzkieRepository
+        {
+            get
+            {
+                if (this.inwalidzkieRepository == null)
+                {
+                    this.inwalidzkieRepository = new InwalidzkieRepository(_context);
+                }
+                return this.inwalidzkieRepository;
+            }
+        }
 
-        public IParkingRepository ParkingRepository => throw new NotImplementedException();
+        public IParkingRepository ParkingRepository
+        {
+            get
+            {
+                if (this.parkingRepository == null)
+                {
+                    this.parkingRepository = new ParkingRepository(_context);
+                }
+                return this.parkingRepository;
+            }
+        }
 
-        public IOpiekunRepository OpiekunRepository => throw new NotImplementedException();
+        public IOpiekunRepository OpiekunRepository
+        {
+            get
+            {
+                if (this.opiekunRepository == null)
+                {
+                    this.opiekunRepository = new OpiekunRepository(_context);
+                }
+                return this.opiekunRepository;
+            }
+        }
 
-        public IRezerwacjaRepository RezerwacjaRepository => throw new NotImplementedException();
-
+        public IRezerwacjaRepository RezerwacjaRepository
+        {
+            get
+            {
+                if (this.rezerwacjaRepository == null)
+                {
+                    this.rezerwacjaRepository = new RezerwacjaRepository(_context);
+                }
+                return this.rezerwacjaRepository;
+            }
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
