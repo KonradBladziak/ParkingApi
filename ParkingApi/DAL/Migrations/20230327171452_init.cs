@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class test : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -90,7 +90,6 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Inwalidzkie = table.Column<bool>(type: "bit", nullable: false),
                     ParkingId = table.Column<int>(type: "int", nullable: false),
                     MiejsceInwalidzkieId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -112,18 +111,16 @@ namespace DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RozmiarMiejsca = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IdMiejsca = table.Column<int>(type: "int", nullable: true),
-                    Miejsce = table.Column<int>(type: "int", nullable: false)
+                    IdMiejsca = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MiejsceInwalidzkie", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MiejsceInwalidzkie_Miejsce_Miejsce",
-                        column: x => x.Miejsce,
+                        name: "FK_MiejsceInwalidzkie_Miejsce_IdMiejsca",
+                        column: x => x.IdMiejsca,
                         principalTable: "Miejsce",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -160,10 +157,11 @@ namespace DAL.Migrations
                 column: "ParkingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MiejsceInwalidzkie_Miejsce",
+                name: "IX_MiejsceInwalidzkie_IdMiejsca",
                 table: "MiejsceInwalidzkie",
-                column: "Miejsce",
-                unique: true);
+                column: "IdMiejsca",
+                unique: true,
+                filter: "[IdMiejsca] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OpiekunParking_ParkingiId",

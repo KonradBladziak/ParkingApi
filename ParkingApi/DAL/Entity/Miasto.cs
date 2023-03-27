@@ -41,7 +41,6 @@ namespace DAL.Entity
                     Wojewodztwo = "Slaskie",
                 }
                 );
-
         }
     }
 }

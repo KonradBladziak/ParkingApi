@@ -4,6 +4,7 @@ using DAL.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230327171452_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,26 +46,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Miasto");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Nazwa = "Katowice",
-                            Wojewodztwo = "Slaskie"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Nazwa = "Chorzow",
-                            Wojewodztwo = "Slaskie"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Nazwa = "Bytom",
-                            Wojewodztwo = "Slaskie"
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entity.Miejsce", b =>
@@ -86,24 +69,6 @@ namespace DAL.Migrations
                     b.HasIndex("ParkingId");
 
                     b.ToTable("Miejsce");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            MiejsceInwalidzkieId = 1,
-                            ParkingId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ParkingId = 3
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ParkingId = 2
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entity.MiejsceInwalidzkie", b =>
@@ -127,14 +92,6 @@ namespace DAL.Migrations
                         .HasFilter("[IdMiejsca] IS NOT NULL");
 
                     b.ToTable("MiejsceInwalidzkie");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IdMiejsca = 2,
-                            RozmiarMiejsca = 15m
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entity.Opiekun", b =>
@@ -156,20 +113,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Opiekun");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Imie = "Michał",
-                            Nazwisko = "Czajkowski"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Imie = "Konrad",
-                            Nazwisko = "Bladziak"
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entity.Parking", b =>
@@ -198,36 +141,6 @@ namespace DAL.Migrations
                     b.HasIndex("IdMiasta");
 
                     b.ToTable("Parking");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Adres = "Kolejowa 16",
-                            IdMiasta = 1,
-                            Nazwa = "Slaski"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Adres = "Wesoła 21",
-                            IdMiasta = 2,
-                            Nazwa = "Chorzowski"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Adres = "Jana Pawła II 51",
-                            IdMiasta = 1,
-                            Nazwa = "Na zakręcie"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Adres = "Grzybowa 11",
-                            IdMiasta = 3,
-                            Nazwa = "Przy galerii"
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entity.Rezerwacja", b =>
@@ -260,17 +173,6 @@ namespace DAL.Migrations
                     b.HasIndex("IdMiejsca");
 
                     b.ToTable("Rezerwacja");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Do = new DateTime(2023, 7, 12, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdMiejsca = 2,
-                            Imie = "Maciej",
-                            Nazwisko = "Grzybowski",
-                            Od = new DateTime(2023, 7, 12, 14, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("OpiekunParking", b =>

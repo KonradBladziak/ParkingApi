@@ -2,6 +2,8 @@
 using DAL.IRepositories;
 using DAL.Repositories;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace DAL.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
+
         private DatabaseContext _context = new DatabaseContext();
         private IMiastoRepository miastoRepository;
         private IMiejsceRepository miejsceRepository;
@@ -91,6 +94,9 @@ namespace DAL.UnitOfWork
                 return this.rezerwacjaRepository;
             }
         }
+
+        public string? this[string key] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -107,5 +113,7 @@ namespace DAL.UnitOfWork
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+
     }
 }

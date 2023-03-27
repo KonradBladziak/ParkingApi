@@ -23,7 +23,7 @@ namespace DAL.Entity
                 {
                     Id = 1,
                     RozmiarMiejsca = 15,
-                    IdMiejsca = 3,
+                    IdMiejsca = 2,
                 });
         }
     }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230315183549_test1")]
-    partial class test1
+    [Migration("20230327171621_OpiekunData")]
+    partial class OpiekunData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,6 @@ namespace DAL.Migrations
 
                     b.Property<string>("Nazwa")
                         .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -47,6 +46,26 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Miasto");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nazwa = "Katowice",
+                            Wojewodztwo = "Slaskie"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nazwa = "Chorzow",
+                            Wojewodztwo = "Slaskie"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nazwa = "Bytom",
+                            Wojewodztwo = "Slaskie"
+                        });
                 });
 
             modelBuilder.Entity("DAL.Entity.Miejsce", b =>
@@ -56,9 +75,6 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Inwalidzkie")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("MiejsceInwalidzkieId")
                         .HasColumnType("int");
@@ -86,16 +102,14 @@ namespace DAL.Migrations
                     b.Property<int?>("IdMiejsca")
                         .HasColumnType("int");
 
-                    b.Property<int>("Miejsce")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("RozmiarMiejsca")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Miejsce")
-                        .IsUnique();
+                    b.HasIndex("IdMiejsca")
+                        .IsUnique()
+                        .HasFilter("[IdMiejsca] IS NOT NULL");
 
                     b.ToTable("MiejsceInwalidzkie");
                 });
@@ -119,6 +133,20 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Opiekun");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Imie = "Michał",
+                            Nazwisko = "Czajkowski"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Imie = "Konrad",
+                            Nazwisko = "Bladziak"
+                        });
                 });
 
             modelBuilder.Entity("DAL.Entity.Parking", b =>
@@ -202,7 +230,7 @@ namespace DAL.Migrations
                         .WithMany()
                         .HasForeignKey("MiejsceInwalidzkieId");
 
-                    b.HasOne("DAL.Entity.Parking", "parking")
+                    b.HasOne("DAL.Entity.Parking", "Parking")
                         .WithMany("Miejsca")
                         .HasForeignKey("ParkingId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -210,18 +238,16 @@ namespace DAL.Migrations
 
                     b.Navigation("MiejsceInwalidzkie");
 
-                    b.Navigation("parking");
+                    b.Navigation("Parking");
                 });
 
             modelBuilder.Entity("DAL.Entity.MiejsceInwalidzkie", b =>
                 {
-                    b.HasOne("DAL.Entity.Miejsce", "miejsce")
+                    b.HasOne("DAL.Entity.Miejsce", "Miejsce")
                         .WithOne()
-                        .HasForeignKey("DAL.Entity.MiejsceInwalidzkie", "Miejsce")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DAL.Entity.MiejsceInwalidzkie", "IdMiejsca");
 
-                    b.Navigation("miejsce");
+                    b.Navigation("Miejsce");
                 });
 
             modelBuilder.Entity("DAL.Entity.Parking", b =>
@@ -237,13 +263,13 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entity.Rezerwacja", b =>
                 {
-                    b.HasOne("DAL.Entity.Miejsce", "miejsce")
+                    b.HasOne("DAL.Entity.Miejsce", "Miejsce")
                         .WithMany("Rezerwacje")
                         .HasForeignKey("IdMiejsca")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("miejsce");
+                    b.Navigation("Miejsce");
                 });
 
             modelBuilder.Entity("OpiekunParking", b =>

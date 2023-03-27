@@ -28,7 +28,7 @@ namespace DAL.Entity
                 {
                     Id = 1,
                     ParkingId = 1,
-                    MiejsceInwalidzkieId = null,
+                    MiejsceInwalidzkieId = 1,
                 },
                 new Miejsce
                 {
@@ -40,7 +40,7 @@ namespace DAL.Entity
                 {
                     Id = 3,
                     ParkingId = 2,
-                    MiejsceInwalidzkieId = 2,
+                    MiejsceInwalidzkieId = null,
                 });
         }
     }
