@@ -1,13 +1,15 @@
 using DAL.DataContext;
 using DAL.Repositories;
 using DAL.IRepositories;
+using DAL.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DatabaseContext>();
-builder.Services.AddScoped<IMiastoRepository, MiastoRepository>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddScoped<IMiastoRepository, MiastoRepository>();
 var app = builder.Build();
 
 

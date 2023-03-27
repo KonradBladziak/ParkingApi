@@ -23,6 +23,12 @@ namespace DAL.UnitOfWork
         private IOpiekunRepository opiekunRepository;
         private IRezerwacjaRepository rezerwacjaRepository;
         private bool disposed = false;
+
+        public UnitOfWork(DatabaseContext context) 
+        {
+            this._context = context;
+        }
+
         public IMiastoRepository MiastoRepository
         {
             get

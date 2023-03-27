@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,46 +16,46 @@ namespace DAL.Repositories
     public class MiastoRepository : IMiastoRepository, IDisposable
     {
 
-        private readonly DatabaseContext _context;
+        private DatabaseContext _context;
 
         public MiastoRepository(DatabaseContext context)
         {
             _context = context;
         }
 
-        public ICollection<Parking> GetParkingi(int id)
+        public async Task <ICollection<Parking>> GetParkingi(int id)
         {
             return _context.Miasta.Find(id).Parkingi;
         }
 
-        public ICollection<Miasto> GetMiasta()
+        public async Task<IEnumerable<Miasto>> GetMiasta()
         {
-            return _context.Miasta.ToList();
+            return await _context.Miasta.ToListAsync();
         }
-        public void DeleteMiasto(int id)
+        public async Task DeleteMiasto(int? id)
         {
-            Miasto miasto = _context.Miasta.Find(id);
+            var miasto = await _context.Miasta.FindAsync(id);
             _context.Miasta.Remove(miasto);
         }
 
-        public Miasto GetMiastoById(int id)
+        public async Task <Miasto> GetMiastoById(int? id)
         {
-            return _context.Miasta.Find(id);
+            return await _context.Miasta.FindAsync(id);
         }
 
-        public void InsertMiasto(Miasto miasto)
+        public async Task InsertMiasto(Miasto miasto)
         {
-            _context.Miasta.Add(miasto);
+            await _context.Miasta.AddAsync(miasto);
         }
 
-        public void UpdateMiasto(Miasto miasto)
+        public async Task UpdateMiasto(Miasto miasto)
         {
             _context.Entry(miasto).State = EntityState.Modified;
         }
 
-        public void Save()
+        public async Task Save()
         {
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
 
         private bool disposed = false;
@@ -76,5 +77,6 @@ namespace DAL.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
     }
 }

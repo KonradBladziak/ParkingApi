@@ -17,7 +17,7 @@ namespace Web.Controllers
     {
         private IUnitOfWork unitOfWork;
 
-        public MiastaController(UnitOfWork unitOfWork)
+        public MiastaController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
@@ -25,21 +25,21 @@ namespace Web.Controllers
         // GET: Miasta
         public async Task<IActionResult> Index()
         {
-              return miastoRepository.Miasta != null ? 
-                          View(await _context.Miasta.ToListAsync()) :
+              return unitOfWork.MiastoRepository.GetMiasta != null ? 
+                          View(await unitOfWork.MiastoRepository.GetMiasta()) :
                           Problem("Entity set 'DatabaseContext.Miasta'  is null.");
         }
 
         // GET: Miasta/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Miasta == null)
+            if (id == null || unitOfWork.MiastoRepository.GetMiasta == null)
             {
                 return NotFound();
             }
 
-            var miasto = await _context.Miasta
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var miasto = await unitOfWork.MiastoRepository.GetMiastoById(id);
+
             if (miasto == null)
             {
                 return NotFound();
@@ -63,8 +63,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(miasto);
-                await _context.SaveChangesAsync();
+                unitOfWork.MiastoRepository.InsertMiasto(miasto);
+                await unitOfWork.MiastoRepository.Save();
                 return RedirectToAction(nameof(Index));
             }
             return View(miasto);
@@ -73,12 +73,12 @@ namespace Web.Controllers
         // GET: Miasta/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Miasta == null)
+            if (id == null || unitOfWork.MiastoRepository.GetMiasta == null)
             {
                 return NotFound();
             }
 
-            var miasto = await _context.Miasta.FindAsync(id);
+            var miasto = await unitOfWork.MiastoRepository.GetMiastoById(id);
             if (miasto == null)
             {
                 return NotFound();
@@ -102,8 +102,8 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _context.Update(miasto);
-                    await _context.SaveChangesAsync();
+                    unitOfWork.MiastoRepository.UpdateMiasto(miasto);
+                    await unitOfWork.MiastoRepository.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,13 +124,12 @@ namespace Web.Controllers
         // GET: Miasta/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Miasta == null)
+            if (id == null || unitOfWork.MiastoRepository.GetMiasta == null)
             {
                 return NotFound();
             }
 
-            var miasto = await _context.Miasta
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var miasto = await unitOfWork.MiastoRepository.GetMiastoById(id);
             if (miasto == null)
             {
                 return NotFound();
@@ -144,23 +143,31 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Miasta == null)
+            if (unitOfWork.MiastoRepository.GetMiasta == null)
             {
                 return Problem("Entity set 'DatabaseContext.Miasta'  is null.");
             }
-            var miasto = await _context.Miasta.FindAsync(id);
+            var miasto = unitOfWork.MiastoRepository.GetMiastoById(id);
             if (miasto != null)
             {
-                _context.Miasta.Remove(miasto);
+                unitOfWork.MiastoRepository.DeleteMiasto(id);
             }
             
-            await _context.SaveChangesAsync();
+            await unitOfWork.MiastoRepository.Save();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MiastoExists(int id)
         {
-          return (_context.Miasta?.Any(e => e.Id == id)).GetValueOrDefault();
+            var res = false;
+
+            if (unitOfWork.MiastoRepository.GetMiastoById(id) != null)
+            {
+                res = true;
+            }
+
+            return res;
         }
+
     }
 }

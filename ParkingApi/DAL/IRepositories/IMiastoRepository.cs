@@ -10,13 +10,13 @@ namespace DAL.IRepositories
     public interface IMiastoRepository : IDisposable
     {
         
-        ICollection<Miasto> GetMiasta();
-        ICollection<Parking> GetParkingi(int id);
-        Miasto GetMiastoById(int id);
-        void InsertMiasto(Miasto miasto);
-        void DeleteMiasto(int id);
-        void UpdateMiasto(Miasto miasto);
-        void Save();
+        Task<IEnumerable<Miasto>> GetMiasta();
+        Task<ICollection<Parking>> GetParkingi(int id);
+        Task <Miasto> GetMiastoById(int? id);
+        Task InsertMiasto(Miasto miasto);
+        Task DeleteMiasto(int? id);
+        Task UpdateMiasto(Miasto miasto);
+        Task Save();
 
     }
 }
