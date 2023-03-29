@@ -19,50 +19,47 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public ICollection<Parking> GetParkingi()
+        public async Task<Parking> GetParkingById(int? id)
         {
-            return _context.Parkingi.ToList();
+            return await _context.Parkingi
+                .Include(p => p.Miasto)
+                .FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public ICollection<Opiekun> GetOpiekunowie(int id)
+        public async Task<IEnumerable<Parking>> GetParkingi()
         {
-            return _context.Parkingi.Find(id).Opiekunowie.ToList();
+            return await _context.Parkingi.
+            Include(p => p.Miasto).
+            ToListAsync();
+
         }
 
-        public ICollection<Miejsce> GetMiejsca(int id)
+        public async Task InsertParking(Parking parking)
         {
-            return _context.Parkingi.Find(id).Miejsca.ToList();
+            _context.Add(parking);
+            await _context.SaveChangesAsync();
         }
 
-        public Miasto GetMiasto(int id)
+        public Task EditParking(int? id)
         {
-            return _context.Parkingi.Find(id).Miasto;
+            throw new NotImplementedException();
         }
 
-        public Parking GetParkingById(int id)
+        public async Task UpdateParking(Parking parking)
         {
-            return _context.Parkingi.Find(id);
+            _context.Update(parking);
+            await Save();
         }
 
-        public void InsertParking(Parking parking)
+        public async Task DeleteParking(Parking parking)
         {
-            _context.Parkingi.Add(parking);
-        }
-
-        public void DeleteParking(int id)
-        {
-            Parking parking = _context.Parkingi.Find(id);
             _context.Parkingi.Remove(parking);
-        }
-        
-        public void UpdateParking(Parking parking)
-        {
-            _context.Entry(parking).State = EntityState.Modified;
+            await Save();
         }
 
-        public void Save()
+        public async Task Save()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;
@@ -84,5 +81,7 @@ namespace DAL.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        
     }
 }

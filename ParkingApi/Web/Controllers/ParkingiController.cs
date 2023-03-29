@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.DataContext;
 using DAL.Entity;
+using DAL.UnitOfWork;
 
 namespace Web.Controllers
 {
@@ -14,29 +15,32 @@ namespace Web.Controllers
     {
         private readonly DatabaseContext _context;
 
-        public ParkingiController(DatabaseContext context)
+        private IUnitOfWork unitOfWork;
+
+        public ParkingiController(DatabaseContext context, IUnitOfWork unitOfWork)
         {
             _context = context;
+            this.unitOfWork = unitOfWork;
         }
 
         // GET: Parkingi
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.Parkingi.Include(p => p.Miasto);
-            return View(await databaseContext.ToListAsync());
+            return unitOfWork.ParkingRepository.GetParkingi != null ?
+                          View(await unitOfWork.ParkingRepository.GetParkingi()) :
+                          Problem("Entity set 'DatabaseContext.Parkingi'  is null.");
         }
 
         // GET: Parkingi/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Parkingi == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var parking = await _context.Parkingi
-                .Include(p => p.Miasto)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var parking = await unitOfWork.ParkingRepository.GetParkingById(id);
+            
             if (parking == null)
             {
                 return NotFound();
@@ -48,24 +52,21 @@ namespace Web.Controllers
         // GET: Parkingi/Create
         public IActionResult Create()
         {
-            ViewData["IdMiasta"] = new SelectList(_context.Miasta, "Id", "Nazwa");
+            ViewData["IdMiasta"] = new SelectList(unitOfWork.MiastoRepository.GetMiasta().Result, "Id", "Nazwa");
             return View();
         }
 
-        // POST: Parkingi/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nazwa,Adres,IdMiasta")] Parking parking)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(parking);
-                await _context.SaveChangesAsync();
+                unitOfWork.ParkingRepository.InsertParking(parking);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdMiasta"] = new SelectList(_context.Miasta, "Id", "Nazwa", parking.IdMiasta);
+            ViewData["IdMiasta"] = new SelectList(unitOfWork.MiastoRepository.GetMiasta().Result, "Id", "Nazwa", parking.IdMiasta);
             return View(parking);
         }
 
@@ -76,7 +77,6 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-
             var parking = await _context.Parkingi.FindAsync(id);
             if (parking == null)
             {
@@ -85,7 +85,6 @@ namespace Web.Controllers
             ViewData["IdMiasta"] = new SelectList(_context.Miasta, "Id", "Nazwa", parking.IdMiasta);
             return View(parking);
         }
-
         // POST: Parkingi/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -97,7 +96,6 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
@@ -125,14 +123,12 @@ namespace Web.Controllers
         // GET: Parkingi/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Parkingi == null)
+            if (id == null || unitOfWork.ParkingRepository.GetParkingi == null)
             {
                 return NotFound();
             }
 
-            var parking = await _context.Parkingi
-                .Include(p => p.Miasto)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var parking = await unitOfWork.ParkingRepository.GetParkingById(id);
             if (parking == null)
             {
                 return NotFound();
@@ -146,23 +142,23 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Parkingi == null)
+            if (unitOfWork.ParkingRepository.GetParkingi == null)
             {
                 return Problem("Entity set 'DatabaseContext.Parkingi'  is null.");
             }
-            var parking = await _context.Parkingi.FindAsync(id);
+            var parking = await unitOfWork.ParkingRepository.GetParkingById(id);
             if (parking != null)
             {
-                _context.Parkingi.Remove(parking);
+                unitOfWork.ParkingRepository.DeleteParking(parking);
             }
             
-            await _context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 
         private bool ParkingExists(int id)
-        {
-          return (_context.Parkingi?.Any(e => e.Id == id)).GetValueOrDefault();
+        { 
+          return unitOfWork.ParkingRepository.GetParkingById(id) != null ? true : false;
         }
     }
 }

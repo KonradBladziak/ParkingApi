@@ -1,6 +1,7 @@
 ﻿using DAL.DataContext;
 using DAL.Entity;
 using DAL.IRepositories;
+using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -51,11 +52,12 @@ namespace DAL.Repositories
         public async Task UpdateMiasto(Miasto miasto)
         {
             _context.Entry(miasto).State = EntityState.Modified;
+            await Save();
         }
 
         public async Task Save()
         {
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;

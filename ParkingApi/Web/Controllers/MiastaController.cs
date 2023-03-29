@@ -103,7 +103,6 @@ namespace Web.Controllers
                 try
                 {
                     unitOfWork.MiastoRepository.UpdateMiasto(miasto);
-                    await unitOfWork.MiastoRepository.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -159,14 +158,7 @@ namespace Web.Controllers
 
         private bool MiastoExists(int id)
         {
-            var res = false;
-
-            if (unitOfWork.MiastoRepository.GetMiastoById(id) != null)
-            {
-                res = true;
-            }
-
-            return res;
+            return unitOfWork.MiastoRepository.GetMiastoById(id) != null ? true : false;
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using DAL.Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,17 @@ namespace DAL.IRepositories
 {
     public interface IParkingRepository : IDisposable
     {
-        ICollection<Parking> GetParkingi();
-        ICollection<Opiekun> GetOpiekunowie(int id);
-        ICollection<Miejsce> GetMiejsca(int id);
-        Parking GetParkingById(int id);
-        Miasto GetMiasto(int id);
-        void InsertParking(Parking parking);
-        void DeleteParking(int id);
-        void UpdateParking(Parking parking);
-        void Save();
+
+        Task<IEnumerable<Parking>> GetParkingi();
+
+        Task<Parking> GetParkingById(int? id);
+
+        Task InsertParking(Parking parking);
+
+        Task EditParking(int? id);
+
+        Task UpdateParking(Parking parking);
+        Task DeleteParking(Parking parking);
+        Task Save();
     }
 }
