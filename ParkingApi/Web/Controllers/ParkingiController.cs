@@ -73,18 +73,20 @@ namespace Web.Controllers
         // GET: Parkingi/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Parkingi == null)
+            if (id == null || unitOfWork.MiastoRepository.GetMiasta().Result == null)
             {
                 return NotFound();
             }
-            var parking = await _context.Parkingi.FindAsync(id);
+
+            var parking = await unitOfWork.ParkingRepository.GetParkingById(id);
             if (parking == null)
             {
                 return NotFound();
             }
-            ViewData["IdMiasta"] = new SelectList(_context.Miasta, "Id", "Nazwa", parking.IdMiasta);
+            ViewData["IdMiasta"] = new SelectList(unitOfWork.MiastoRepository.GetMiasta().Result, "Id", "Nazwa", parking.IdMiasta);
             return View(parking);
         }
+
         // POST: Parkingi/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -96,12 +98,12 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(parking);
-                    await _context.SaveChangesAsync();
+                    unitOfWork.ParkingRepository.UpdateParking(parking);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,7 +118,7 @@ namespace Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdMiasta"] = new SelectList(_context.Miasta, "Id", "Nazwa", parking.IdMiasta);
+            ViewData["IdMiasta"] = new SelectList(unitOfWork.MiastoRepository.GetMiasta().Result, "Id", "Nazwa", parking.IdMiasta);
             return View(parking);
         }
 
