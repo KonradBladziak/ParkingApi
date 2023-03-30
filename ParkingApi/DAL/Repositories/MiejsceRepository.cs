@@ -18,32 +18,40 @@ namespace DAL.Repositories
         {
             this._context = context;
         }
-        public ICollection<Miejsce> GetMiejsca()
+        public async Task <ICollection<Miejsce>> GetMiejsca()
         {
-            return _context.Miejsca.ToList();
+            return await _context.Miejsca
+                .Include(m => m.Parking)
+                .ToListAsync();
         }
-        public ICollection<Rezerwacja> GetRezerwacje()
+        public async Task <ICollection<Rezerwacja>> GetRezerwacje()
         {
-            return _context.Rezerwacje.ToList();
+            return await _context.Rezerwacje
+                .Include(m => m.Miejsce)
+                .ToListAsync();
         }
 
-        public Miejsce GetMiejscaById(int id)
+        public async Task <Miejsce> GetMiejscaById(int? id)
         {
-            return _context.Miejsca.Find(id);
+            return await _context.Miejsca
+                .Include(m => m.Parking)
+                .FirstOrDefaultAsync(m => m.Id == id);
         }
-        public void AddMiejsce(Miejsce miejsce)
+        public async Task InsertMiejsce(Miejsce miejsce)
         {
             _context.Miejsca.Add(miejsce);
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteMiejsce(int id)
+        public async Task DeleteMiejsce(Miejsce miejsce)
         {
-            Miejsce miejsce = _context.Miejsca.Find(id);
             _context.Remove(miejsce);
+            await Save();
         }
-        public void UpdateMiejsce(Miejsce miejsce)
+        public async Task UpdateMiejsce(Miejsce miejsce)
         {
-            _context.Entry(miejsce).State = EntityState.Modified;
+            _context.Update(miejsce);
+            await Save();
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -62,9 +70,9 @@ namespace DAL.Repositories
             GC.SuppressFinalize(this);
         }
 
-        public void Save()
+        public async Task Save()
         {
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
     }
 }

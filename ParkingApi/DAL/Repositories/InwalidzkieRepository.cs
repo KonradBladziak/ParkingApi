@@ -19,37 +19,47 @@ namespace DAL.Repositories
             this._context = context;
         }
 
-        public ICollection<MiejsceInwalidzkie> GetMiejscaInwalidzkie()
+        public async Task<ICollection<MiejsceInwalidzkie>> GetMiejscaInwalidzkie()
         {
-            return _context.MiesjcaInwalidzkie.ToList();
+            return await _context.MiesjcaInwalidzkie
+                .Include(m => m.Miejsce)
+                .ToListAsync();
         }
-        public ICollection<Miejsce> GetMiejsca()
+        public async Task<ICollection<Miejsce>> GetMiejsca()
         {
-            return _context.Miejsca.ToList();
+            return await _context.Miejsca
+                 .Include(m => m.Parking)
+                 .ToListAsync();
         }
-        public Miejsce GetMiejsceById(int id)
+        public async Task<Miejsce> GetMiejsceById(int? id)
         {
-            return _context.Miejsca.Find(id);
-        }
-
-        public MiejsceInwalidzkie GetMiejsceInwalidzkieById(int id)
-        {
-            return _context.MiesjcaInwalidzkie.Find(id);
-        }
-
-        public void UpdateMiejsceInwalidzkie(MiejsceInwalidzkie miejsceInwalidzkie)
-        {
-            _context.Entry(miejsceInwalidzkie).State = EntityState.Modified;
-        }
-        public void AddMiejsceInwalidzkie(MiejsceInwalidzkie miejsceInwalidzkie)
-        {
-            _context.MiesjcaInwalidzkie.Add(miejsceInwalidzkie);
+            return await _context.Miejsca
+                .Include(m => m.Parking)
+                .FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public void DeleteMiejsceInwalidzkie(int id)
+        public async Task<MiejsceInwalidzkie> GetMiejsceInwalidzkieById(int? id)
         {
-             MiejsceInwalidzkie miejsceInwalidzkie= _context.MiesjcaInwalidzkie.Find(id);
+            return await _context.MiesjcaInwalidzkie
+                .Include(m => m.Miejsce)
+                .FirstOrDefaultAsync(m => m.Id == id);
+        }
+
+        public async Task UpdateMiejsceInwalidzkie(MiejsceInwalidzkie miejsceInwalidzkie)
+        {
+            _context.Update(miejsceInwalidzkie);
+            await Save();
+        }
+        public async Task InsertMiejsceInwalidzkie(MiejsceInwalidzkie miejsceInwalidzkie)
+        {
+            _context.Add(miejsceInwalidzkie);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteMiejsceInwalidzkie(MiejsceInwalidzkie miejsceInwalidzkie)
+        {
             _context.Remove(miejsceInwalidzkie);
+            await Save();
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -68,9 +78,9 @@ namespace DAL.Repositories
             GC.SuppressFinalize(this);
         }
 
-        public void Save()
+        public async Task Save()
         {
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
     }
 }

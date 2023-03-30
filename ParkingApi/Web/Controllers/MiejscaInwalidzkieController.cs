@@ -7,36 +7,38 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.DataContext;
 using DAL.Entity;
+using DAL.UnitOfWork;
+using DAL.Repositories;
 
 namespace Web.Controllers
 {
     public class MiejscaInwalidzkieController : Controller
     {
-        private readonly DatabaseContext _context;
+        private IUnitOfWork unitOfWork;
 
-        public MiejscaInwalidzkieController(DatabaseContext context)
+        public MiejscaInwalidzkieController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            this.unitOfWork = unitOfWork;
         }
 
         // GET: MiejscaInwalidzkie
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.MiesjcaInwalidzkie.Include(m => m.Miejsce);
-            return View(await databaseContext.ToListAsync());
+            return unitOfWork.InwalidzkieRepository.GetMiejscaInwalidzkie != null ?
+                           View(await unitOfWork.InwalidzkieRepository.GetMiejscaInwalidzkie()) :
+                           Problem("Entity set 'DatabaseContext.Miejsca'  is null.");
         }
 
         // GET: MiejscaInwalidzkie/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.MiesjcaInwalidzkie == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var miejsceInwalidzkie = await _context.MiesjcaInwalidzkie
-                .Include(m => m.Miejsce)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var miejsceInwalidzkie = await unitOfWork.InwalidzkieRepository.GetMiejsceInwalidzkieById(id);
+
             if (miejsceInwalidzkie == null)
             {
                 return NotFound();
@@ -48,7 +50,7 @@ namespace Web.Controllers
         // GET: MiejscaInwalidzkie/Create
         public IActionResult Create()
         {
-            ViewData["IdMiejsca"] = new SelectList(_context.Miejsca, "Id", "Id");
+            ViewData["IdMiejsca"] = new SelectList(unitOfWork.MiejsceRepository.GetMiejsca().Result, "Id", "Id");
             return View();
         }
 
@@ -61,28 +63,27 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(miejsceInwalidzkie);
-                await _context.SaveChangesAsync();
+                await unitOfWork.InwalidzkieRepository.InsertMiejsceInwalidzkie(miejsceInwalidzkie);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdMiejsca"] = new SelectList(_context.Miejsca, "Id", "Id", miejsceInwalidzkie.IdMiejsca);
+            ViewData["IdMiejsca"] = new SelectList(unitOfWork.MiejsceRepository.GetMiejsca().Result, "Id", "Id", miejsceInwalidzkie.IdMiejsca);
             return View(miejsceInwalidzkie);
         }
 
         // GET: MiejscaInwalidzkie/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.MiesjcaInwalidzkie == null)
+            if (id == null || unitOfWork.InwalidzkieRepository.GetMiejscaInwalidzkie().Result == null)
             {
                 return NotFound();
             }
 
-            var miejsceInwalidzkie = await _context.MiesjcaInwalidzkie.FindAsync(id);
+            var miejsceInwalidzkie = await unitOfWork.InwalidzkieRepository.GetMiejsceInwalidzkieById(id);
             if (miejsceInwalidzkie == null)
             {
                 return NotFound();
             }
-            ViewData["IdMiejsca"] = new SelectList(_context.Miejsca, "Id", "Id", miejsceInwalidzkie.IdMiejsca);
+            ViewData["IdMiejsca"] = new SelectList(unitOfWork.MiejsceRepository.GetMiejsca().Result, "Id", "Id", miejsceInwalidzkie.IdMiejsca);
             return View(miejsceInwalidzkie);
         }
 
@@ -102,8 +103,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _context.Update(miejsceInwalidzkie);
-                    await _context.SaveChangesAsync();
+                    await unitOfWork.InwalidzkieRepository.UpdateMiejsceInwalidzkie(miejsceInwalidzkie);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,21 +118,19 @@ namespace Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdMiejsca"] = new SelectList(_context.Miejsca, "Id", "Id", miejsceInwalidzkie.IdMiejsca);
+            ViewData["IdMiejsca"] = new SelectList(unitOfWork.MiejsceRepository.GetMiejsca().Result, "Id", "Id", miejsceInwalidzkie.IdMiejsca);
             return View(miejsceInwalidzkie);
         }
 
         // GET: MiejscaInwalidzkie/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.MiesjcaInwalidzkie == null)
+            if (id == null || unitOfWork.InwalidzkieRepository.GetMiejscaInwalidzkie == null)
             {
                 return NotFound();
             }
 
-            var miejsceInwalidzkie = await _context.MiesjcaInwalidzkie
-                .Include(m => m.Miejsce)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var miejsceInwalidzkie = unitOfWork.InwalidzkieRepository.GetMiejsceInwalidzkieById(id);
             if (miejsceInwalidzkie == null)
             {
                 return NotFound();
@@ -146,23 +144,22 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.MiesjcaInwalidzkie == null)
+            if (unitOfWork.InwalidzkieRepository.GetMiejscaInwalidzkie == null)
             {
                 return Problem("Entity set 'DatabaseContext.MiesjcaInwalidzkie'  is null.");
             }
-            var miejsceInwalidzkie = await _context.MiesjcaInwalidzkie.FindAsync(id);
+            var miejsceInwalidzkie = await unitOfWork.InwalidzkieRepository.GetMiejsceInwalidzkieById(id);
             if (miejsceInwalidzkie != null)
             {
-                _context.MiesjcaInwalidzkie.Remove(miejsceInwalidzkie);
+                await unitOfWork.InwalidzkieRepository.DeleteMiejsceInwalidzkie(miejsceInwalidzkie);
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MiejsceInwalidzkieExists(int id)
         {
-          return (_context.MiesjcaInwalidzkie?.Any(e => e.Id == id)).GetValueOrDefault();
+          return unitOfWork.InwalidzkieRepository.GetMiejsceInwalidzkieById(id) != null ? true : false;
         }
     }
 }

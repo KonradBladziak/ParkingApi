@@ -9,13 +9,13 @@ namespace DAL.IRepositories
 {
     public interface IInwalidzkieRepository : IDisposable
     {
-        ICollection<MiejsceInwalidzkie> GetMiejscaInwalidzkie();
-        MiejsceInwalidzkie GetMiejsceInwalidzkieById(int id);
-        Miejsce GetMiejsceById(int id);
-        ICollection<Miejsce> GetMiejsca();
-        void AddMiejsceInwalidzkie(MiejsceInwalidzkie miejsceInwalidzkie);
-        void UpdateMiejsceInwalidzkie(MiejsceInwalidzkie miejsceInwalidzkie);
-        void DeleteMiejsceInwalidzkie(int id);
-        void Save();
+        Task <ICollection<MiejsceInwalidzkie>> GetMiejscaInwalidzkie();
+        Task <MiejsceInwalidzkie> GetMiejsceInwalidzkieById(int? id);
+        Task <Miejsce> GetMiejsceById(int? id);
+        Task <ICollection<Miejsce>> GetMiejsca();
+        Task InsertMiejsceInwalidzkie(MiejsceInwalidzkie miejsceInwalidzkie);
+        Task UpdateMiejsceInwalidzkie(MiejsceInwalidzkie miejsceInwalidzkie);
+        Task DeleteMiejsceInwalidzkie(MiejsceInwalidzkie miejsceInwalidzkie);
+        Task Save();
     }
 }

@@ -7,37 +7,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.DataContext;
 using DAL.Entity;
+using DAL.UnitOfWork;
 
 namespace Web.Controllers
 {
     public class MiejscaController : Controller
     {
-        private readonly DatabaseContext _context;
-
-        public MiejscaController(DatabaseContext context)
+        private IUnitOfWork unitOfWork;
+        public MiejscaController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            this.unitOfWork = unitOfWork;
         }
 
         // GET: Miejsca
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.Miejsca.Include(m => m.MiejsceInwalidzkie).Include(m => m.Parking);
-            return View(await databaseContext.ToListAsync());
+            return unitOfWork.MiejsceRepository.GetMiejsca != null ?
+                           View(await unitOfWork.MiejsceRepository.GetMiejsca()) :
+                           Problem("Entity set 'DatabaseContext.Miejsca'  is null.");
         }
 
         // GET: Miejsca/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Miejsca == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var miejsce = await _context.Miejsca
-                .Include(m => m.MiejsceInwalidzkie)
-                .Include(m => m.Parking)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var miejsce = await unitOfWork.MiejsceRepository.GetMiejscaById(id);
+
             if (miejsce == null)
             {
                 return NotFound();
@@ -49,8 +48,8 @@ namespace Web.Controllers
         // GET: Miejsca/Create
         public IActionResult Create()
         {
-            ViewData["MiejsceInwalidzkieId"] = new SelectList(_context.MiesjcaInwalidzkie, "Id", "Id");
-            ViewData["ParkingId"] = new SelectList(_context.Parkingi, "Id", "Adres");
+            ViewData["MiejsceInwalidzkieId"] = new SelectList(unitOfWork.InwalidzkieRepository.GetMiejscaInwalidzkie().Result, "Id", "Id");
+            ViewData["ParkingId"] = new SelectList(unitOfWork.ParkingRepository.GetParkingi().Result, "Id", "Adres");
             return View();
         }
 
@@ -63,30 +62,30 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(miejsce);
-                await _context.SaveChangesAsync();
+                await unitOfWork.MiejsceRepository.InsertMiejsce(miejsce);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MiejsceInwalidzkieId"] = new SelectList(_context.MiesjcaInwalidzkie, "Id", "Id", miejsce.MiejsceInwalidzkieId);
-            ViewData["ParkingId"] = new SelectList(_context.Parkingi, "Id", "Adres", miejsce.ParkingId);
+            ViewData["MiejsceInwalidzkieId"] = new SelectList(unitOfWork.InwalidzkieRepository.GetMiejscaInwalidzkie().Result, "Id", "Id", miejsce.MiejsceInwalidzkieId);
+            ViewData["ParkingId"] = new SelectList(unitOfWork.ParkingRepository.GetParkingi().Result, "Id", "Adres", miejsce.ParkingId);
             return View(miejsce);
         }
 
         // GET: Miejsca/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Miejsca == null)
+            if (id == null || unitOfWork.MiejsceRepository.GetMiejsca().Result == null)
             {
                 return NotFound();
             }
 
-            var miejsce = await _context.Miejsca.FindAsync(id);
+            var miejsce = await unitOfWork.MiejsceRepository.GetMiejscaById(id);
             if (miejsce == null)
             {
                 return NotFound();
             }
-            ViewData["MiejsceInwalidzkieId"] = new SelectList(_context.MiesjcaInwalidzkie, "Id", "Id", miejsce.MiejsceInwalidzkieId);
-            ViewData["ParkingId"] = new SelectList(_context.Parkingi, "Id", "Adres", miejsce.ParkingId);
+
+            ViewData["MiejsceInwalidzkieId"] = new SelectList(unitOfWork.InwalidzkieRepository.GetMiejscaInwalidzkie().Result, "Id", "Id", miejsce.MiejsceInwalidzkieId);
+            ViewData["ParkingId"] = new SelectList(unitOfWork.ParkingRepository.GetParkingi().Result, "Id", "Adres", miejsce.ParkingId);
             return View(miejsce);
         }
 
@@ -106,8 +105,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _context.Update(miejsce);
-                    await _context.SaveChangesAsync();
+                   await unitOfWork.MiejsceRepository.UpdateMiejsce(miejsce);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,23 +120,20 @@ namespace Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MiejsceInwalidzkieId"] = new SelectList(_context.MiesjcaInwalidzkie, "Id", "Id", miejsce.MiejsceInwalidzkieId);
-            ViewData["ParkingId"] = new SelectList(_context.Parkingi, "Id", "Adres", miejsce.ParkingId);
+            ViewData["MiejsceInwalidzkieId"] = new SelectList(unitOfWork.InwalidzkieRepository.GetMiejscaInwalidzkie().Result, "Id", "Id", miejsce.MiejsceInwalidzkieId);
+            ViewData["ParkingId"] = new SelectList(unitOfWork.ParkingRepository.GetParkingi().Result, "Id", "Adres", miejsce.ParkingId);
             return View(miejsce);
         }
 
         // GET: Miejsca/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Miejsca == null)
+            if (id == null || unitOfWork.MiejsceRepository.GetMiejsca == null)
             {
                 return NotFound();
             }
 
-            var miejsce = await _context.Miejsca
-                .Include(m => m.MiejsceInwalidzkie)
-                .Include(m => m.Parking)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var miejsce = unitOfWork.MiejsceRepository.GetMiejscaById(id);
             if (miejsce == null)
             {
                 return NotFound();
@@ -152,23 +147,22 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Miejsca == null)
+            if (unitOfWork.MiejsceRepository.GetMiejsca == null)
             {
                 return Problem("Entity set 'DatabaseContext.Miejsca'  is null.");
             }
-            var miejsce = await _context.Miejsca.FindAsync(id);
+            var miejsce = await unitOfWork.MiejsceRepository.GetMiejscaById(id);
             if (miejsce != null)
             {
-                _context.Miejsca.Remove(miejsce);
+                await unitOfWork.MiejsceRepository.DeleteMiejsce(miejsce);
             }
-            
-            await _context.SaveChangesAsync();
+        
             return RedirectToAction(nameof(Index));
         }
 
         private bool MiejsceExists(int id)
         {
-          return (_context.Miejsca?.Any(e => e.Id == id)).GetValueOrDefault();
+          return unitOfWork.MiejsceRepository.GetMiejscaById(id) != null ? true : false;
         }
     }
 }

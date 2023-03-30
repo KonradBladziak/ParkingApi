@@ -13,13 +13,11 @@ namespace Web.Controllers
 {
     public class ParkingiController : Controller
     {
-        private readonly DatabaseContext _context;
 
         private IUnitOfWork unitOfWork;
 
-        public ParkingiController(DatabaseContext context, IUnitOfWork unitOfWork)
+        public ParkingiController(IUnitOfWork unitOfWork)
         {
-            _context = context;
             this.unitOfWork = unitOfWork;
         }
 
@@ -83,6 +81,7 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
+
             ViewData["IdMiasta"] = new SelectList(unitOfWork.MiastoRepository.GetMiasta().Result, "Id", "Nazwa", parking.IdMiasta);
             return View(parking);
         }

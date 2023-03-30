@@ -9,12 +9,12 @@ namespace DAL.IRepositories
 {
     public interface IMiejsceRepository : IDisposable
     {
-        ICollection<Miejsce> GetMiejsca();
-        ICollection<Rezerwacja> GetRezerwacje();
-        Miejsce GetMiejscaById(int id);
-        void AddMiejsce(Miejsce miejsce);
-        void UpdateMiejsce(Miejsce miejsce);
-        void DeleteMiejsce(int id);
-        void Save();
+        Task <ICollection<Miejsce>> GetMiejsca();
+        Task <ICollection<Rezerwacja>> GetRezerwacje();
+        Task <Miejsce> GetMiejscaById(int? id);
+        Task InsertMiejsce(Miejsce miejsce);
+        Task UpdateMiejsce(Miejsce miejsce);
+        Task DeleteMiejsce(Miejsce miejsce);
+        Task Save();
     }
 }
