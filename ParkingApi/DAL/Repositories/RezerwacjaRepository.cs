@@ -18,26 +18,27 @@ namespace DAL.Repositories
         {
             this._context = context;
         }
-        public ICollection<Rezerwacja> GetRezerwacje()
+        public async Task <IEnumerable<Rezerwacja>> GetRezerwacje()
         {
-            return _context.Rezerwacje.ToList();
+            return await _context.Rezerwacje.ToListAsync();
         }
-        public Rezerwacja GetRezerwacjaById(int id)
+        public async Task <Rezerwacja> GetRezerwacjaById(int id)
         {
-            return _context.Rezerwacje.Find(id);
+            return await _context.Rezerwacje.FindAsync(id);
         }
-        public void UpdateRezerwacja(Rezerwacja rezerwacja)
+        public async Task UpdateRezerwacja(Rezerwacja rezerwacja)
         {
             _context.Entry(rezerwacja).State = EntityState.Modified;
+            await Save();
         }
-        public void AddRezerwacja(Rezerwacja rezerwacja)
+        public async Task InsertRezerwacja(Rezerwacja rezerwacja)
         {
-            _context.Rezerwacje.Add(rezerwacja);
+            await _context.Rezerwacje.AddAsync(rezerwacja);
         }
-        public void DeleteRezerwacja(int id)
+        public async Task DeleteRezerwacja(int id)
         {
-            Rezerwacja rezerwacja = _context.Rezerwacje.Find(id);
-            _context.Remove(rezerwacja);
+            Rezerwacja rezerwacja = await _context.Rezerwacje.FindAsync(id);
+            _context.Rezerwacje.Remove(rezerwacja);
         }
         protected virtual void Dispose(bool disposing)
         {
@@ -55,9 +56,9 @@ namespace DAL.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        public void Save()
+        public async Task Save()
         {
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
     }
 }

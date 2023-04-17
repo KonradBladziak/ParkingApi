@@ -9,11 +9,11 @@ namespace DAL.IRepositories
 {
     public interface IRezerwacjaRepository : IDisposable
     {
-        ICollection<Rezerwacja> GetRezerwacje();
-        Rezerwacja GetRezerwacjaById(int id);
-        void AddRezerwacja(Rezerwacja rezerwacja);
-        void UpdateRezerwacja(Rezerwacja rezerwacja);
-        void DeleteRezerwacja(int id);
-        void Save();
+        Task <IEnumerable<Rezerwacja>> GetRezerwacje();
+        Task <Rezerwacja> GetRezerwacjaById(int id);
+        Task InsertRezerwacja(Rezerwacja rezerwacja);
+        Task UpdateRezerwacja(Rezerwacja rezerwacja);
+        Task DeleteRezerwacja(int id);
+        Task Save();
     }
 }
