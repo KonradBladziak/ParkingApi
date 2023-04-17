@@ -12,9 +12,11 @@ namespace DAL.Entity
         public int Id { get; set; }
 
         [MaxLength(50)]
+        [RegularExpression(@"^[a-zA-Z'-'\s]{1,40}$")]
         public string Nazwa { get; set; }
 
         [MaxLength(50)]
+        [RegularExpression(@"^[a-zA-Z'-'\s]{1,20}$")]
         public string Wojewodztwo { get; set; }
 
         public ICollection<Parking>? Parkingi { get; set; }

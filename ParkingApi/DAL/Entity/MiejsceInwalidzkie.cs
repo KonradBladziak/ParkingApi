@@ -10,6 +10,7 @@ namespace DAL.Entity
     {
         [Key]
         public int Id { get; set; }
+        [Range(1, 3)]
         public decimal RozmiarMiejsca { get; set; }
         public int? IdMiejsca { get; set; }
 
