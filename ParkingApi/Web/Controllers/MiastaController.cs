@@ -24,8 +24,8 @@ namespace Web.Controllers
 
         // GET: Miasta
         public async Task<IActionResult> Index()
-        {
-              return unitOfWork.MiastoRepository.GetMiasta != null ? 
+        { 
+            return unitOfWork.MiastoRepository.GetMiasta != null ? 
                           View(await unitOfWork.MiastoRepository.GetMiasta()) :
                           Problem("Entity set 'DatabaseContext.Miasta'  is null.");
         }
@@ -54,9 +54,6 @@ namespace Web.Controllers
             return View();
         }
 
-        // POST: Miasta/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nazwa,Wojewodztwo")] Miasto miasto)
@@ -132,8 +129,11 @@ namespace Web.Controllers
             if (miasto == null)
             {
                 return NotFound();
+                
             }
 
+            unitOfWork.MiastoRepository.DeleteMiasto(miasto.Id);
+            await unitOfWork.MiastoRepository.Save();
             return View(miasto);
         }
 
