@@ -12,7 +12,7 @@ namespace DAL.Entity
         public int Id { get; set; }
         public DateTime Od { get; set; }
         public DateTime Do { get; set; }
-        public int IdMiejsca { get; set; }  
+        public int IdMiejsca { get; set; }
 
         [ForeignKey(nameof(IdMiejsca))]
         public Miejsce Miejsce { get; set; }

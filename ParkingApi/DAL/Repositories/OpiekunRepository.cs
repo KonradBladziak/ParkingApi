@@ -19,40 +19,41 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public ICollection<Opiekun> GetOpiekunowie()
+        public async Task <IEnumerable<Opiekun>> GetOpiekunowie()
         {
-            return _context.Opiekunowie.ToList();
+            return await _context.Opiekunowie.ToListAsync();
         }
 
-        public ICollection<Parking> GetParkingi(int id)
+        public async Task <ICollection<Parking>> GetParkingi(int id)
         {
             return _context.Opiekunowie.Find(id).Parkingi;
         }
 
-        public Opiekun GetOpiekunById(int id)
+        public async Task <Opiekun> GetOpiekunById(int id)
         {
-            return _context.Opiekunowie.Find(id);
+            return await _context.Opiekunowie.FindAsync(id);
         }
 
-        public void InsertOpiekun(Opiekun opiekun)
+        public async Task InsertOpiekun(Opiekun opiekun)
         {
-            _context.Opiekunowie.Add(opiekun);
+            await _context.Opiekunowie.AddAsync(opiekun);
         }
 
-        public void DeleteOpiekun(int id)
+        public async Task DeleteOpiekun(int id)
         {
-            Opiekun opiekun = _context.Opiekunowie.Find(id);
+            Opiekun opiekun = await _context.Opiekunowie.FindAsync(id);
             _context.Opiekunowie.Remove(opiekun);
         }
 
-        public void UpdateOpiekun(Opiekun opiekun)
+        public async Task UpdateOpiekun(Opiekun opiekun)
         {
             _context.Entry(opiekun).State = EntityState.Modified;
+            await Save();
         }
 
-        public void Save()
+        public async Task Save()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;

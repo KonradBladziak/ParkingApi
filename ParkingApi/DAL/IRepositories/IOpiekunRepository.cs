@@ -9,13 +9,13 @@ namespace DAL.IRepositories
 {
     public interface IOpiekunRepository : IDisposable
     {
-        ICollection<Opiekun> GetOpiekunowie();
-        ICollection<Parking> GetParkingi(int id);
-        Opiekun GetOpiekunById(int id);
-        void InsertOpiekun(Opiekun opiekun);
-        void DeleteOpiekun(int id);
-        void UpdateOpiekun(Opiekun opiekun);
-        void Save();
+        Task <IEnumerable<Opiekun>> GetOpiekunowie();
+        Task <ICollection<Parking>> GetParkingi(int id);
+        Task <Opiekun> GetOpiekunById(int id);
+        Task InsertOpiekun(Opiekun opiekun);
+        Task DeleteOpiekun(int id);
+        Task UpdateOpiekun(Opiekun opiekun);
+        Task Save();
 
     }
 }
