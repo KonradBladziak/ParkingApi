@@ -2,6 +2,7 @@ using DAL.DataContext;
 using DAL.Repositories;
 using DAL.IRepositories;
 using DAL.UnitOfWork;
+using BLL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-//builder.Services.AddScoped<IMiastoRepository, MiastoRepository>();
+builder.Services.AddScoped<IWorkService, WorkService>();
 var app = builder.Build();
 
 

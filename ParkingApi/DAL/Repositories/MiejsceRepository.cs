@@ -40,7 +40,7 @@ namespace DAL.Repositories
         public async Task InsertMiejsce(Miejsce miejsce)
         {
             _context.Miejsca.Add(miejsce);
-            await _context.SaveChangesAsync();
+            await Save();
         }
 
         public async Task DeleteMiejsce(Miejsce miejsce)
@@ -72,7 +72,7 @@ namespace DAL.Repositories
 
         public async Task Save()
         {
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

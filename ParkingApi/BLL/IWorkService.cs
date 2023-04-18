@@ -16,5 +16,12 @@ namespace BLL
         Task Rezerwacja(Rezerwacja rezerwacja);
         Task OdwolajRezerwacje(int idRezerwacji);
         Task EdytujRezerwacje(Rezerwacja rezerwacja);
+
+        ////////////////////////////////////////////////
+
+        Task PrzedluzRezerwacje(int rezerwacjaId, DateTime doKiedy);
+        Task<ICollection<Parking>> ZwrocParkingiWMiescie(int miastoId);
+        Task<ICollection<Parking>> ZwrocParkingiDanegoOpiekuna(int opiekunId);
+        Task<IEnumerable<Rezerwacja>> ZwrocRezerwacjeWDanymCzasie(DateTime odKiedy, DateTime doKiedy);
     }
 }
