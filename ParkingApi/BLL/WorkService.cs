@@ -52,39 +52,40 @@ namespace BLL
             throw new NotImplementedException();
         }
 
-        public Task EdytujRezerwacje(Rezerwacja rezerwacja)
+        public async Task EdytujRezerwacje(Rezerwacja rezerwacja)
         {
-            throw new NotImplementedException();
+            await this._unitOfWork.RezerwacjaRepository.UpdateRezerwacja(rezerwacja);
         }
 
-        public Task OdwolajRezerwacje(int idRezerwacji)
+        public async Task OdwolajRezerwacje(int idRezerwacji)
         {
-            throw new NotImplementedException();
+            await this._unitOfWork.RezerwacjaRepository.DeleteRezerwacja(idRezerwacji);
         }
 
-        public Task Rezerwacja(Rezerwacja rezerwacja)
+        public async Task Rezerwacja(Rezerwacja rezerwacja)
         {
-            throw new NotImplementedException();
+            await this._unitOfWork.RezerwacjaRepository.InsertRezerwacja(rezerwacja);
         }
 
-        public Task StworzOpiekuna(Opiekun opiekun)
+        public async Task StworzOpiekuna(Opiekun opiekun)
         {
-            throw new NotImplementedException();
+            await this._unitOfWork.OpiekunRepository.InsertOpiekun(opiekun);
         }
 
-        public Task UsunMiasto(int id)
+        public async Task UsunMiasto(int id)
         {
-            throw new NotImplementedException();
+            await this._unitOfWork.MiastoRepository.DeleteMiasto(id);
         }
 
-        public Task UsunOpiekuna(int idOpiekuna)
+        public async Task UsunOpiekuna(int idOpiekuna)
         {
-            throw new NotImplementedException();
+            await this._unitOfWork.OpiekunRepository.DeleteOpiekun(idOpiekuna);
         }
 
-        public Task UsunParking(int idParkingu)
+        public async Task UsunParking(int idParkingu)
         {
-            throw new NotImplementedException();
+            var parking = await this._unitOfWork.ParkingRepository.GetParkingById(idParkingu);
+            await this._unitOfWork.ParkingRepository.DeleteParking(parking);
         }
 
         /// ///////////////////////////////////////////////////////////////////////////////////////////////////
