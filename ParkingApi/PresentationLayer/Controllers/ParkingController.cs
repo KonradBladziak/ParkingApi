@@ -18,8 +18,25 @@ namespace PresentationLayer.Controllers
         [HttpGet("ZwrocParkingiWMiescie")]
         public async Task<ICollection<Parking>> ZwrocParkingiWMiescie(int miastoId)
         {
-            return await this.workService.ZwrocParkingiWMiescie(miastoId);
+            try
+            {
+                var result = await this.workService.ZwrocParkingiWMiescie(miastoId);
+                if (result == null)
+                {
+                    throw new Exception("");
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
+
+        [HttpPost("DodajParkingDoMiasta")]
+        public async Task DodajParkingDoMiasta([FromForm]int idParkingu, int idMiasta)
+        => Ok(this.workService.DodajParkingDoMiasta(idParkingu, idMiasta));
+
     }
 
 }

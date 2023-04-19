@@ -95,6 +95,12 @@ namespace BLL
 
             opiekun.Parkingi.Add(await _unitOfWork.ParkingRepository.GetParkingById(idParkingu));
         }
+        public async Task DodajParkingDoMiasta(int idParkingu, int idMiasta)
+        {
+            var miasto = await _unitOfWork.MiastoRepository.GetMiastoById(idMiasta);
+
+            miasto.Parkingi.Add(await _unitOfWork.ParkingRepository.GetParkingById(idParkingu));
+        }
 
         public async Task DodajParking(Parking parking, int iloscMiejsc, int iloscMiejscInwalidzkich,decimal rozmiarMiejscInwalidzkich)
         {
@@ -122,8 +128,6 @@ namespace BLL
         {
             await this._unitOfWork.OpiekunRepository.InsertOpiekun(opiekun);
         }
-
-        
 
         public async Task UsunOpiekuna(int idOpiekuna)
         {
@@ -162,6 +166,5 @@ namespace BLL
             var wynik = rezerwacje.Where(r => r.Od >= odKiedy && r.Do <= doKiedy);
             return wynik;
         }
-
     }
 }

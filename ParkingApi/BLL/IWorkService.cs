@@ -10,6 +10,7 @@ namespace BLL
         Task<string> UsunMiasto(int id);
         //Parking Controller
         Task<ICollection<Parking>> ZwrocParkingiWMiescie(int miastoId);
+        Task DodajParkingDoMiasta(int idParkingu, int idMiasta);
         Task DodajParking(Parking parking, int iloscMiejsc, int iloscMiejscInwalidzkich, decimal rozmiarMiejscInwalidzkich);
         Task UsunParking(int idParkingu);
         Task DodajOpiekunaDoParkingu(int idOpiekuna, int idParkingu);
