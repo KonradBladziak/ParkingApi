@@ -47,6 +47,7 @@ namespace DAL.Repositories
         public async Task InsertMiasto(Miasto miasto)
         {
             await _context.Miasta.AddAsync(miasto);
+            await Save();
         }
 
         public async Task UpdateMiasto(Miasto miasto)
