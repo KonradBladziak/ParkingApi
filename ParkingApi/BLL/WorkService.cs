@@ -18,9 +18,25 @@ namespace BLL
             this._unitOfWork = unitOfWork;
         }
 
-        public async Task DodajMiasto(Miasto miasto)
+        public async Task<string> DodajMiasto(Miasto miasto)
         {
-           await this._unitOfWork.MiastoRepository.InsertMiasto(miasto);
+           var miasta = _unitOfWork.MiastoRepository.GetMiasta().Result.Any(x => x.Nazwa == miasto.Nazwa);
+
+            if (miasta == false) {
+
+                await _unitOfWork.MiastoRepository.InsertMiasto(miasto);
+                return $"Dodano miasto {miasto.Nazwa}";
+            }
+            else 
+            { 
+                return $"Miasto {miasto.Nazwa} już jest w bazie"; 
+            }
+           
+        }
+
+        public async Task UsunMiasto(int id)
+        {
+            await this._unitOfWork.MiastoRepository.DeleteMiasto(id);
         }
 
         public async Task DodajMiejsca(int ilosc, int idParkingu)
@@ -29,27 +45,45 @@ namespace BLL
             {
                 for (int i = 0; i < ilosc; i++)
                 {
-                    Miejsce miejsce = new Miejsce();
-                    miejsce.ParkingId = idParkingu;
+                    Miejsce miejsce = new Miejsce { ParkingId = idParkingu };
                     this._unitOfWork.MiejsceRepository.InsertMiejsce(miejsce);
                 }
             });
-            
         }
 
-        public Task DodajMiejscaInwalidzkie(int ilosc, int idParkingu)
+        public async Task DodajMiejscaInwalidzkie(int ilosc, int idParkingu,decimal rozmiarMiejsca)
         {
-            throw new NotImplementedException();
+
+            await Task.Run(() =>
+            {
+                for (int i = 0; i < ilosc; i++)
+                {
+                    Miejsce miejsce = new Miejsce { ParkingId = idParkingu };
+                    this._unitOfWork.MiejsceRepository.InsertMiejsce(miejsce);
+
+                    MiejsceInwalidzkie miejsceInwalidzkie = new MiejsceInwalidzkie { RozmiarMiejsca = rozmiarMiejsca, IdMiejsca = miejsce.Id };
+                    this._unitOfWork.InwalidzkieRepository.InsertMiejsceInwalidzkie(miejsceInwalidzkie);
+
+                    miejsce.MiejsceInwalidzkieId = miejsceInwalidzkie.Id;
+
+                    this._unitOfWork.MiejsceRepository.UpdateMiejsce(miejsce);
+
+                }
+            });
         }
 
-        public Task DodajOpiekunaDoParkingu(int idOpiekuna, int idParkingu)
+        public async Task DodajOpiekunaDoParkingu(int idOpiekuna, int idParkingu)
         {
-            throw new NotImplementedException();
+            var opiekun = await _unitOfWork.OpiekunRepository.GetOpiekunById(idOpiekuna);
+
+            opiekun.Parkingi.Add(await _unitOfWork.ParkingRepository.GetParkingById(idParkingu));
         }
 
-        public Task DodajParking(Parking parking, int iloscMiejsc, int iloscMiejscInwalidzkich)
+        public async Task DodajParking(Parking parking, int iloscMiejsc, int iloscMiejscInwalidzkich,decimal rozmiarMiejscInwalidzkich)
         {
-            throw new NotImplementedException();
+            await this._unitOfWork.ParkingRepository.InsertParking(parking);
+            await DodajMiejsca(iloscMiejsc, parking.Id);
+            await DodajMiejscaInwalidzkie(iloscMiejscInwalidzkich, parking.Id,rozmiarMiejscInwalidzkich);
         }
 
         public async Task EdytujRezerwacje(Rezerwacja rezerwacja)
@@ -72,10 +106,7 @@ namespace BLL
             await this._unitOfWork.OpiekunRepository.InsertOpiekun(opiekun);
         }
 
-        public async Task UsunMiasto(int id)
-        {
-            await this._unitOfWork.MiastoRepository.DeleteMiasto(id);
-        }
+        
 
         public async Task UsunOpiekuna(int idOpiekuna)
         {
@@ -87,8 +118,6 @@ namespace BLL
             var parking = await this._unitOfWork.ParkingRepository.GetParkingById(idParkingu);
             await this._unitOfWork.ParkingRepository.DeleteParking(parking);
         }
-
-        /// ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         public async Task PrzedluzRezerwacje(int rezerwacjaId, DateTime doKiedy)
         {
