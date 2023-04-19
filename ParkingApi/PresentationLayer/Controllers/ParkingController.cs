@@ -16,11 +16,7 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpGet("ZwrocParkingiWMiescie")]
-        [Route("api/[controller]/ZwrocParkingiWMiescie")]
-        public async Task<IActionResult> DodajMiasto([FromForm] Miasto miasto)
-         => Ok(await this.workService.DodajMiasto(miasto));
-
-        public async Task<ICollection<Parking>> ZwrocParkingiWMiescie([FromBody]int miastoId)
+        public async Task<ICollection<Parking>> ZwrocParkingiWMiescie(int miastoId)
         {
             return await this.workService.ZwrocParkingiWMiescie(miastoId);
         }
