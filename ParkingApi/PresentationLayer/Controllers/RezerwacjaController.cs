@@ -16,10 +16,10 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost("DodajRezerwacje")]
-        public async Task<IActionResult> DodajRezerwacje([FromForm] Rezerwacja rezerwacja)
-        
-          =>Ok(   this.workService.Rezerwacja(rezerwacja));
-        
+        public async Task DodajRezerwacje(DateTime odKiedy, DateTime doKiedy, int idMiejsca, string imie, string nazwisko)
+        {
+            await this.workService.Rezerwacja(odKiedy, doKiedy, idMiejsca, imie, nazwisko);
+        }
         [HttpPost("OdwolajRezerwacje")]
         public async Task OdwolajRezerwacje(int idRezerwacji)
         {

@@ -108,8 +108,9 @@ namespace BLL
             await this._unitOfWork.RezerwacjaRepository.DeleteRezerwacja(idRezerwacji);
         }
 
-        public async Task Rezerwacja(Rezerwacja rezerwacja)
+        public async Task Rezerwacja(DateTime odKiedy, DateTime doKiedy, int idMiejsca, string imie, string nazwisko)
         {
+            Rezerwacja rezerwacja = new Rezerwacja { Do = doKiedy, Od = odKiedy, IdMiejsca = idMiejsca, Imie = imie, Nazwisko = nazwisko };
             await this._unitOfWork.RezerwacjaRepository.InsertRezerwacja(rezerwacja);
         }
 

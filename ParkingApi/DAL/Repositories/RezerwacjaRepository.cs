@@ -34,11 +34,12 @@ namespace DAL.Repositories
         public async Task InsertRezerwacja(Rezerwacja rezerwacja)
         {
             await _context.Rezerwacje.AddAsync(rezerwacja);
+            await Save();
         }
         public async Task DeleteRezerwacja(int id)
         {
-            Rezerwacja rezerwacja = await _context.Rezerwacje.FindAsync(id);
-            _context.Rezerwacje.Remove(rezerwacja);
+            var result = await _context.Rezerwacje.FindAsync(id);
+            _context.Rezerwacje.Remove(result);
             await Save();
         }
         protected virtual void Dispose(bool disposing)
@@ -59,7 +60,7 @@ namespace DAL.Repositories
         }
         public async Task Save()
         {
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

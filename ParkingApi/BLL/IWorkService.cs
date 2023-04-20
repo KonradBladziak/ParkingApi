@@ -23,7 +23,7 @@ namespace BLL
         Task UsunOpiekuna(int idOpiekuna);
         Task<ICollection<Parking>> ZwrocParkingiDanegoOpiekuna(int opiekunId);
         //Rezerwacja Controller
-        Task Rezerwacja(Rezerwacja rezerwacja);
+        Task Rezerwacja(DateTime odKiedy, DateTime doKiedy, int idMiejsca, string imie, string nazwisko);
         Task OdwolajRezerwacje(int idRezerwacji);
         Task EdytujRezerwacje(Rezerwacja rezerwacja);
         Task PrzedluzRezerwacje(int rezerwacjaId, DateTime doKiedy);
