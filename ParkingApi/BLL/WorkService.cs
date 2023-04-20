@@ -74,9 +74,14 @@ namespace BLL
 
         public async Task DodajOpiekunaDoParkingu(int idOpiekuna, int idParkingu)
         {
-            var opiekun = await _unitOfWork.OpiekunRepository.GetOpiekunById(idOpiekuna);
+            Opiekun opiekun = await _unitOfWork.OpiekunRepository.GetOpiekunById(idOpiekuna);
 
-            opiekun.Parkingi.Add(await _unitOfWork.ParkingRepository.GetParkingById(idParkingu));
+            Parking parking = await _unitOfWork.ParkingRepository.GetParkingById(idParkingu);
+
+            parking.Opiekunowie.Add(opiekun);
+
+            await _unitOfWork.ParkingRepository.Save();
+
         }
         public async Task DodajParkingDoMiasta(int idParkingu, int idMiasta)
         {

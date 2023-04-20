@@ -19,5 +19,9 @@ namespace PresentationLayer.Controllers
         [HttpPost("DodajMiasto")]
         public async Task<IActionResult> DodajMiasto([FromForm]Miasto miasto)
          => Ok(await this.workService.DodajMiasto(miasto));
+
+        [HttpPost("UsunMiasto")]
+        public async Task<IActionResult> UsunMiasto(int idMiasta)
+            => Ok(this.workService.UsunMiasto(idMiasta));
     }
 }

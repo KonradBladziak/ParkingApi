@@ -31,18 +31,20 @@ namespace DAL.Repositories
 
         public async Task <Opiekun> GetOpiekunById(int id)
         {
-            return await _context.Opiekunowie.FindAsync(id);
+            return await _context.Opiekunowie.FirstOrDefaultAsync(o => o.Id == id);
         }
 
         public async Task InsertOpiekun(Opiekun opiekun)
         {
             await _context.Opiekunowie.AddAsync(opiekun);
+            await Save();
         }
 
         public async Task DeleteOpiekun(int id)
         {
             Opiekun opiekun = await _context.Opiekunowie.FindAsync(id);
             _context.Opiekunowie.Remove(opiekun);
+            await Save();
         }
 
         public async Task UpdateOpiekun(Opiekun opiekun)
