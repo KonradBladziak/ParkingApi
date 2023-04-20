@@ -18,18 +18,19 @@ namespace BLL
             this._unitOfWork = unitOfWork;
         }
 
-        public async Task<string> DodajMiasto(Miasto miasto)
+        public async Task<string> DodajMiasto(string nazwa, string wojewodztwo)
         {
-           var miasta = _unitOfWork.MiastoRepository.GetMiasta().Result.Any(x => x.Nazwa == miasto.Nazwa);
+            var miasta = _unitOfWork.MiastoRepository.GetMiasta().Result.Any(x => x.Nazwa == nazwa);
 
             if (miasta == false) {
-
+                
+                var miasto = new Miasto { Nazwa = nazwa, Wojewodztwo = wojewodztwo };
                 await _unitOfWork.MiastoRepository.InsertMiasto(miasto);
-                return $"Dodano miasto {miasto.Nazwa}";
+                return $"Dodano miasto {nazwa}";
             }
             else 
             { 
-                return $"Miasto {miasto.Nazwa} już jest w bazie"; 
+                return $"Miasto {nazwa} już jest w bazie"; 
             }
            
         }

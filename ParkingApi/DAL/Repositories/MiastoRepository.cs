@@ -35,8 +35,13 @@ namespace DAL.Repositories
         }
         public async Task DeleteMiasto(int? id)
         {
-            var miasto = await _context.Miasta.FindAsync(id);
-            _context.Miasta.Remove(miasto);
+            var miasto = _context.Miasta.FirstOrDefault(x => x.Id == id);   
+
+            if (miasto != null) {
+
+                _context.Remove(miasto);
+                await Save();
+            }
         }
 
         public async Task<Miasto> GetMiastoById(int? id)

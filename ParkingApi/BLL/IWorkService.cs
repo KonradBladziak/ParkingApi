@@ -6,7 +6,7 @@ namespace BLL
     public interface IWorkService
     {
         //Miasto Controller
-        Task<string> DodajMiasto(Miasto miasto);
+        Task<string> DodajMiasto(string nazwa, string wojewodztwo);
         Task UsunMiasto(int id);
         //Parking Controller
         Task<ICollection<Parking>> ZwrocParkingiWMiescie(int miastoId);
