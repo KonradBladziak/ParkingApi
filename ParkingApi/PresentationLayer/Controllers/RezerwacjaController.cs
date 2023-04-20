@@ -1,6 +1,45 @@
-﻿namespace PresentationLayer.Controllers
+﻿using BLL;
+using DAL.Entity;
+using Microsoft.AspNetCore.Mvc;
+
+namespace PresentationLayer.Controllers
 {
-    public class RezerwacjaController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class RezerwacjaController : ControllerBase
     {
+        private readonly IWorkService workService;
+
+        public RezerwacjaController(IWorkService workService)
+        {
+            this.workService = workService;
+        }
+
+        [HttpPost("DodajRezerwacje")]
+        public async Task<IActionResult> DodajRezerwacje([FromForm] Rezerwacja rezerwacja)
+        
+          =>Ok(   this.workService.Rezerwacja(rezerwacja));
+        
+        [HttpPost("OdwolajRezerwacje")]
+        public async Task OdwolajRezerwacje(int idRezerwacji)
+        {
+            await this.workService.OdwolajRezerwacje(idRezerwacji);
+        }
+        [HttpPost("EdytujRezerwacje")]
+        public async Task EdytujRezerwacje(Rezerwacja rezerwacja)
+        {
+            await this.workService.EdytujRezerwacje(rezerwacja);
+        }
+        [HttpPost("PrzedluzRezerwacje")]
+        public async Task PrzedluzRezerwacje(int rezerwacjaId, DateTime doKiedy)
+        {
+            await this.workService.PrzedluzRezerwacje(rezerwacjaId, doKiedy);
+        }
+        [HttpGet("ZwrocRezerwacjeWDanymCzasie")]
+        public async Task<IEnumerable<Rezerwacja>> ZwrocRezerwacjeWDanymCzasie(DateTime odKiedy, DateTime doKiedy)
+        {
+            var result = await this.workService.ZwrocRezerwacjeWDanymCzasie(odKiedy, doKiedy);
+            return result;
+        }
     }
 }

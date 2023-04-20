@@ -39,6 +39,7 @@ namespace DAL.Repositories
         {
             Rezerwacja rezerwacja = await _context.Rezerwacje.FindAsync(id);
             _context.Rezerwacje.Remove(rezerwacja);
+            await Save();
         }
         protected virtual void Dispose(bool disposing)
         {

@@ -87,8 +87,8 @@ namespace BLL
         public async Task DodajParkingDoMiasta(int idParkingu, int idMiasta)
         {
             var miasto = await _unitOfWork.MiastoRepository.GetMiastoById(idMiasta);
-
-            miasto.Parkingi.Add(await _unitOfWork.ParkingRepository.GetParkingById(idParkingu));
+            var parking = await _unitOfWork.ParkingRepository.GetParkingById(idParkingu);
+            miasto.Parkingi.Add(parking);
         }
 
         public async Task DodajParking(Parking parking, int iloscMiejsc, int iloscMiejscInwalidzkich,decimal rozmiarMiejscInwalidzkich)
