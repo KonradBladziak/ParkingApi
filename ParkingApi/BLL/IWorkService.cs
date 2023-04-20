@@ -7,7 +7,7 @@ namespace BLL
     {
         //Miasto Controller
         Task<string> DodajMiasto(Miasto miasto);
-        Task<string> UsunMiasto(int id);
+        Task UsunMiasto(int id);
         //Parking Controller
         Task<ICollection<Parking>> ZwrocParkingiWMiescie(int miastoId);
         Task DodajParkingDoMiasta(int idParkingu, int idMiasta);
@@ -15,8 +15,8 @@ namespace BLL
         Task UsunParking(int idParkingu);
         Task DodajOpiekunaDoParkingu(int idOpiekuna, int idParkingu);
         //Miejsca Controller
-        Task <string>DodajMiejsca(int ilosc,int idParkingu);
-        Task <string>DodajMiejscaInwalidzkie(int ilosc, int idParkingu,decimal rozmiarMiejsca);
+        Task DodajMiejsca(int ilosc,int idParkingu);
+        Task DodajMiejscaInwalidzkie(int ilosc, int idParkingu,decimal rozmiarMiejsca);
         
         //Opiekun Controller
         Task StworzOpiekuna(Opiekun opiekun);

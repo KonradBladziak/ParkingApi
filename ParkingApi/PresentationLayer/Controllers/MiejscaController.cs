@@ -17,14 +17,14 @@ namespace PresentationLayer.Controllers
             this.workService = workService;
         }
 
-        [HttpPost("DodajMiejsca")]
-        public async Task<IActionResult> DodajMiejsca(int ilosc,int idParkingu)
-         => Ok(await this.workService.DodajMiejsca(ilosc,idParkingu));
+        //[HttpPost("DodajMiejsca")]
+        //public async Task<IActionResult> DodajMiejsca(int ilosc,int idParkingu)
+        // => Ok(await this.workService.DodajMiejsca(ilosc,idParkingu));
 
 
-        [HttpPost("DodajMiejscaInwalidzkie")]
-        public async Task<IActionResult> DodajMiejscaInwalidzkie(int ilosc, int idParkingu, decimal rozmiarMiejsca)
-         => Ok(await this.workService.DodajMiejscaInwalidzkie(ilosc, idParkingu, rozmiarMiejsca));
+        //[HttpPost("DodajMiejscaInwalidzkie")]
+        //public async Task<IActionResult> DodajMiejscaInwalidzkie(int ilosc, int idParkingu, decimal rozmiarMiejsca)
+        // => Ok(await this.workService.DodajMiejscaInwalidzkie(ilosc, idParkingu, rozmiarMiejsca));
 
     }
 }

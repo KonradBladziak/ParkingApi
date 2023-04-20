@@ -34,9 +34,16 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost("DodajParkingDoMiasta")]
-        public async Task DodajParkingDoMiasta([FromForm]int idParkingu, int idMiasta)
+        public async Task DodajParkingDoMiasta([FromForm] int idParkingu, int idMiasta)
         => Ok(this.workService.DodajParkingDoMiasta(idParkingu, idMiasta));
 
+        [HttpPost("DodajParking")]
+        public async Task DodajParking([FromForm] Parking parking, int iloscMiejsc, int iloscMiejscInwalidzkich, decimal rozmiarMiejscInwalidzkich)
+        => Ok(this.workService.DodajParking(parking, iloscMiejsc, iloscMiejscInwalidzkich, rozmiarMiejscInwalidzkich));
+
+        [HttpPost("DodajOpiekunaDoParkingu")]
+        public async Task DodajOpiekunaDoParkingu(int idOpiekuna, int idParkingu)
+        => Ok(this.workService.DodajOpiekunaDoParkingu(idOpiekuna, idParkingu));
     }
 
 }

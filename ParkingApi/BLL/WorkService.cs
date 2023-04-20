@@ -34,25 +34,12 @@ namespace BLL
            
         }
 
-        public async Task<string> UsunMiasto(int id)
+        public async Task UsunMiasto(int id)
         {
-            var miasta = _unitOfWork.MiastoRepository.GetMiasta().Result.Any(x => x.Id == id);
-
             await this._unitOfWork.MiastoRepository.DeleteMiasto(id);
-
-            if (miasta == true)
-            {
-
-                await _unitOfWork.MiastoRepository.DeleteMiasto(id);
-                return $"Usnieto miasto";
-            }
-            else
-            {
-                return $"Miasta nie bylo w bazie";
-            }
         }
 
-        public async Task<string> DodajMiejsca(int ilosc, int idParkingu)
+        public async Task DodajMiejsca(int ilosc, int idParkingu)
         {
             await Task.Run(() =>
             {
@@ -62,11 +49,9 @@ namespace BLL
                     this._unitOfWork.MiejsceRepository.InsertMiejsce(miejsce);
                 }
             });
-
-            return $"Dodano {ilosc} miejsc do Parkingu o id {idParkingu}";
         }
 
-        public async Task<string> DodajMiejscaInwalidzkie(int ilosc, int idParkingu,decimal rozmiarMiejsca)
+        public async Task DodajMiejscaInwalidzkie(int ilosc, int idParkingu,decimal rozmiarMiejsca)
         {
 
             await Task.Run(() =>
@@ -85,8 +70,6 @@ namespace BLL
 
                 }
             });
-
-            return $"Dodano {ilosc} miejsc do Parkingu o id {idParkingu}";
         }
 
         public async Task DodajOpiekunaDoParkingu(int idOpiekuna, int idParkingu)

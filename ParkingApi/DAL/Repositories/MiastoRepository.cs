@@ -39,7 +39,7 @@ namespace DAL.Repositories
             _context.Miasta.Remove(miasto);
         }
 
-        public async Task <Miasto> GetMiastoById(int? id)
+        public async Task<Miasto> GetMiastoById(int? id)
         {
             return await _context.Miasta.FindAsync(id);
         }
