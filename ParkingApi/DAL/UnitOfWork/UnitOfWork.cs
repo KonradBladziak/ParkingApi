@@ -28,6 +28,10 @@ namespace DAL.UnitOfWork
         {
             this._context = context;
         }
+        public UnitOfWork(IMiastoRepository miastoRepo)
+        {
+            this.miastoRepository = miastoRepo;
+        }
 
         public IMiastoRepository MiastoRepository
         {

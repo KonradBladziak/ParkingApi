@@ -39,7 +39,7 @@ namespace DAL.Repositories
         }
         public async Task InsertMiejsce(Miejsce miejsce)
         {
-            _context.Miejsca.Add(miejsce);
+            await _context.Miejsca.AddAsync(miejsce);
             await Save();
         }
 

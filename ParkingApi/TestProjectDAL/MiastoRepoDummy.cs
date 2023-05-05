@@ -1,5 +1,7 @@
-﻿using DAL.Entity;
+﻿using DAL.DataContext;
+using DAL.Entity;
 using DAL.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace TestProjectDAL
 {
-    internal class MiastoRepoDummy : IMiastoRepository
+    public class MiastoRepoDummy : IMiastoRepository
     {
         public Task DeleteMiasto(int? id)
         {
