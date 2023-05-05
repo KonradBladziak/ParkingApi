@@ -15,7 +15,7 @@ namespace DAL.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
 
-        private DatabaseContext _context = new DatabaseContext();
+        private DatabaseContext _context;
         private IMiastoRepository miastoRepository;
         private IMiejsceRepository miejsceRepository;
         private IInwalidzkieRepository inwalidzkieRepository;
