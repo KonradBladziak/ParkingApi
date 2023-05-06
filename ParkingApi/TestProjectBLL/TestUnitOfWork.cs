@@ -1,6 +1,7 @@
 ﻿using DAL.DataContext;
 using DAL.IRepositories;
 using DAL.Repositories;
+using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
@@ -10,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.UnitOfWork
+namespace TestProjectBLL
 {
-    public class UnitOfWork : IUnitOfWork
+    public class TestUnitOfWork : IUnitOfWork
     {
 
         private DatabaseContext _context;
@@ -24,25 +25,25 @@ namespace DAL.UnitOfWork
         private IRezerwacjaRepository rezerwacjaRepository;
         private bool disposed = false;
 
-        public UnitOfWork(DatabaseContext context) 
+        public TestUnitOfWork(DatabaseContext context)
         {
             this._context = context;
         }
+        public TestUnitOfWork(IMiastoRepository miastoRepo)
+        {
+            this.miastoRepository = miastoRepo;
+        }
 
-        public UnitOfWork(IParkingRepository parkingRepo)
+        public TestUnitOfWork(IParkingRepository parkingRepo)
         {
             this.parkingRepository = parkingRepo;
-        }
-        public UnitOfWork(IMiejsceRepository miejsceRepository)
-        {
-            this.miejsceRepository = miejsceRepository;
         }
 
         public IMiastoRepository MiastoRepository
         {
             get
             {
-                if (this.miastoRepository == null) 
+                if (this.miastoRepository == null)
                 {
                     this.miastoRepository = new MiastoRepository(_context);
                 }
