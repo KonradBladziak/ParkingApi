@@ -10,7 +10,7 @@ namespace DAL.IRepositories
 {
     public interface IParkingRepository : IDisposable
     {
-        Task<IEnumerable<Parking>> GetParkingi();
+        Task<ICollection<Parking>> GetParkingi();
         Task<Parking> GetParkingById(int? id);
         Task InsertParking(Parking parking);
         Task UpdateParking(Parking parking);

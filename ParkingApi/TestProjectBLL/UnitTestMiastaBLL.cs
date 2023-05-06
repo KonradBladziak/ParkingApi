@@ -24,6 +24,17 @@ namespace TestProjectBLL
             Assert.Equal(5, count);  
         }
 
+        [Fact]
+        public void DodajMiejsca()
+        {
+            var miejsceFakeRepo = new MiejsceRepositoryFake();
+            var unitOfWork = new UnitOfWork(miejsceFakeRepo);
+            var workService = new WorkService(unitOfWork);
 
+            workService.DodajMiejsca(5, 1);
+
+            var count = miejsceFakeRepo.GetMiejsca().Result.Count();
+            Assert.Equal(5, count);
+        }
     }
 }

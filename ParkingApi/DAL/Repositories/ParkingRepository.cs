@@ -26,18 +26,17 @@ namespace DAL.Repositories
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task<IEnumerable<Parking>> GetParkingi()
+        public async Task<ICollection<Parking>> GetParkingi()
         {
-            return await _context.Parkingi.
-            Include(p => p.Miasto).
-            ToListAsync();
-
+            return await _context.Parkingi
+                .Include(p => p.Miasto)
+                .ToListAsync();
         }
 
         public async Task InsertParking(Parking parking)
         {
-            _context.Add(parking);
-            await _context.SaveChangesAsync();
+            await _context.AddAsync(parking);
+            await Save();
         }
 
         public async Task UpdateParking(Parking parking)

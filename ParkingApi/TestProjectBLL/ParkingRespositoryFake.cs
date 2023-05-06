@@ -19,9 +19,9 @@ namespace TestProjectBLL
             parkingi.Remove(res);
         }
 
-        public async Task<IEnumerable<Parking>> GetParkingi()
+        public async Task<ICollection<Parking>> GetParkingi()
         {
-            return await Task.FromResult<IEnumerable<Parking>>(parkingi);
+            return await Task.FromResult<ICollection<Parking>>(parkingi);
         }
 
         public async Task<Parking> GetParkingById(int? id)

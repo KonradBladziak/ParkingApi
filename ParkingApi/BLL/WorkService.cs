@@ -139,7 +139,7 @@ namespace BLL
         public async Task<ICollection<Parking>> ZwrocParkingiDanegoOpiekuna(int opiekunId)
         {
             var opiekun = await this._unitOfWork.OpiekunRepository.GetOpiekunById(opiekunId);
-            var wynik = opiekun.Parkingi;
+            var wynik = opiekun.Parkingi.ToList();
             return wynik;
         }
 

@@ -28,6 +28,25 @@ namespace TestProjectDAL
         }
 
         [Fact]
+        public async Task TestGetParkingi()
+        {
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseInMemoryDatabase(databaseName: "Testowa")
+                .Options;
+            var databaseContext = new DatabaseContext(options);
+            ParkingRepository parkingRepository = new ParkingRepository(databaseContext);
+
+
+            Assert.Empty(await parkingRepository.GetParkingi());
+            await parkingRepository.InsertParking(new DAL.Entity.Parking { Id = 1, Nazwa = "Test", Adres = "Test", IdMiasta = 1 });
+            await parkingRepository.Save();
+
+            var listaParkingow = await parkingRepository.GetParkingi();
+
+            Assert.Equal(1, listaParkingow.Count());
+        }
+
+        [Fact]
         public async Task TestGetMiejsca()
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
@@ -82,25 +101,6 @@ namespace TestProjectDAL
             var listaOpiekunow = await opienkunRepository.GetOpiekunowie();
 
             Assert.Equal(1, listaOpiekunow.Count());
-        }
-
-        [Fact]
-        public async Task TestGetParkingi()
-        {
-            var options = new DbContextOptionsBuilder<DatabaseContext>()
-                .UseInMemoryDatabase(databaseName: "Testowa")
-                .Options;
-            var databaseContext = new DatabaseContext(options);
-            ParkingRepository parkingRepository = new ParkingRepository(databaseContext);
-
-
-            Assert.Empty(await parkingRepository.GetParkingi());
-            await parkingRepository.InsertParking(new DAL.Entity.Parking { Id = 1, Nazwa = "Test", Adres = "Test", IdMiasta = 1 });
-            await parkingRepository.Save();
-
-            var listaParkingow = await parkingRepository.GetParkingi();
-
-            Assert.Equal(1, listaParkingow.Count());
         }
 
         [Fact]
