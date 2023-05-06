@@ -41,6 +41,18 @@ namespace TestProjectBLL
             Assert.Equal(0, MiastoFakeRepo.GetMiasta().Result.Count());
         }
 
+        [Fact]
+        public void DodajMiejsca()
+        {
+            var miejsceFakeRepo = new MiejsceRepositoryFake();
+            var unitOfWork = new UnitOfWork(miejsceFakeRepo);
+            var workService = new WorkService(unitOfWork);
+
+            workService.DodajMiejsca(5, 1);
+
+            var count = miejsceFakeRepo.GetMiejsca().Result.Count();
+            Assert.Equal(5, count);
+        }
 
         [Fact]
         public void DodajMiastaMock() { 
@@ -73,6 +85,17 @@ namespace TestProjectBLL
             Assert.Equal(0, mockMiastoRepo.Object.GetMiasta().Result.Count());
         }
 
+        [Fact]
+        public async Task DodajMiejscaMock()
+        {
+            Mock<IMiejsceRepository> mockMiejsceRepo = new Mock<IMiejsceRepository>();
+            var unitOfWork = new TestUnitOfWork(mockMiejsceRepo.Object);
+            var workService = new WorkService(unitOfWork);
 
+            await workService.DodajMiejsca(5, 1);
+
+           // var count = await unitOfWork.MiejsceRepository.GetMiejsca();
+           // Assert.Equal(5, count.Count());
+        }
     }
 }

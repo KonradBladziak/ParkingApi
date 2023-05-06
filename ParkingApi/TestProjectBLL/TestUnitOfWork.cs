@@ -34,9 +34,9 @@ namespace TestProjectBLL
             this.miastoRepository = miastoRepo;
         }
 
-        public TestUnitOfWork(IParkingRepository parkingRepo)
+        public TestUnitOfWork(IMiejsceRepository miejsceRepo)
         {
-            this.parkingRepository = parkingRepo;
+            this.miejsceRepository = miejsceRepo;
         }
 
         public IMiastoRepository MiastoRepository
