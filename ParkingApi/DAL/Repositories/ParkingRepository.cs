@@ -40,11 +40,6 @@ namespace DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task EditParking(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task UpdateParking(Parking parking)
         {
             _context.Update(parking);

@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationLayer", "PresentationLayer\PresentationLayer.csproj", "{F4BF4935-77B7-426B-A451-1CEBC8A92717}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectDAL", "TestProjectDAL\TestProjectDAL.csproj", "{6A250648-5530-4118-8111-4C7A55741459}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProjectDAL", "TestProjectDAL\TestProjectDAL.csproj", "{6A250648-5530-4118-8111-4C7A55741459}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectBLL", "TestProjectBLL\TestProjectBLL.csproj", "{D12C6D8C-B473-4141-8E44-BD2A754648A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{6A250648-5530-4118-8111-4C7A55741459}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A250648-5530-4118-8111-4C7A55741459}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A250648-5530-4118-8111-4C7A55741459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D12C6D8C-B473-4141-8E44-BD2A754648A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D12C6D8C-B473-4141-8E44-BD2A754648A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D12C6D8C-B473-4141-8E44-BD2A754648A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D12C6D8C-B473-4141-8E44-BD2A754648A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
