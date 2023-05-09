@@ -26,7 +26,7 @@ namespace DAL.Repositories
 
         public async Task <ICollection<Parking>> GetParkingi(int id)
         {
-            return _context.Miasta.Find(id).Parkingi;
+            return this._context.Miasta.Find(id).Parkingi;
         }
 
         public async Task<IEnumerable<Miasto>> GetMiasta()
@@ -39,7 +39,7 @@ namespace DAL.Repositories
 
             if (miasto != null) {
 
-                _context.Remove(miasto);
+                _context.Miasta.Remove(miasto);
                 await Save();
             }
         }

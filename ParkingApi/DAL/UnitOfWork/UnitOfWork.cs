@@ -33,6 +33,10 @@ namespace DAL.UnitOfWork
         {
             this.parkingRepository = parkingRepo;
         }
+        public UnitOfWork(IMiastoRepository miastoRepo)
+        {
+            this.miastoRepository = miastoRepo;
+        }
         public UnitOfWork(IMiejsceRepository miejsceRepository)
         {
             this.miejsceRepository = miejsceRepository;
