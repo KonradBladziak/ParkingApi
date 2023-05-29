@@ -27,7 +27,7 @@ namespace PresentationLayer.Controllers
 
         public IActionResult ZwrocParkingiDanegoOpiekuna(int idOpiekuna)
         {
-            var res = this.workService.ZwrocParkingiDanegoOpiekuna(idOpiekuna);
+            var res = this.workService.ZwrocParkingiDanegoOpiekuna(idOpiekuna).Result.Count();
             return View(res);
         }
 
