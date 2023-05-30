@@ -12,9 +12,30 @@ namespace TestMVCControllers
     {
         public int IleMiejscDodano { get; set; }
 
-        public Task<string> DodajMiasto(string nazwa, string wojewodztwo)
+        public List<Miasto> miasta = new List<Miasto>() {
+           new Miasto{Id = 2,Nazwa="Test2",Wojewodztwo="Test2" }
+        };
+
+        public async Task<string> DodajMiasto(string nazwa, string wojewodztwo)
         {
-            throw new NotImplementedException();
+            var res = miasta.Any(x => x.Nazwa == nazwa);
+
+            if (res == false)
+            {
+
+                var miasto = new Miasto { Nazwa = nazwa, Wojewodztwo = wojewodztwo };
+                miasta.Add(miasto);
+                return $"Dodano miasto {nazwa}";
+            }
+            else
+            {
+                return $"Miasto {nazwa} już jest w bazie";
+            }
+        }
+
+        public async Task UsunMiasto(int id)
+        {
+            miasta.RemoveAt(id);
         }
 
         public Task DodajMiejsca(int ilosc, int idParkingu)
@@ -68,10 +89,7 @@ namespace TestMVCControllers
             throw new NotImplementedException();
         }
 
-        public Task UsunMiasto(int id)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public Task UsunOpiekuna(int idOpiekuna)
         {
