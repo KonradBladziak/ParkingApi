@@ -16,9 +16,10 @@ namespace DAL.Entity
 
         [MaxLength(50)]
         public string Adres { get; set; }
-
-        public int IdMiasta { get; set; }
+        
         [ForeignKey(nameof(IdMiasta))]
+        public int IdMiasta { get; set; }
+        
         public Miasto Miasto { get; set; }
 
         public ICollection<Opiekun> Opiekunowie { get; set; }
