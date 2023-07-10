@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DAL.Entity
 {
     [Table("Miejsce")]
-    public class Miejsce : IEntityTypeConfiguration<Miejsce>
+    public class Miejsce
     {
         [Key]
         public int Id { get; set; }
@@ -21,27 +21,5 @@ namespace DAL.Entity
 
         public ICollection<Rezerwacja?> Rezerwacje { get; set; }
 
-        public void Configure(EntityTypeBuilder<Miejsce> builder)
-        {
-            builder.HasData(
-                new Miejsce
-                {
-                    Id = 1,
-                    ParkingId = 1,
-                    MiejsceInwalidzkieId = 1,
-                },
-                new Miejsce
-                {
-                    Id = 2,
-                    ParkingId = 3,
-                    MiejsceInwalidzkieId = null,
-                },
-                new Miejsce
-                {
-                    Id = 3,
-                    ParkingId = 2,
-                    MiejsceInwalidzkieId = null,
-                });
-        }
     }
 }
