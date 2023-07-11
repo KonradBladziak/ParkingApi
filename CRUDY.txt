@@ -1,0 +1,14 @@
+Administrator
+
+Opiekuni CRUD
+Miasta CRUD
+Parkingi CRUD
+Miejsca -> MiejscaInwalidzkie - CRUD
+
+
+
+Cywil
+
+
+Parkingi (z Miastami)- filtrowanie po miastach
+Rezerwacje - rezerwacja/odwolanie ADD DELETE EDIT
