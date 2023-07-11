@@ -10,5 +10,7 @@ namespace DAL.UnitOfWork
     public interface IUnitOfWork
     {
         IMiastoRepository MiastoRepository { get; }
+
+        Task SaveAsync();
     }
 }

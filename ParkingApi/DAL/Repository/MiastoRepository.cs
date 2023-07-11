@@ -26,22 +26,19 @@ namespace DAL.Repository
             return await FindByCondition(x => x.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
-        public async Task AddAsync(Miasto miasto)
+        public async Task Add(Miasto miasto)
         {
             Add(miasto);
-            await databaseContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Miasto miasto)
+        public async Task Delete(Miasto miasto)
         {
             Delete(miasto);
-            await databaseContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Miasto miasto)
+        public async Task Update(Miasto miasto)
         {
             Update(miasto);
-            await databaseContext.SaveChangesAsync();
         }
         
 

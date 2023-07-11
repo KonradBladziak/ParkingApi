@@ -32,5 +32,11 @@ namespace DAL.UnitOfWork
                 return this.miastoRepository;
             }
         }
+
+        public async Task SaveAsync() {
+            
+            await databaseContext.SaveChangesAsync();
+        
+        }
     }
 }

@@ -12,11 +12,11 @@ namespace DAL.IRepository
         Task<IEnumerable<Miasto>> GetAllAsync();
         Task<Miasto> GetByIdAsync(int id);
 
-        Task AddAsync(Miasto miasto);
+        void Add(Miasto miasto);
 
-        Task DeleteAsync(Miasto miasto);
+        void Delete(Miasto miasto);
 
-        Task UpdateAsync(Miasto miasto);
+        void Update(Miasto miasto);
         
     }
 }
