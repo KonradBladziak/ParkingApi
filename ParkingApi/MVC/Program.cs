@@ -13,6 +13,7 @@ builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IMiastoService, MiastoService>();
+builder.Services.AddScoped<IParkingService, ParkingService>();
 
 var app = builder.Build();
 

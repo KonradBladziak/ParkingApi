@@ -27,7 +27,7 @@ namespace BLL.WorkServices
 
         public async Task<Miasto> GetMiastoById(int id)
         {
-            return unitOfWork.MiastoRepository.GetByIdAsync(id).Result;
+            return await unitOfWork.MiastoRepository.GetByIdAsync(id);
         }
 
         public async Task AddMiasto(Miasto miasto)
