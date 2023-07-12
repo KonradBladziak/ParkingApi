@@ -18,7 +18,7 @@ namespace DAL.Repository
 
         public async Task<IEnumerable<Miasto>> GetAllAsync()
         {
-            return await FindAll().OrderBy(x => x.Nazwa).ToListAsync(); 
+            return await FindAll().OrderBy(x => x.Nazwa).ToListAsync();
         }
 
         public async Task<Miasto> GetByIdAsync(int id)
