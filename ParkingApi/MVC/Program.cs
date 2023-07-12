@@ -1,3 +1,5 @@
+using BLL.IWorkServices;
+using BLL.WorkServices;
 using DAL.DataContext;
 using DAL.IRepository;
 using DAL.Repository;
@@ -8,9 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DatabaseContext>();
-builder.Services.AddScoped<IMiastoRepository, MiastoRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IMiastoService, MiastoService>();
+builder.Services.AddScoped<IParkingService, ParkingService>();
 
 var app = builder.Build();
 

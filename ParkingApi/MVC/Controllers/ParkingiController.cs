@@ -1,4 +1,5 @@
-﻿using DAL.Entity;
+﻿using BLL.IWorkServices;
+using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,21 +7,20 @@ namespace MVC.Controllers
 {
     public class ParkingiController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private IParkingService parkingService;
 
-        public ParkingiController(IUnitOfWork unitOfWork)
+        public ParkingiController(IParkingService parkingService)
         {
-            this.unitOfWork = unitOfWork;
+            this.parkingService = parkingService;
         }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult WszystkieParkingi()
+        public async Task<IActionResult> WszystkieParkingi()
         {
-            var parkingi = unitOfWork.ParkingRepository.GetAllAsync().Result.ToList();
-            ViewBag.Miasta = parkingi;
+            var parkingi = await parkingService.GetParkingi();
             return View(parkingi);
         }
 
@@ -28,8 +28,7 @@ namespace MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.ParkingRepository.Add(parking);
-                await unitOfWork.SaveAsync();
+                await parkingService.AddParking(parking);
                 return RedirectToAction(nameof(WszystkieParkingi));
             }
             return View(parking);
@@ -45,20 +44,18 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
 
-                unitOfWork.ParkingRepository.Update(parking);
-                await unitOfWork.SaveAsync();
+                await parkingService.UpdateParking(parking);
                 return RedirectToAction(nameof(WszystkieParkingi));
             }
             return View(parking);
         }
         public async Task<IActionResult> Delete(int id)
         {
-            var parking = await unitOfWork.ParkingRepository.GetByIdAsync(id);
+            var parking = await parkingService.GetParkingiById(id);
 
             if (parking != null)
             {
-                unitOfWork.ParkingRepository.Delete(parking);
-                await unitOfWork.SaveAsync();
+                await parkingService.DeleteParking(parking);
                 return RedirectToAction(nameof(WszystkieParkingi));
             }
 

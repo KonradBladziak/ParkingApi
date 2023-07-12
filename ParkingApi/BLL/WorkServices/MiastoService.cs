@@ -18,16 +18,16 @@ namespace BLL.WorkServices
             this.unitOfWork = unitOfWork;
         }   
 
-        public async Task <List<Miasto>> GetMiasta()
+        public async Task <IEnumerable<Miasto>> GetMiasta()
         {
             var res = await unitOfWork.MiastoRepository.GetAllAsync();
 
-            return res.ToList();
+            return res;
         }
 
         public async Task<Miasto> GetMiastoById(int id)
         {
-            return unitOfWork.MiastoRepository.GetByIdAsync(id).Result;
+            return await unitOfWork.MiastoRepository.GetByIdAsync(id);
         }
 
         public async Task AddMiasto(Miasto miasto)

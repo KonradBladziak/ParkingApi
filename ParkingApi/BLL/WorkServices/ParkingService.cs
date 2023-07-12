@@ -27,7 +27,7 @@ namespace BLL.WorkServices
 
         public async Task<Parking> GetParkingiById(int id)
         {
-            return unitOfWork.ParkingRepository.GetByIdAsync(id).Result;
+            return await unitOfWork.ParkingRepository.GetByIdAsync(id);
         }
 
         public async Task AddParking(Parking parking)
