@@ -9,7 +9,7 @@ namespace BLL.IWorkServices
 {
     public interface IMiastoService
     {
-        Task<List<Miasto>> GetMiasta();
+        Task<IEnumerable<Miasto>> GetMiasta();
         Task<Miasto> GetMiastoById(int id);
         Task AddMiasto(Miasto miasto);
         Task DeleteMiasto(Miasto miasto);

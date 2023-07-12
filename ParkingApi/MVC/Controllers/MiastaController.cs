@@ -1,4 +1,5 @@
-﻿using DAL.Entity;
+﻿using BLL.IWorkServices;
+using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,21 +9,20 @@ namespace MVC.Controllers
 {
     public class MiastaController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private IMiastoService miastoService;
 
-        public MiastaController(IUnitOfWork unitOfWork)
+        public MiastaController(IMiastoService miastoService)
         {
-            this.unitOfWork = unitOfWork;
+            this.miastoService = miastoService;
         }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult WszystkieMiasta()
+        public async Task<IActionResult> WszystkieMiasta()
         {
-            var miasta = unitOfWork.MiastoRepository.GetAllAsync().Result.ToList();
-            ViewBag.Miasta = miasta;
+            var miasta = await miastoService.GetMiasta();
             return View(miasta);
         }
 
@@ -30,8 +30,7 @@ namespace MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.MiastoRepository.Add(miasto);
-                await unitOfWork.SaveAsync();
+                await miastoService.AddMiasto(miasto);
                 return RedirectToAction(nameof(WszystkieMiasta));
             }
             return View(miasto);
@@ -46,21 +45,19 @@ namespace MVC.Controllers
 
             if (ModelState.IsValid)
             {
-               
-                unitOfWork.MiastoRepository.Update(miasto);
-                await unitOfWork.SaveAsync();
+
+                await miastoService.UpdateMiasto(miasto);
                 return RedirectToAction(nameof(WszystkieMiasta));
             }
             return View(miasto);
         }
         public async Task<IActionResult> Delete(int id)
         {
-            var miasto = await unitOfWork.MiastoRepository.GetByIdAsync(id);
+            var miasto = await miastoService.GetMiastoById(id);
             
             if (miasto != null)
             {
-                unitOfWork.MiastoRepository.Delete(miasto);
-                await unitOfWork.SaveAsync();
+                await miastoService.DeleteMiasto(miasto);
                 return RedirectToAction(nameof(WszystkieMiasta));
             }
 
