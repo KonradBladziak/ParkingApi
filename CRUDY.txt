@@ -12,3 +12,13 @@ Cywil
 
 Parkingi (z Miastami)- filtrowanie po miastach
 Rezerwacje - rezerwacja/odwolanie ADD DELETE EDIT
+
+
+WORKSERVICE 
+
+Tworzenie parkingu z miejscami 
+
+ZROBIMY WSZYSTKIE I OD RAZU Z NICH SIE PODEPNIE 
+TYLKO JAKĄŚ LOGIKE TRZEBA WYMYSLIC ZEBY BYLO LADNIE A 
+POTEM W KONTROLERACH OBSLUZYC WYJATKI TYPU 
+"taki rekord istnieje itd."

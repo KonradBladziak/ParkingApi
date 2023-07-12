@@ -9,36 +9,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace DAL.Repository
 {
-    public class MiastoRepository : Repository<Miasto>, IMiastoRepository
+    public class MiejsceInwalidzkieRepository : Repository<MiejsceInwalidzkie>, IMiejsceInwalidzkieRepository
     {
-        public MiastoRepository(DatabaseContext databaseContext):base(databaseContext) { }
+        public MiejsceInwalidzkieRepository(DatabaseContext databaseContext) : base(databaseContext) { }
 
-        public async Task<IEnumerable<Miasto>> GetAllAsync()
+        public async Task<IEnumerable<MiejsceInwalidzkie>> GetAllAsync()
         {
-            return await FindAll().OrderBy(x => x.Nazwa).ToListAsync(); 
+            return await FindAll().OrderBy(x => x.Id).ToListAsync();
         }
 
-        public async Task<Miasto> GetByIdAsync(int id)
+        public async Task<MiejsceInwalidzkie> GetByIdAsync(int id)
         {
             return await FindByCondition(x => x.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
-        public async Task Add(Miasto miasto)
+        public async Task Add(MiejsceInwalidzkie miasto)
         {
             Add(miasto);
         }
 
-        public async Task Delete(Miasto miasto)
+        public async Task Delete(MiejsceInwalidzkie miasto)
         {
             Delete(miasto);
         }
 
-        public async Task Update(Miasto miasto)
+        public async Task Update(MiejsceInwalidzkie miasto)
         {
             Update(miasto);
         }
+
+
     }
 }
