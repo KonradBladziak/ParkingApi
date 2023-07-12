@@ -20,7 +20,7 @@ namespace BLL.WorkServices
 
         public async Task <List<Miasto>> GetMiasta()
         {
-            var res = unitOfWork.MiastoRepository.GetAllAsync().Result;
+            var res = await unitOfWork.MiastoRepository.GetAllAsync();
 
             return res.ToList();
         }
