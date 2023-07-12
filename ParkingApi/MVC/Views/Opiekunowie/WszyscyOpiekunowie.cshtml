@@ -1,20 +1,17 @@
-﻿@model IEnumerable<DAL.Entity.Miasto>
+﻿@model IEnumerable<DAL.Entity.Opiekun>
 
 @if (Model.Count() > 0)
 {
-    <a asp-action="Create">Dodaj miasto</a>
+    <a asp-action="Create">Dodaj opiekuna</a>
     <hr />
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Nazwa)
+                    @Html.DisplayNameFor(model => model.Imie)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Wojewodztwo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Parkingi)
+                    @Html.DisplayNameFor(model => model.Nazwisko)
                 </th>
             </tr>
         </thead>
@@ -23,13 +20,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Nazwa)
+                        @Html.DisplayFor(modelItem => item.Imie)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Wojewodztwo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Parkingi)
+                        @Html.DisplayFor(modelItem => item.Nazwisko)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> |
@@ -42,7 +36,7 @@
 }
 else
 {
-    <p>Brak miast!</p>
+    <p>Brak opiekunów!</p>
 }
 <a asp-action="Index">Powrót</a>
 <hr />
