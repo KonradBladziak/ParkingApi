@@ -1,4 +1,4 @@
-﻿using DAL.DataContext;
+using DAL.DataContext;
 using DAL.Entity;
 using DAL.IRepository;
 using Microsoft.EntityFrameworkCore;

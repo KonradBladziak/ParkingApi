@@ -10,6 +10,15 @@ namespace DAL.UnitOfWork
     public interface IUnitOfWork
     {
         IMiastoRepository MiastoRepository { get; }
+        IParkingRepository ParkingRepository { get; }
+
+        IMiejsceRepository MiejsceRepository { get; }
+
+        IMiejsceInwalidzkieRepository MiejsceInwalidzkie { get; }
+
+        IOpiekunRepository OpiekunRepository { get; }
+
+        IRezerwacjaRepository RezerwacjaRepository { get; }
 
         Task SaveAsync();
     }

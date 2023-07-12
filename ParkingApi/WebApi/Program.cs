@@ -1,5 +1,3 @@
-
-
 using DAL.DataContext;
 using DAL.IRepository;
 using DAL.Repository;
@@ -9,7 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<DatabaseContext>();
+//Repo
 builder.Services.AddScoped<IMiastoRepository, MiastoRepository>();
+builder.Services.AddScoped<IMiejsceInwalidzkieRepository, MiejsceInwalidzkieRepository>();
+builder.Services.AddScoped<IMiejsceRepository, MiejsceRepository>();
+builder.Services.AddScoped<IOpiekunRepository, OpiekunRepository>();
+builder.Services.AddScoped<IRezerwacjaRepository, RezerwacjaRepository>();
+builder.Services.AddScoped<IParkingRepository, ParkingRepository>();
+
 builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
