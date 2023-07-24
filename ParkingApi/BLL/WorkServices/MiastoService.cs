@@ -30,6 +30,11 @@ namespace BLL.WorkServices
             return await unitOfWork.MiastoRepository.GetByIdAsync(id);
         }
 
+        public async Task<Miasto> GetMiastoByIdDetails(int id)
+        {
+            return await unitOfWork.MiastoRepository.GetByIdAsyncDetails(id);
+        }
+
         public async Task AddMiasto(Miasto miasto)
         {
             unitOfWork.MiastoRepository.Add(miasto);
@@ -50,5 +55,7 @@ namespace BLL.WorkServices
 
             await unitOfWork.SaveAsync();
         }
+
+        
     }
 }

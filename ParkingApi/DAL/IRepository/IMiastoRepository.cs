@@ -11,6 +11,7 @@ namespace DAL.IRepository
     {
         Task<IEnumerable<Miasto>> GetAllAsync();
         Task<Miasto> GetByIdAsync(int id);
+        Task<Miasto> GetByIdAsyncDetails(int id);
 
         void Add(Miasto miasto);
 

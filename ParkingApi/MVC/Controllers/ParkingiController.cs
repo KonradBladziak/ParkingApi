@@ -13,12 +13,7 @@ namespace MVC.Controllers
         {
             this.parkingService = parkingService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> WszystkieParkingi()
+        public async Task<IActionResult> Index()
         {
             var parkingi = await parkingService.GetParkingi();
             return View(parkingi);
@@ -29,7 +24,7 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
                 await parkingService.AddParking(parking);
-                return RedirectToAction(nameof(WszystkieParkingi));
+                return RedirectToAction(nameof(Index));
             }
             return View(parking);
         }
@@ -45,7 +40,7 @@ namespace MVC.Controllers
             {
 
                 await parkingService.UpdateParking(parking);
-                return RedirectToAction(nameof(WszystkieParkingi));
+                return RedirectToAction(nameof(Index));
             }
             return View(parking);
         }
@@ -56,7 +51,7 @@ namespace MVC.Controllers
             if (parking != null)
             {
                 await parkingService.DeleteParking(parking);
-                return RedirectToAction(nameof(WszystkieParkingi));
+                return RedirectToAction(nameof(Index));
             }
 
             return View(parking);

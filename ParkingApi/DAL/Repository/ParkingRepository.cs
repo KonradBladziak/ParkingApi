@@ -21,7 +21,7 @@ namespace DAL.Repository
 
         public async Task<Parking> GetByIdAsync(int id)
         {
-            return await FindByCondition(x => x.Id.Equals(id)).FirstOrDefaultAsync();
+            return await FindByCondition(x => x.Id.Equals(id)).Include(x => x.Opiekunowie).FirstOrDefaultAsync();
         }
 
         public async Task Add(Parking parking)

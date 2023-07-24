@@ -26,6 +26,11 @@ namespace DAL.Repository
             return await FindByCondition(x => x.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
+        public async Task<Miasto> GetByIdAsyncDetails(int id)
+        {
+            return await FindByCondition(x => x.Id.Equals(id)).Include(x => x.Parkingi).FirstOrDefaultAsync();
+        }
+
         public async Task Add(Miasto miasto)
         {
             Add(miasto);
@@ -40,5 +45,7 @@ namespace DAL.Repository
         {
             Update(miasto);
         }
+
+        
     }
 }

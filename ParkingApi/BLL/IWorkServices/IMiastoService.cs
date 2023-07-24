@@ -11,6 +11,7 @@ namespace BLL.IWorkServices
     {
         Task<IEnumerable<Miasto>> GetMiasta();
         Task<Miasto> GetMiastoById(int id);
+        Task<Miasto> GetMiastoByIdDetails(int id);
         Task AddMiasto(Miasto miasto);
         Task DeleteMiasto(Miasto miasto);
         Task UpdateMiasto(Miasto miasto);

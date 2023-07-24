@@ -15,15 +15,28 @@ namespace MVC.Controllers
         {
             this.miastoService = miastoService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> WszystkieMiasta()
+        public async Task<IActionResult> Index()
         {
             var miasta = await miastoService.GetMiasta();
             return View(miasta);
+        }
+
+        public async Task<IActionResult> Details(int id) 
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var miasto = await miastoService.GetMiastoByIdDetails(id);
+
+            if (miasto == null) {
+                
+                return NotFound();
+            
+            }
+
+            return View(miasto);
         }
 
         public async Task<IActionResult> Create([Bind("Nazwa,Wojewodztwo")] Miasto miasto)
@@ -31,13 +44,14 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
                 await miastoService.AddMiasto(miasto);
-                return RedirectToAction(nameof(WszystkieMiasta));
+                return RedirectToAction(nameof(Index));
             }
             return View(miasto);
         }
 
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa,Wojewodztwo")] Miasto miasto)
         {
+
             if (id != miasto.Id)
             {
                 return NotFound();
@@ -47,9 +61,10 @@ namespace MVC.Controllers
             {
 
                 await miastoService.UpdateMiasto(miasto);
-                return RedirectToAction(nameof(WszystkieMiasta));
+                return RedirectToAction(nameof(Index));
             }
-            return View(miasto);
+            
+            return View(await miastoService.GetMiastoById(id));
         }
         public async Task<IActionResult> Delete(int id)
         {
@@ -58,7 +73,7 @@ namespace MVC.Controllers
             if (miasto != null)
             {
                 await miastoService.DeleteMiasto(miasto);
-                return RedirectToAction(nameof(WszystkieMiasta));
+                return RedirectToAction(nameof(Index));
             }
 
             return View(miasto);
