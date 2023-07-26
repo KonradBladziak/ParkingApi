@@ -17,7 +17,7 @@ namespace WebApi.Controllers
             this.miastoService = miastoService;
         }
 
-        [HttpPost("GetWszyskieMiasta")]
+        [HttpGet("GetWszyskieMiasta")]
         public async Task<IActionResult> GetAllMiasta()
             => Ok(await miastoService.GetMiasta());
 

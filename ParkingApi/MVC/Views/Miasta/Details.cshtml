@@ -1,0 +1,66 @@
+﻿@model DAL.Entity.Miasto
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Szczegóły</h1>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nazwa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Wojewodztwo)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Nazwa)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Wojewodztwo)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    @if (Model.Parkingi.Count() > 0)
+    {
+            <h2>Parkingi</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+
+                        <th>Nazwa</th>
+
+                        <th>Adres</th>
+                    </tr>
+                </thead>
+            @foreach (var item in Model.Parkingi)
+            {
+                <tbody>
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Nazwa</td>
+                        <td>@item.Adres</td>
+                    </tr>
+                </tbody>
+            
+        }
+        </table>
+    }
+    else
+    {
+        <p>Brak parkingów</p>
+    }
+</div>

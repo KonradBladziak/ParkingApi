@@ -1,7 +1,61 @@
-﻿
-<h1>Parkingi</h1>
+﻿@model IEnumerable<DAL.Entity.Parking>
+@if (Model.Count() > 0)
+{
+    <a asp-action="Create">Dodaj parking</a>
+    <hr />
+    
 
-<a asp-action="WszystkieParkingi">Wyświetl wszystkie parkingi</a>
-
-
-
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+                    Adres
+                </th>
+                <th>
+                    Miasto
+@*                    <label for="filtr">Miasto</label>
+                    <select id="filtr">
+                        <option value="Wszystkie" selected="selected">Wszystkie</option>
+                        @foreach (var item in Model.Select(x => x.Miasto.Nazwa).Distinct().ToList())
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>*@
+                </th>
+                <th>
+                    Akcje
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nazwa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adres)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Miasto.Nazwa)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Brak parkingów!</p>
+}
+<a asp-action="Index">Powrót</a>
+<hr />

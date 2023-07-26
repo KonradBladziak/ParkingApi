@@ -11,8 +11,12 @@ namespace BLL.IWorkServices
     {
         Task<List<Parking>> GetParkingi();
         Task<Parking> GetParkingiById(int id);
+        Task<Parking> GetParkingiByIdDetails(int id);
         Task AddParking(Parking parking);
+        Task AddParking(string nazwaParkingu, string adres, int idMiasta, int idOpiekuna);
         Task DeleteParking(Parking parking);
         Task UpdateParking(Parking parking);
+        Task<ICollection<Opiekun>> AddOpiekun(int idParkingu,int idOpiekuna);
+        Task<ICollection<Miejsce>> AddMiejsca(int id, int count);
     }
 }

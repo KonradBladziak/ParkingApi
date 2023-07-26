@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<DatabaseContext>();
-//Repo
+//Repository
 builder.Services.AddScoped<IMiastoRepository, MiastoRepository>();
 builder.Services.AddScoped<IMiejsceInwalidzkieRepository, MiejsceInwalidzkieRepository>();
 builder.Services.AddScoped<IMiejsceRepository, MiejsceRepository>();
@@ -20,8 +20,10 @@ builder.Services.AddScoped<IParkingRepository, ParkingRepository>();
 
 builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+//Service
 builder.Services.AddScoped<IMiastoService, MiastoService>();
+builder.Services.AddScoped<IParkingService, ParkingService>();
+builder.Services.AddScoped<IOpiekunService, OpiekunService>();
 
 
 

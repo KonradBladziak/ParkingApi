@@ -1,6 +1,7 @@
 ﻿using BLL.IWorkServices;
 using DAL.Entity;
 using DAL.UnitOfWork;
+using Microsoft.CodeAnalysis.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,11 @@ namespace BLL.WorkServices
             return await unitOfWork.ParkingRepository.GetByIdAsync(id);
         }
 
+        public async Task<Parking> GetParkingiByIdDetails(int id)
+        {
+            return await unitOfWork.ParkingRepository.GetByIdDetailsAsync(id);
+        }
+
         public async Task AddParking(Parking parking)
         {
             unitOfWork.ParkingRepository.Add(parking);
@@ -44,11 +50,65 @@ namespace BLL.WorkServices
             await unitOfWork.SaveAsync();
         }
 
+        public async Task AddParking(string nazwaParkingu, string adres, int idMiasta, int idOpiekuna)
+        {
+            var miasto = await unitOfWork.MiastoRepository.GetByIdAsync(idMiasta);
+            //var opiekun = await unitOfWork.OpiekunRepository.GetByIdAsync(idOpiekuna);
+            Parking parking = new Parking
+            {
+                Nazwa = nazwaParkingu,
+                Adres = adres,
+                IdMiasta = idMiasta
+            };
+
+            //parking.Opiekunowie.Add(opiekun);
+
+            unitOfWork.ParkingRepository.Add(parking);
+
+            await unitOfWork.SaveAsync();
+        }
+
         public async Task UpdateParking(Parking parking)
         {
             unitOfWork.ParkingRepository.Update(parking);
 
             await unitOfWork.SaveAsync();
         }
+
+        public async Task<ICollection<Opiekun>> AddOpiekun(int idParkingu,int idOpiekuna)
+        {
+            var parking = await GetParkingiById(idParkingu);
+            var opiekun = await unitOfWork.OpiekunRepository.GetByIdAsync(idOpiekuna);
+
+            parking.Opiekunowie.Add(opiekun);
+
+            unitOfWork.ParkingRepository.Update(parking);
+
+            await unitOfWork.SaveAsync();
+
+            return GetParkingiById(idParkingu).Result.Opiekunowie;
+        }
+
+        public async Task<ICollection<Miejsce>> AddMiejsca(int idParkingu, int count)
+        {
+            var parking = await GetParkingiById(idParkingu);
+
+            for (int i = 0; i < count; i++)
+            {
+                var noweMiejsce = new Miejsce
+                {
+                    ParkingId = idParkingu,
+                };
+
+                unitOfWork.MiejsceRepository.Add(noweMiejsce);
+            }
+
+            await unitOfWork.SaveAsync();
+
+            return GetParkingiById(idParkingu).Result.Miejsca;
+
+        }
+
+        
     }
 }

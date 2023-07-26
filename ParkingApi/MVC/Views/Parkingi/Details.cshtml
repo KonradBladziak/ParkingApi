@@ -1,0 +1,79 @@
+﻿@model DAL.Entity.Parking
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Szczegóły</h1>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nazwa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Adres)
+                </th>
+                <th>
+                    Ilość miejsc parkingowych
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Nazwa)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Adres)
+                </td>
+                <td>
+                    @if (Model.Miejsca != null)
+                    {
+                        <p>@Model.Miejsca.Count()</p>
+                    }
+                    else
+                    {
+                        <p>Brak miejsc parkingowych</p>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    @if (Model.Opiekunowie.Count() > 0)
+    {
+        <h2>Opiekunowie</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+
+                    <th>Imie</th>
+
+                    <th>Nazwisko</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model.Opiekunowie)
+            {
+                <tbody>
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Imie</td>
+                        <td>@item.Nazwisko</td>
+                    </tr>
+                </tbody>
+
+            }
+        </table>
+    }
+    else
+    {
+        <p>Brak parkingów</p>
+    }
+</div>
