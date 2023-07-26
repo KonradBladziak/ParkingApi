@@ -31,6 +31,11 @@ namespace BLL.WorkServices
             return await unitOfWork.ParkingRepository.GetByIdAsync(id);
         }
 
+        public async Task<Parking> GetParkingiByIdDetails(int id)
+        {
+            return await unitOfWork.ParkingRepository.GetByIdDetailsAsync(id);
+        }
+
         public async Task AddParking(Parking parking)
         {
             unitOfWork.ParkingRepository.Add(parking);
@@ -48,7 +53,7 @@ namespace BLL.WorkServices
         public async Task AddParking(string nazwaParkingu, string adres, int idMiasta, int idOpiekuna)
         {
             var miasto = await unitOfWork.MiastoRepository.GetByIdAsync(idMiasta);
-            var opiekun = await unitOfWork.OpiekunRepository.GetByIdAsync(idOpiekuna);
+            //var opiekun = await unitOfWork.OpiekunRepository.GetByIdAsync(idOpiekuna);
             Parking parking = new Parking
             {
                 Nazwa = nazwaParkingu,
@@ -56,7 +61,7 @@ namespace BLL.WorkServices
                 IdMiasta = idMiasta
             };
 
-            parking.Opiekunowie.Add(opiekun);
+            //parking.Opiekunowie.Add(opiekun);
 
             unitOfWork.ParkingRepository.Add(parking);
 
@@ -103,5 +108,7 @@ namespace BLL.WorkServices
             return GetParkingiById(idParkingu).Result.Miejsca;
 
         }
+
+        
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,12 +17,21 @@ namespace DAL.Repository
 
         public async Task<IEnumerable<Parking>> GetAllAsync()
         {
-            return await FindAll().OrderBy(x => x.Nazwa).ToListAsync();
+            return await FindAll().Include(x=>x.Miasto).OrderBy(x => x.Nazwa).ToListAsync();
         }
+
 
         public async Task<Parking> GetByIdAsync(int id)
         {
             return await FindByCondition(x => x.Id.Equals(id)).Include(x => x.Opiekunowie).FirstOrDefaultAsync();
+        }
+
+        public async Task<Parking?> GetByIdDetailsAsync(int id)
+        {
+            return await FindByCondition(x => x.Id.Equals(id))
+                                         .Include(x => x.Miasto)
+                                         .Include(x => x.Opiekunowie)
+                                         .FirstOrDefaultAsync();
         }
 
         public async Task Add(Parking parking)

@@ -19,7 +19,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdMiasta" class="control-label"></label>
-                <input asp-for="IdMiasta" class="form-control" />
+                <input asp-for="IdMiasta" class="form-control"/>
+                @*<select asp-for="IdMiasta" class="form-control" asp-items="ViewBag.IdMiasta"></select>*@
             </div>
             <hr />
             <div class="form-group">
@@ -30,7 +31,7 @@
 </div>
 
 <div>
-    <a asp-action="WszystkieParkingi">Wróć</a>
+    <a asp-action="Index">Wróć</a>
 </div>
 
 @section Scripts {

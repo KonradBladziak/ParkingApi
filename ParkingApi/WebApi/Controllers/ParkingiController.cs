@@ -12,10 +12,11 @@ namespace WebApi.Controllers
     public class ParkingiController : ControllerBase
     {
         private IParkingService parkingService;
-
-        public ParkingiController(IParkingService parkingService)
+        private IMiastoService miastoService;
+        public ParkingiController(IParkingService parkingService, IMiastoService miastoService)
         {
             this.parkingService = parkingService;
+            this.miastoService = miastoService; 
         }
 
         [HttpGet("GetWszystkieParkingi")]
