@@ -1,10 +1,12 @@
 ﻿using BLL.IWorkServices;
 using BLL.WorkServices;
+using DAL.DataContext;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Host;
+using Microsoft.EntityFrameworkCore;
 
 namespace MVC.Controllers
 {
@@ -46,15 +48,15 @@ namespace MVC.Controllers
         }
 
 
-        public async Task<IActionResult> Create([Bind("Nazwa,Adres,IdMiasta")] Parking parking)
+        public async Task<IActionResult> Create([Bind("Adres,Nazwa,IdMiasta")] Parking parking)
         {
             if (ModelState.IsValid)
             {
-
-                parking.Miasto = await miastoService.GetMiastoById(parking.IdMiasta);
+                //parking.Miasto = await miastoService.GetMiastoById(parking.IdMiasta);
                 await parkingService.AddParking(parking);
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdMiasta"] = new SelectList(await miastoService.GetMiasta(), "Id", "Nazwa", parking.IdMiasta);
             return View(parking);
         }
 
@@ -71,7 +73,7 @@ namespace MVC.Controllers
                 await parkingService.UpdateParking(parking);
                 return RedirectToAction(nameof(Index));
             }
-           
+            ViewData["IdMiasta"] = new SelectList(await miastoService.GetMiasta(), "Id", "Nazwa", parking.IdMiasta);
             return View(await parkingService.GetParkingiByIdDetails(id));
         }
         public async Task<IActionResult> Delete(int id)

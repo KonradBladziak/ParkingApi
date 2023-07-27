@@ -20,11 +20,11 @@ namespace DAL.Entity
         public int IdMiasta { get; set; }
         [ForeignKey(nameof(IdMiasta))]
 
-        public Miasto Miasto { get; set; }
+        public Miasto? Miasto { get; set; }
 
-        public ICollection<Opiekun> Opiekunowie { get; set; }
+        public ICollection<Opiekun>? Opiekunowie { get; set; }
 
-        public ICollection<Miejsce> Miejsca { get; set; }
+        public ICollection<Miejsce>? Miejsca { get; set; }
 
 
     }
