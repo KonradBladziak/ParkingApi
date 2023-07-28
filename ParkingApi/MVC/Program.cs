@@ -14,6 +14,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IMiastoService, MiastoService>();
 builder.Services.AddScoped<IParkingService, ParkingService>();
+builder.Services.AddScoped<IOpiekunService, OpiekunService>();
 
 var app = builder.Build();
 

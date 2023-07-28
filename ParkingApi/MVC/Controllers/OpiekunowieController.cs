@@ -1,4 +1,5 @@
-﻿using DAL.Entity;
+﻿using BLL.IWorkServices;
+using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,21 +7,20 @@ namespace MVC.Controllers
 {
     public class OpiekunowieController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private IOpiekunService opiekunService;
 
-        public OpiekunowieController(IUnitOfWork unitOfWork)
+        public OpiekunowieController(IOpiekunService opiekunService)
         {
-            this.unitOfWork = unitOfWork;
+            this.opiekunService = opiekunService;
         }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult WszyscyOpiekunowie()
+        public async Task<IActionResult> WszyscyOpiekunowie()
         {
-            var opiekunowie = unitOfWork.OpiekunRepository.GetAllAsync().Result.ToList();
-            ViewBag.Miasta = opiekunowie;
+            var opiekunowie = await opiekunService.GetOpiekunowie();
             return View(opiekunowie);
         }
 
@@ -28,8 +28,7 @@ namespace MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.OpiekunRepository.Add(opiekun);
-                await unitOfWork.SaveAsync();
+                await opiekunService.AddOpiekun(opiekun);
                 return RedirectToAction(nameof(WszyscyOpiekunowie));
             }
             return View(opiekun);
@@ -45,20 +44,18 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
 
-                unitOfWork.OpiekunRepository.Update(opiekun);
-                await unitOfWork.SaveAsync();
+                await opiekunService.UpdateOpiekun(opiekun);
                 return RedirectToAction(nameof(WszyscyOpiekunowie));
             }
             return View(opiekun);
         }
         public async Task<IActionResult> Delete(int id)
         {
-            var opiekun = await unitOfWork.OpiekunRepository.GetByIdAsync(id);
+            var opiekun = await opiekunService.GetOpiekunById(id);
 
             if (opiekun != null)
             {
-                unitOfWork.OpiekunRepository.Delete(opiekun);
-                await unitOfWork.SaveAsync();
+                await opiekunService.AddOpiekun(opiekun);
                 return RedirectToAction(nameof(WszyscyOpiekunowie));
             }
 

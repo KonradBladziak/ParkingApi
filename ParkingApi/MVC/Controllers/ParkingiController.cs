@@ -1,10 +1,12 @@
 ﻿using BLL.IWorkServices;
 using BLL.WorkServices;
+using DAL.DataContext;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Host;
+using Microsoft.EntityFrameworkCore;
 
 namespace MVC.Controllers
 {
@@ -12,17 +14,20 @@ namespace MVC.Controllers
     {
         private IParkingService parkingService;
         private IMiastoService miastoService;
+        private IOpiekunService opiekunService;
 
-        public ParkingiController(IParkingService parkingService, IMiastoService miastoService)
+        public ParkingiController(IParkingService parkingService, IMiastoService miastoService, IOpiekunService opiekunService)
         {
             this.parkingService = parkingService;
             this.miastoService = miastoService;
+            this.opiekunService = opiekunService;
         }
 
 
         public async Task<IActionResult> Index()
         {
             var parkingi = await parkingService.GetParkingi();
+            //ViewData["Opiekunowie"] = await parkingService.get
             return View(parkingi);
         }
 
@@ -46,17 +51,40 @@ namespace MVC.Controllers
         }
 
 
-        public async Task<IActionResult> Create([Bind("Nazwa,Adres,IdMiasta")] Parking parking)
+        //public async Task<IActionResult> Create(string Imie, [Bind("Adres,Nazwa,IdMiasta")] Parking parking, Opiekun opiekun)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //parking.Miasto = await miastoService.GetMiastoById(parking.IdMiasta);
+        //        opiekun = parking.Opiekunowie.FirstOrDefault(x => x.Imie == Imie); 
+        //        parking.Opiekunowie.Add(opiekun);
+        //        await parkingService.AddParking(parking);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["IdMiasta"] = new SelectList(await miastoService.GetMiasta(), "Id", "Nazwa", parking.IdMiasta);
+        //    ViewData["Opiekun"] = new SelectList(await opiekunService.GetOpiekunowie(), "Imie", "Nazwisko", opiekun.Id);
+        //    return View(parking);
+        //}
+        public async Task<IActionResult> Create([Bind("Adres,Nazwa,IdMiasta")] Parking parking, int opiekunId)
         {
             if (ModelState.IsValid)
             {
-
-                parking.Miasto = await miastoService.GetMiastoById(parking.IdMiasta);
-                await parkingService.AddParking(parking);
-                return RedirectToAction(nameof(Index));
+                Opiekun opiekun = await opiekunService.GetOpiekunById(opiekunId);
+                ICollection<Opiekun> opiekunowie = new List<Opiekun>();
+                parking.Opiekunowie = opiekunowie;
+                if (opiekun != null)
+                {
+                    parking.Opiekunowie.Add(opiekun);
+                    await parkingService.AddParking(parking);
+                    return RedirectToAction(nameof(Index));
+                }
             }
+
+            ViewData["IdMiasta"] = new SelectList(await miastoService.GetMiasta(), "Id", "Nazwa", parking.IdMiasta);
+            ViewData["Opiekun"] = new SelectList(await opiekunService.GetOpiekunowie(), "Id", "Nazwisko");
             return View(parking);
         }
+
 
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa,Adres,IdMiasta")] Parking parking)
         {
@@ -71,7 +99,7 @@ namespace MVC.Controllers
                 await parkingService.UpdateParking(parking);
                 return RedirectToAction(nameof(Index));
             }
-           
+            ViewData["IdMiasta"] = new SelectList(await miastoService.GetMiasta(), "Id", "Nazwa", parking.IdMiasta);
             return View(await parkingService.GetParkingiByIdDetails(id));
         }
         public async Task<IActionResult> Delete(int id)

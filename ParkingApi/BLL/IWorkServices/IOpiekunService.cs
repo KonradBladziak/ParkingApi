@@ -9,7 +9,7 @@ namespace BLL.IWorkServices
 {
     public interface IOpiekunService
     {
-        Task<IEnumerable<Opiekun>> GetOpiekunowie();
+        Task<List<Opiekun>> GetOpiekunowie();
         Task<Opiekun> GetOpiekunById(int id);
         Task AddOpiekun(Opiekun opiekun);
         Task DeleteOpiekun(Opiekun opiekun);
