@@ -1,7 +1,45 @@
-﻿
-<h1>Opiekunowie</h1>
+﻿@model IEnumerable<DAL.Entity.Opiekun>
 
-<a asp-action="WszyscyOpiekunowie">Wyświetl wszystkich opiekunów</a>
-
-
-
+@if (Model.Count() > 0)
+{
+    <a asp-action="Create">Dodaj opiekuna</a>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Imie)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nazwisko)
+                </th>
+                <th>
+                    Akcje
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Imie)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nazwisko)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Brak opiekunów!</p>
+}
+<hr />

@@ -1,4 +1,4 @@
-﻿@model DAL.Entity.Miasto
+﻿@model DAL.Entity.Opiekun
 @{
     ViewData["Title"] = "Details";
 }
@@ -12,10 +12,10 @@
                     @Html.DisplayNameFor(model => model.Id)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Nazwa)
+                    @Html.DisplayNameFor(model => model.Imie)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Wojewodztwo)
+                    @Html.DisplayNameFor(model => model.Nazwisko)
                 </th>
             </tr>
         </thead>
@@ -25,27 +25,29 @@
                     @Html.DisplayFor(model => model.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.Nazwa)
+                    @Html.DisplayFor(model => model.Imie)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.Wojewodztwo)
+                    @Html.DisplayFor(model => model.Nazwisko)
                 </td>
             </tr>
         </tbody>
     </table>
     @if (Model.Parkingi.Count() > 0)
     {
-            <h2>Parkingi</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
+        <h2>Parkingi</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
 
-                        <th>Nazwa</th>
+                    <th>Nazwa</th>
 
-                        <th>Adres</th>
-                    </tr>
-                </thead>
+                    <th>Adres</th>
+                    
+                    <th>Miasto</th>
+                </tr>
+            </thead>
             @foreach (var item in Model.Parkingi)
             {
                 <tbody>
@@ -53,10 +55,11 @@
                         <td>@item.Id</td>
                         <td>@item.Nazwa</td>
                         <td>@item.Adres</td>
+                        <td>@item.Miasto.Nazwa</td>
                     </tr>
                 </tbody>
-            
-        }
+
+            }
         </table>
     }
     else

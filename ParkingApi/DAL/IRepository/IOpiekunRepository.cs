@@ -12,6 +12,8 @@ namespace DAL.IRepository
         Task<IEnumerable<Opiekun>> GetAllAsync();
         Task<Opiekun> GetByIdAsync(int id);
 
+        Task<Opiekun?> GetByIdAsyncDetails(int id);
+
         void Add(Opiekun opiekun);
 
         void Delete(Opiekun opiekun);
