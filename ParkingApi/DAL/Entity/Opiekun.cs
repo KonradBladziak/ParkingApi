@@ -11,6 +11,6 @@ namespace DAL.Entity
         [Key]
         public int Id { get; set; }
 
-        public ICollection<Parking> Parkingi { get; set; }
+        public ICollection<Parking>? Parkingi { get; set; }
     }
 }

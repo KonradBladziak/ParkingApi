@@ -18,11 +18,11 @@ namespace BLL.WorkServices
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Opiekun>> GetOpiekunowie()
+        public async Task<List<Opiekun>> GetOpiekunowie()
         {
             var res = await unitOfWork.OpiekunRepository.GetAllAsync();
 
-            return res;
+            return res.ToList();
         }
 
         public async Task<Opiekun> GetOpiekunById(int id)
