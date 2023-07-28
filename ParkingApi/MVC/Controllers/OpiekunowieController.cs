@@ -69,7 +69,7 @@ namespace MVC.Controllers
                 await opiekunService.UpdateOpiekun(opiekun);
                 return RedirectToAction(nameof(Index));
             }
-            return View(opiekun);
+            return View(await opiekunService.GetOpiekunById(id));
         }
         public async Task<IActionResult> Delete(int id)
         {
