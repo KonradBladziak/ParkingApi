@@ -11,7 +11,7 @@ namespace DAL.IRepository
     {
         Task<IEnumerable<Miejsce>> GetAllAsync();
         Task<Miejsce> GetByIdAsync(int id);
-
+        Task<Miejsce> GetByIdAsyncDetails(int id);
         void Add(Miejsce miejsce);
 
         void Delete(Miejsce miejsce);

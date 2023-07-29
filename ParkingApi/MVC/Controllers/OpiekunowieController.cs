@@ -1,4 +1,5 @@
 ﻿using BLL.IWorkServices;
+using BLL.WorkServices;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
@@ -8,29 +9,50 @@ namespace MVC.Controllers
     public class OpiekunowieController : Controller
     {
         private IOpiekunService opiekunService;
+        private IParkingService parkingService;
 
-        public OpiekunowieController(IOpiekunService opiekunService)
+        public OpiekunowieController(IOpiekunService opiekunService,IParkingService parkingService)
         {
             this.opiekunService = opiekunService;
-        }
-        public IActionResult Index()
-        {
-            return View();
+            this.parkingService = parkingService;
         }
 
-        public async Task<IActionResult> WszyscyOpiekunowie()
+
+        public async Task<IActionResult> Index()
         {
-            var opiekunowie = await opiekunService.GetOpiekunowie();
-            return View(opiekunowie);
+            var opiekuni = await opiekunService.GetOpiekunowie();
+            return View(opiekuni);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var opiekun = await opiekunService.GetOpiekunByIdDetails(id);
+
+            if (opiekun == null)
+            {
+
+                return NotFound();
+
+            }
+
+            return View(opiekun);
+        }
+
 
         public async Task<IActionResult> Create([Bind("Imie,Nazwisko")] Opiekun opiekun)
         {
+
             if (ModelState.IsValid)
             {
                 await opiekunService.AddOpiekun(opiekun);
-                return RedirectToAction(nameof(WszyscyOpiekunowie));
+                return RedirectToAction(nameof(Index));
             }
+
             return View(opiekun);
         }
 
@@ -45,9 +67,9 @@ namespace MVC.Controllers
             {
 
                 await opiekunService.UpdateOpiekun(opiekun);
-                return RedirectToAction(nameof(WszyscyOpiekunowie));
+                return RedirectToAction(nameof(Index));
             }
-            return View(opiekun);
+            return View(await opiekunService.GetOpiekunById(id));
         }
         public async Task<IActionResult> Delete(int id)
         {
@@ -55,8 +77,8 @@ namespace MVC.Controllers
 
             if (opiekun != null)
             {
-                await opiekunService.AddOpiekun(opiekun);
-                return RedirectToAction(nameof(WszyscyOpiekunowie));
+                await opiekunService.DeleteOpiekun(opiekun);
+                return RedirectToAction(nameof(Index));
             }
 
             return View(opiekun);

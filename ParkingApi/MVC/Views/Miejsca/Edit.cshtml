@@ -12,11 +12,7 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="ParkingId" class="control-label"></label>
-                <input asp-for="ParkingId" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="MiejsceInwalidzkieId" class="control-label"></label>
-                <input asp-for="MiejsceInwalidzkieId" class="form-control" />
+                <select asp-for="ParkingId" class="form-control" asp-items="ViewBag.IdParkingu"></select>
             </div>
             <hr />
             <div class="form-group">
@@ -27,7 +23,7 @@
 </div>
 
 <div>
-    <a asp-action="WszystkieMiejsca">Wróć</a>
+    <a asp-action="Index">Wróć</a>
 </div>
 
 @section Scripts {

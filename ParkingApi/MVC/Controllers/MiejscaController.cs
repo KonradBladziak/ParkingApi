@@ -1,37 +1,59 @@
-﻿using DAL.Entity;
+﻿using BLL.IWorkServices;
+using BLL.WorkServices;
+using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MVC.Controllers
 {
     public class MiejscaController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private IMiejsceService miejscaService;
+        private IParkingService parkingService;
 
-        public MiejscaController(IUnitOfWork unitOfWork)
+        public MiejscaController(IMiejsceService miejscaService, IParkingService parkingService)
         {
-            this.unitOfWork = unitOfWork;
+            this.miejscaService = miejscaService;
+            this.parkingService = parkingService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-
-        public IActionResult WszystkieMiejsca()
-        {
-            var miasta = unitOfWork.MiejsceRepository.GetAllAsync().Result.ToList();
-            ViewBag.Miejsca = miasta;
-            return View(miasta);
+            var miejsca = await miejscaService.GetMiejsca();
+            return View(miejsca);
         }
 
-        public async Task<IActionResult> Create([Bind("ParkingId,MiejsceInwalidzkieId")] Miejsce miejsce)
+        public async Task<IActionResult> Details(int id) 
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var miejsce = await miejscaService.GetMiejsceByIdDetails(id);
+
+            if (miejsce == null)
+            {
+
+                return NotFound();
+
+            }
+
+            return View(miejsce);
+        }
+
+        public async Task<IActionResult> Create([Bind("ParkingId")] Miejsce miejsce)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.MiejsceRepository.Add(miejsce);
-                await unitOfWork.SaveAsync();
-                return RedirectToAction(nameof(WszystkieMiejsca));
+                await miejscaService.AddMiejsce(miejsce);
+                return RedirectToAction(nameof(Index));
             }
+
+            Parking parking = new Parking();
+
+            ViewData["IdParkingu"] = new SelectList(await parkingService.GetParkingi(), "Id", "Nazwa",miejsce.ParkingId);
+
             return View(miejsce);
         }
 
@@ -45,21 +67,19 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
 
-                unitOfWork.MiejsceRepository.Update(miejsce);
-                await unitOfWork.SaveAsync();
-                return RedirectToAction(nameof(WszystkieMiejsca));
+                miejscaService.UpdateMiejsce(miejsce);
+                return RedirectToAction(nameof(Index));
             }
             return View(miejsce);
         }
         public async Task<IActionResult> Delete(int id)
         {
-            var miejsce = await unitOfWork.MiejsceRepository.GetByIdAsync(id);
+            var miejsce = await miejscaService.GetMiejsceById(id);
 
             if (miejsce != null)
             {
-                unitOfWork.MiejsceRepository.Delete(miejsce);
-                await unitOfWork.SaveAsync();
-                return RedirectToAction(nameof(WszystkieMiejsca));
+                await miejscaService.DeleteMiejsce(miejsce);
+                return RedirectToAction(nameof(Index));
             }
 
             return View(miejsce);

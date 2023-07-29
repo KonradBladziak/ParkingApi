@@ -11,6 +11,8 @@ namespace BLL.IWorkServices
     {
         Task<List<Opiekun>> GetOpiekunowie();
         Task<Opiekun> GetOpiekunById(int id);
+
+        Task<Opiekun> GetOpiekunByIdDetails(int id);
         Task AddOpiekun(Opiekun opiekun);
         Task DeleteOpiekun(Opiekun opiekun);
         Task UpdateOpiekun(Opiekun opiekun);

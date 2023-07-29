@@ -30,6 +30,11 @@ namespace BLL.WorkServices
             return await unitOfWork.OpiekunRepository.GetByIdAsync(id);
         }
 
+        public async Task<Opiekun> GetOpiekunByIdDetails(int id)
+        {
+            return await unitOfWork.OpiekunRepository.GetByIdAsyncDetails(id);
+        }
+
         public async Task AddOpiekun(Opiekun opiekun)
         {
             unitOfWork.OpiekunRepository.Add(opiekun);
@@ -50,5 +55,7 @@ namespace BLL.WorkServices
 
             await unitOfWork.SaveAsync();
         }
+
+        
     }
 }

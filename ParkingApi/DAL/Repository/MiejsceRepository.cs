@@ -24,6 +24,11 @@ namespace DAL.Repository
             return await FindByCondition(x => x.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
+        public async Task<Miejsce?> GetByIdAsyncDetails(int id)
+        {
+            return await FindByCondition(x => x.Id.Equals(id)).Include(x=> x.Parking).Include(x=>x.MiejsceInwalidzkie).FirstOrDefaultAsync();
+        }
+
         public async Task Add(Miejsce miasto)
         {
             Add(miasto);
