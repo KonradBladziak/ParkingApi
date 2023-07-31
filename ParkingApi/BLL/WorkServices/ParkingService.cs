@@ -103,6 +103,7 @@ namespace BLL.WorkServices
                 unitOfWork.MiejsceRepository.Add(noweMiejsce);
             }
 
+            unitOfWork.ParkingRepository.Update(parking);
             await unitOfWork.SaveAsync();
 
             return GetParkingiById(idParkingu).Result.Miejsca;

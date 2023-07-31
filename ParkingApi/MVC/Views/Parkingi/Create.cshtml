@@ -26,7 +26,7 @@
                 <label for="Imie" class="control-label">Opiekun parkingu</label>
                 <select id="Imie" class="form-control" asp-items="ViewBag.Opiekun"></select>
             </div>*@
-            <div class="form-group">
+            @*<div class="form-group">
                 <label for="Opiekun" class="control-label">Opiekun parkingu</label>
                 <select id="Opiekun" class="form-control" name="opiekunId">
                     @foreach (var opiekun in ViewBag.Opiekun as SelectList)
@@ -34,7 +34,7 @@
                         <option value="@opiekun.Value">@opiekun.Text</option>
                     }
                 </select>
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <input type="submit" value="Utwórz" class="btn btn-primary" />

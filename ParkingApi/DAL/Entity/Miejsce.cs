@@ -12,7 +12,7 @@ namespace DAL.Entity
         public int Id { get; set; }
         public int ParkingId { get; set; }
         [ForeignKey(nameof(ParkingId))]
-        public Parking Parking { get; set; }
+        public Parking? Parking { get; set; }
 
         public int? MiejsceInwalidzkieId { get; set; }
 
