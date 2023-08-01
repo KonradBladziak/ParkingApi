@@ -30,6 +30,7 @@ namespace DAL.Repository
         {
             return await FindByCondition(x => x.Id.Equals(id))
                                          .Include(x => x.Miasto)
+                                         .Include(x => x.Miejsca)
                                          .Include(x => x.Opiekunowie)
                                          .FirstOrDefaultAsync();
         }
