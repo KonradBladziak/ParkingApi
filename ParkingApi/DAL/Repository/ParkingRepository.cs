@@ -32,6 +32,7 @@ namespace DAL.Repository
                                          .Include(x => x.Miasto)
                                          .Include(x => x.Miejsca)
                                          .Include(x => x.Opiekunowie)
+                                         .Include(x => x.Miejsca)
                                          .FirstOrDefaultAsync();
         }
 
