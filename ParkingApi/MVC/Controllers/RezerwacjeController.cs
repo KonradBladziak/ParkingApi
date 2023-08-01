@@ -1,4 +1,6 @@
-﻿using DAL.Entity;
+﻿using BLL.IWorkServices;
+using BLL.WorkServices;
+using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,21 +8,16 @@ namespace MVC.Controllers
 {
     public class RezerwacjeController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private IRezerwacjeService rezerwacjeService;
 
-        public RezerwacjeController(IUnitOfWork unitOfWork)
+        public RezerwacjeController(IRezerwacjeService rezerwacjeService)
         {
-            this.unitOfWork = unitOfWork;
-        }
-        public IActionResult Index()
-        {
-            return View();
+            this.rezerwacjeService = rezerwacjeService;
         }
 
-        public IActionResult WszystkieRezerwacje()
+        public async Task<IActionResult> Index()
         {
-            var rezerwacje = unitOfWork.RezerwacjaRepository.GetAllAsync().Result.ToList();
-            ViewBag.Miasta = rezerwacje;
+            var rezerwacje = await rezerwacjeService.GetRezerwacje();
             return View(rezerwacje);
         }
 
@@ -28,9 +25,8 @@ namespace MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.RezerwacjaRepository.Add(rezerwacja);
-                await unitOfWork.SaveAsync();
-                return RedirectToAction(nameof(WszystkieRezerwacje));
+                await rezerwacjeService.AddRezerwacja(rezerwacja);
+                return RedirectToAction(nameof(Index));
             }
             return View(rezerwacja);
         }
@@ -45,21 +41,19 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
 
-                unitOfWork.RezerwacjaRepository.Update(rezerwacja);
-                await unitOfWork.SaveAsync();
-                return RedirectToAction(nameof(WszystkieRezerwacje));
+                await rezerwacjeService.UpdateRezerwacja(rezerwacja);
+                return RedirectToAction(nameof(Index));
             }
             return View(rezerwacja);
         }
         public async Task<IActionResult> Delete(int id)
         {
-            var rezerwacja = await unitOfWork.RezerwacjaRepository.GetByIdAsync(id);
+            var rezerwacja = await rezerwacjeService.GetRezerwacjaById(id);
 
             if (rezerwacja != null)
             {
-                unitOfWork.RezerwacjaRepository.Delete(rezerwacja);
-                await unitOfWork.SaveAsync();
-                return RedirectToAction(nameof(WszystkieRezerwacje));
+                await rezerwacjeService.DeleteRezerwacja(rezerwacja);
+                return RedirectToAction(nameof(Index));
             }
 
             return View(rezerwacja);

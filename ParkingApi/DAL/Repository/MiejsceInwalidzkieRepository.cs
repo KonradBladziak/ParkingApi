@@ -25,19 +25,25 @@ namespace DAL.Repository
             return await FindByCondition(x => x.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
-        public async Task Add(MiejsceInwalidzkie miasto)
+        public async Task<MiejsceInwalidzkie?> GetByIdAsyncDetails(int id)
         {
-            Add(miasto);
+            return await FindByCondition(x => x.Id.Equals(id)).Include(x => x.Miejsce).FirstOrDefaultAsync();
         }
 
-        public async Task Delete(MiejsceInwalidzkie miasto)
+
+        public async Task Add(MiejsceInwalidzkie miejsce)
         {
-            Delete(miasto);
+            Add(miejsce);
         }
 
-        public async Task Update(MiejsceInwalidzkie miasto)
+        public async Task Delete(MiejsceInwalidzkie miejsce)
         {
-            Update(miasto);
+            Delete(miejsce);
+        }
+
+        public async Task Update(MiejsceInwalidzkie miejsce)
+        {
+            Update(miejsce);
         }
 
 

@@ -70,6 +70,8 @@ namespace MVC.Controllers
                 miejscaService.UpdateMiejsce(miejsce);
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdParkingu"] = new SelectList(await parkingService.GetParkingi(), "Id", "Nazwa", miejsce.ParkingId);
+
             return View(miejsce);
         }
         public async Task<IActionResult> Delete(int id)

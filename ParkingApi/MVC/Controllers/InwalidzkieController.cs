@@ -1,4 +1,5 @@
-﻿using DAL.Entity;
+﻿using BLL.IWorkServices;
+using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,31 +7,23 @@ namespace MVC.Controllers
 {
     public class InwalidzkieController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private IMiejscaInwalidzkieService miejscaInwalidzkieService;
 
-        public InwalidzkieController(IUnitOfWork unitOfWork)
+        public InwalidzkieController(IMiejscaInwalidzkieService miejscaInwalidzkieService)
         {
-            this.unitOfWork = unitOfWork;
+            this.miejscaInwalidzkieService = miejscaInwalidzkieService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var miejsca = await miejscaInwalidzkieService.GetMiejscaInwalidzkie();
+            return View(miejsca);
         }
-
-        public IActionResult WszystkieInwalidzkie()
-        {
-            var inwalidzkie = unitOfWork.MiejsceInwalidzkie.GetAllAsync().Result.ToList();
-            ViewBag.Miasta = inwalidzkie;
-            return View(inwalidzkie);
-        }
-
         public async Task<IActionResult> Create([Bind("RozmiarMiejsca,IdMiejsca")] MiejsceInwalidzkie inwalidzkie)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.MiejsceInwalidzkie.Add(inwalidzkie);
-                await unitOfWork.SaveAsync();
-                return RedirectToAction(nameof(WszystkieInwalidzkie));
+                miejscaInwalidzkieService.AddMiejsceInwalidzkie(inwalidzkie);
+                return RedirectToAction(nameof(Index));
             }
             return View(inwalidzkie);
         }
@@ -44,22 +37,19 @@ namespace MVC.Controllers
 
             if (ModelState.IsValid)
             {
-
-                unitOfWork.MiejsceInwalidzkie.Update(inwalidzkie);
-                await unitOfWork.SaveAsync();
-                return RedirectToAction(nameof(WszystkieInwalidzkie));
+                await miejscaInwalidzkieService.UpdateMiejsceInwalidzkie(inwalidzkie);
+                return RedirectToAction(nameof(Index));
             }
             return View(inwalidzkie);
         }
         public async Task<IActionResult> Delete(int id)
         {
-            var inwalidzkie = await unitOfWork.MiejsceInwalidzkie.GetByIdAsync(id);
+            var inwalidzkie = await miejscaInwalidzkieService.GetMiejsceInwalidzkieById(id);
 
             if (inwalidzkie != null)
             {
-                unitOfWork.MiejsceInwalidzkie.Delete(inwalidzkie);
-                await unitOfWork.SaveAsync();
-                return RedirectToAction(nameof(WszystkieInwalidzkie));
+                miejscaInwalidzkieService.DeleteMiejsceInwalidzkie(inwalidzkie);
+                return RedirectToAction(nameof(Index));
             }
 
             return View(inwalidzkie);

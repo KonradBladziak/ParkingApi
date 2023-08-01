@@ -62,13 +62,13 @@ namespace DAL.UnitOfWork
             }
         }
 
-        public IMiejsceInwalidzkieRepository MiejsceInwalidzkie
+        public IMiejsceInwalidzkieRepository MiejsceInwalidzkieRepository
         {
             get
             {
                 if (this.miejsceInwalidzkieRepository == null)
                 {
-                    this.miejsceRepository = new MiejsceRepository(databaseContext);
+                    this.miejsceInwalidzkieRepository = new MiejsceInwalidzkieRepository(databaseContext);
                 }
                 return this.miejsceInwalidzkieRepository;
             }

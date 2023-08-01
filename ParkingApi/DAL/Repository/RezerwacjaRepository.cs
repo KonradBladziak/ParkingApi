@@ -24,6 +24,11 @@ namespace DAL.Repository
             return await FindByCondition(x => x.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
+        public async Task<Rezerwacja?> GetByIdAsyncDetails(int id)
+        {
+            return await FindByCondition(x => x.Id.Equals(id)).Include(x => x.Miejsce).ThenInclude(x => x.Parking).FirstOrDefaultAsync();
+        }
+
         public async Task Add(Rezerwacja rezerwacja)
         {
             Add(rezerwacja);
@@ -39,6 +44,6 @@ namespace DAL.Repository
             Update(rezerwacja);
         }
 
-
+        
     }
 }
