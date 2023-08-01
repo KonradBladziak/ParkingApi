@@ -47,6 +47,7 @@ namespace MVC.Controllers
 
             }
 
+            TempData["ID"] = id;
             return View(parking);
         }
 
@@ -65,26 +66,74 @@ namespace MVC.Controllers
         //    ViewData["Opiekun"] = new SelectList(await opiekunService.GetOpiekunowie(), "Imie", "Nazwisko", opiekun.Id);
         //    return View(parking);
         //}
-        public async Task<IActionResult> Create([Bind("Adres,Nazwa,IdMiasta")] Parking parking, int opiekunId)
+        public async Task<IActionResult> Create([Bind("Adres,Nazwa,IdMiasta")] Parking parking) //int opiekunId)
         {
             if (ModelState.IsValid)
             {
-                Opiekun opiekun = await opiekunService.GetOpiekunById(opiekunId);
-                ICollection<Opiekun> opiekunowie = new List<Opiekun>();
-                parking.Opiekunowie = opiekunowie;
-                if (opiekun != null)
-                {
-                    parking.Opiekunowie.Add(opiekun);
-                    await parkingService.AddParking(parking);
-                    return RedirectToAction(nameof(Index));
-                }
+                //Opiekun opiekun = await opiekunService.GetOpiekunById(opiekunId);
+                //ICollection<Opiekun> opiekunowie = new List<Opiekun>();
+                // parking.Opiekunowie = opiekunowie;
+                //if (opiekun != null)
+                // {
+                //  parking.Opiekunowie.Add(opiekun);
+                await parkingService.AddParking(parking);
+                //await parkingService.AddOpiekun(parking.Id, opiekunId);
+                return RedirectToAction(nameof(Index));
+                //}
             }
 
             ViewData["IdMiasta"] = new SelectList(await miastoService.GetMiasta(), "Id", "Nazwa", parking.IdMiasta);
-            ViewData["Opiekun"] = new SelectList(await opiekunService.GetOpiekunowie(), "Id", "Nazwisko");
+            //ViewData["Opiekun"] = new SelectList(await opiekunService.GetOpiekunowie(), "Id", "Nazwisko");
             return View(parking);
         }
 
+        public async Task<IActionResult> DodajOpiekuna(int opiekunId)
+        {
+            int id = Convert.ToInt32(TempData["ID"]);
+
+            TempData.Keep("ID");
+
+            Parking parking = await parkingService.GetParkingiByIdDetails(id);
+
+            if (ModelState.IsValid && opiekunId > 0)
+            {
+                await parkingService.AddOpiekun(parking.Id, opiekunId);
+                return RedirectToAction(nameof(Details));
+            }
+
+            ViewData["Opiekun"] = new SelectList(await opiekunService.GetOpiekunowie(), "Id", "Nazwisko");
+            
+            return View(parking);
+        }
+
+        public async Task<IActionResult> DodajMiejsca(int ilosc)
+        {
+            int id = Convert.ToInt32(TempData["ID"]);
+
+            TempData.Keep("ID");
+
+            Parking parking = await parkingService.GetParkingiByIdDetails(id);
+            ICollection<Miejsce> miejsca = new List<Miejsce>();
+
+            if (ModelState.IsValid && ilosc > 0)
+            {
+                for (int i = 0; i < ilosc; i++)
+                {
+                    var miejsce = new Miejsce
+                    {
+                        ParkingId = id,
+                    };
+
+                    miejsca.Add(miejsce);
+                }
+
+                parking.Miejsca = miejsca;
+                await parkingService.UpdateParking(parking);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(parking);
+        }
 
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa,Adres,IdMiasta")] Parking parking)
         {

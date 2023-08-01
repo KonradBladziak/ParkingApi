@@ -74,6 +74,20 @@
     }
     else
     {
-        <p>Brak parkingów</p>
+        <p>Brak Opiekunów</p>
     }
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="DodajMiejsca">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="DodajOpiekuna">Dodaj opiekuna do parkingu</a>
+</div>
+<div>
+    <a asp-action="DodajMiejsca">Dodaj miejsca do parkingu</a>
 </div>

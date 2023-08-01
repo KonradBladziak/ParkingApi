@@ -1,0 +1,31 @@
+﻿@model DAL.Entity.Parking
+@{
+    ViewData["Title"] = "DodajMiejsca";
+}
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<h1>Dodaj miejsca</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="DodajMiejsca">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id"  />
+            <div class="form-group">
+                <label for="ilosc" class="control-label">Ilość miejsc</label>
+                <input id="ilosc" class="form-control" name="ilosc" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Dodaj" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Details">Wróć</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

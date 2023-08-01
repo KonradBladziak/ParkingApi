@@ -1,0 +1,28 @@
+﻿@model DAL.Entity.Parking
+@{
+    ViewData["Title"] = "DodajOpiekuna";
+}
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<h1>Dodaj opiekuna</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="DodajOpiekuna">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label for="Opiekun" class="control-label">Opiekun parkingu</label>
+                <select id="Opiekun" class="form-control" name="opiekunId">
+                    <option value="">Wybierz opiekuna...</option>
+                    @foreach (var opiekun in ViewBag.Opiekun as SelectList)
+                    {
+                        <option value="@opiekun.Value">@opiekun.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Dodaj" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
