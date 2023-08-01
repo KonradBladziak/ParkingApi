@@ -12,6 +12,8 @@ namespace DAL.IRepository
         Task<IEnumerable<MiejsceInwalidzkie>> GetAllAsync();
         Task<MiejsceInwalidzkie> GetByIdAsync(int id);
 
+        Task<MiejsceInwalidzkie> GetByIdAsyncDetails(int id);
+
         void Add(MiejsceInwalidzkie miejsce);
 
         void Delete(MiejsceInwalidzkie miejsce);

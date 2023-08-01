@@ -109,7 +109,5 @@ namespace BLL.WorkServices
             return GetParkingiById(idParkingu).Result.Miejsca;
 
         }
-
-        
     }
 }

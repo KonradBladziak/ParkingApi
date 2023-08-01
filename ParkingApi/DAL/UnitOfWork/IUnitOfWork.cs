@@ -14,7 +14,7 @@ namespace DAL.UnitOfWork
 
         IMiejsceRepository MiejsceRepository { get; }
 
-        IMiejsceInwalidzkieRepository MiejsceInwalidzkie { get; }
+        IMiejsceInwalidzkieRepository MiejsceInwalidzkieRepository { get; }
 
         IOpiekunRepository OpiekunRepository { get; }
 

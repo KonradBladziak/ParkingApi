@@ -11,7 +11,7 @@ namespace DAL.IRepository
     {
         Task<IEnumerable<Rezerwacja>> GetAllAsync();
         Task<Rezerwacja> GetByIdAsync(int id);
-
+        Task<Rezerwacja> GetByIdAsyncDetails(int id);
         void Add(Rezerwacja rezerwacja);
 
         void Delete(Rezerwacja rezerwacja);

@@ -16,6 +16,8 @@ builder.Services.AddScoped<IMiastoService, MiastoService>();
 builder.Services.AddScoped<IParkingService, ParkingService>();
 builder.Services.AddScoped<IOpiekunService, OpiekunService>();
 builder.Services.AddScoped<IMiejsceService, MiejsceService>();
+builder.Services.AddScoped<IMiejscaInwalidzkieService,MiejsceInwalidzkieService>();
+builder.Services.AddScoped<IRezerwacjeService,RezerwacjaService>();
 
 var app = builder.Build();
 
