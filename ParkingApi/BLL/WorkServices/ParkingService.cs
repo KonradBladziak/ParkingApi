@@ -75,7 +75,7 @@ namespace BLL.WorkServices
             await unitOfWork.SaveAsync();
         }
 
-        public async Task<ICollection<Opiekun>> AddOpiekun(int idParkingu,int idOpiekuna)
+        public async Task<Parking> AddOpiekun(int idParkingu,int idOpiekuna)
         {
             var parking = await GetParkingiById(idParkingu);
             var opiekun = await unitOfWork.OpiekunRepository.GetByIdAsync(idOpiekuna);
@@ -86,7 +86,7 @@ namespace BLL.WorkServices
 
             await unitOfWork.SaveAsync();
 
-            return GetParkingiById(idParkingu).Result.Opiekunowie;
+            return await GetParkingiByIdDetails(idParkingu);
         }
 
         public async Task<ICollection<Miejsce>> AddMiejsca(int idParkingu, int count)
