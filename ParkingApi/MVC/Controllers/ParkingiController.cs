@@ -15,12 +15,14 @@ namespace MVC.Controllers
         private IParkingService parkingService;
         private IMiastoService miastoService;
         private IOpiekunService opiekunService;
+        private IMiejsceService miejsceService;
 
-        public ParkingiController(IParkingService parkingService, IMiastoService miastoService, IOpiekunService opiekunService)
+        public ParkingiController(IParkingService parkingService, IMiastoService miastoService, IOpiekunService opiekunService,IMiejsceService miejsceService)
         {
             this.parkingService = parkingService;
             this.miastoService = miastoService;
             this.opiekunService = opiekunService;
+            this.miejsceService = miejsceService;
         }
 
 
@@ -103,11 +105,11 @@ namespace MVC.Controllers
                         ParkingId = id,
                     };
 
-                    miejsca.Add(miejsce);
+                    await miejsceService.AddMiejsce(miejsce);
                 }
 
-                parking.Miejsca = miejsca;
-                await parkingService.UpdateParking(parking);
+                //parking.Miejsca = miejsca;
+                //await parkingService.UpdateParking(parking);
                 return RedirectToAction(nameof(Index));
             }
 
