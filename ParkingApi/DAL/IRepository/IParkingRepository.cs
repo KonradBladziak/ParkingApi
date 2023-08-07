@@ -20,5 +20,7 @@ namespace DAL.IRepository
         void Delete(Parking parking);
 
         void Update(Parking parking);
+
+        Task UsunOpiekuna(int parkingId, int opiekunId);
     }
 }

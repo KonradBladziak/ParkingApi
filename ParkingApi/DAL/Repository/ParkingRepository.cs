@@ -50,5 +50,20 @@ namespace DAL.Repository
         {
             Update(parking);
         }
+
+        public async Task UsunOpiekuna(int parkingId, int opiekunId)
+        {
+            var parking = databaseContext.Parkingi.Include(p => p.Opiekunowie).SingleOrDefault(p => p.Id == parkingId);
+            if (parking != null)
+            {
+                var opiekun = parking.Opiekunowie.SingleOrDefault(o => o.Id == opiekunId);
+
+                if (opiekun != null)
+                {
+                    parking.Opiekunowie.Remove(opiekun);
+                    databaseContext.SaveChanges();
+                }
+            }
+        }
     }
 }
