@@ -13,7 +13,7 @@ namespace DAL.Entity
         [Range(1, 3)]
         [Column(TypeName = "decimal(5, 2)")]
         public decimal RozmiarMiejsca { get; set; }
-        public int? IdMiejsca { get; set; }
+        public int IdMiejsca { get; set; }
 
         [ForeignKey(nameof(IdMiejsca))]
         public Miejsce Miejsce { get; set; }

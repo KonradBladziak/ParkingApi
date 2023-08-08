@@ -57,7 +57,9 @@ namespace DAL.DataContext
             modelBuilder.Entity<MiejsceInwalidzkie>()
                 .HasOne(x => x.Miejsce)
                 .WithOne(x => x.MiejsceInwalidzkie)
-                .HasForeignKey<MiejsceInwalidzkie>(x => x.IdMiejsca);
+                .HasForeignKey<MiejsceInwalidzkie>(x => x.IdMiejsca)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
 
             //Wiele rezerwacji do jednego miejsca
             modelBuilder.Entity<Rezerwacja>()

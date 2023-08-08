@@ -9,7 +9,7 @@ namespace BLL.IWorkServices
 {
     public interface IMiejscaInwalidzkieService
     {
-        Task<IEnumerable<MiejsceInwalidzkie>> GetMiejscaInwalidzkie();
+        Task<List<MiejsceInwalidzkie>> GetMiejscaInwalidzkie();
         Task<MiejsceInwalidzkie> GetMiejsceInwalidzkieById(int id);
         Task<MiejsceInwalidzkie> GetMiejsceInwalidzkieByIdDetails(int id);
         Task AddMiejsceInwalidzkie(MiejsceInwalidzkie miejsce);

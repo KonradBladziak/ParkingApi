@@ -3,16 +3,19 @@ using BLL.WorkServices;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.Odbc;
 
 namespace MVC.Controllers
 {
     public class RezerwacjeController : Controller
     {
         private IRezerwacjeService rezerwacjeService;
+        private IMiejsceService miejscaService;
 
-        public RezerwacjeController(IRezerwacjeService rezerwacjeService)
+        public RezerwacjeController(IRezerwacjeService rezerwacjeService,IMiejsceService miejscaService)
         {
             this.rezerwacjeService = rezerwacjeService;
+            this.miejscaService = miejscaService;
         }
 
         public async Task<IActionResult> Index()
@@ -23,11 +26,12 @@ namespace MVC.Controllers
 
         public async Task<IActionResult> Create([Bind("Od,Do,IdMiejsca,Imie,Nazwisko")] Rezerwacja rezerwacja)
         {
-            if (ModelState.IsValid)
+            if (rezerwacja != null) 
             {
-                await rezerwacjeService.AddRezerwacja(rezerwacja);
-                return RedirectToAction(nameof(Index));
+                
+
             }
+
             return View(rezerwacja);
         }
 
@@ -44,7 +48,7 @@ namespace MVC.Controllers
                 await rezerwacjeService.UpdateRezerwacja(rezerwacja);
                 return RedirectToAction(nameof(Index));
             }
-            return View(rezerwacja);
+            return View(await rezerwacjeService.GetRezerwacjaByIdDetails(id));
         }
         public async Task<IActionResult> Delete(int id)
         {
