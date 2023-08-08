@@ -109,5 +109,17 @@ namespace BLL.WorkServices
             return GetParkingiById(idParkingu).Result.Miejsca;
 
         }
+
+        public async Task Save()
+        {
+            await unitOfWork.SaveAsync();
+        }
+
+        public async Task<ICollection<Opiekun>> UsunOpiekuna(int idOpiekuna, int idParkingu)
+        {
+            await unitOfWork.ParkingRepository.UsunOpiekuna(idParkingu, idOpiekuna);
+
+            return GetParkingiById(idParkingu).Result.Opiekunowie;
+        }
     }
 }

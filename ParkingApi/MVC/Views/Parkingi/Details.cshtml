@@ -66,6 +66,7 @@
                         <td>@item.Id</td>
                         <td>@item.Imie</td>
                         <td>@item.Nazwisko</td>
+                        <td><a asp-action="UsunOpiekuna" asp-route-id="@item.Id">Usuń</a></td>
                     </tr>
                 </tbody>
 
@@ -77,17 +78,9 @@
         <p>Brak Opiekunów</p>
     }
 </div>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Details">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-        </form>
-    </div>
+<div>
+    <a asp-action="DodajOpiekuna" asp-route-id="@Model.Id">Dodaj opiekuna do parkingu</a>
 </div>
 <div>
-    <a asp-action="DodajOpiekuna">Dodaj opiekuna do parkingu</a>
-</div>
-<div>
-    <a asp-action="DodajMiejsca">Dodaj miejsca do parkingu</a>
+    <a asp-action="DodajMiejsca" asp-route-id="@Model.Id">Dodaj miejsca do parkingu</a>
 </div>
