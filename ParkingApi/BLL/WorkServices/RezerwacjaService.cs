@@ -69,8 +69,6 @@ namespace BLL.WorkServices
                 {
                     DateTimeRange innaRezerwacja = new DateTimeRange(item.Od,item.Do);
 
-                    bool czyKoliduje = nowaRezerwacja.StartTime < innaRezerwacja.EndTime && innaRezerwacja.StartTime <= nowaRezerwacja.EndTime;
-
                     if (nowaRezerwacja.StartTime < innaRezerwacja.EndTime && innaRezerwacja.StartTime <= nowaRezerwacja.EndTime)
                     {
                         return false;
