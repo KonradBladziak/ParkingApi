@@ -26,11 +26,21 @@ namespace MVC.Controllers
 
         public async Task<IActionResult> Create([Bind("Od,Do,IdMiejsca,Imie,Nazwisko")] Rezerwacja rezerwacja)
         {
-            if (rezerwacja != null) 
-            {
-                
+            ViewBag.Message = null;
 
+            if (rezerwacja.IdMiejsca != null && rezerwacja.Od >= DateTime.Now && rezerwacja.Do > rezerwacja.Od)
+            {
+                if (await rezerwacjeService.CzyMoznaRezerwowac(rezerwacja.IdMiejsca, rezerwacja.Od, rezerwacja.Do))
+                {
+                    await rezerwacjeService.AddRezerwacja(rezerwacja);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Message = "Ta data koliduje z inną rezerwacją dla tego miejsca";
+                }
             }
+            
 
             return View(rezerwacja);
         }
