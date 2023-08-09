@@ -47,12 +47,6 @@ namespace WebApi.Controllers
             return Ok("Usunieto");    
         }
 
-
-
-        [HttpPut("AddOpiekun")]
-        public async Task<IActionResult> AddOpiekun(int idParkingu, int idOpiekuna)
-            => Ok(await parkingService.AddOpiekun(idParkingu, idOpiekuna));
-
         [HttpPost("AddMiejsca")]
         public async Task<IActionResult> AddMiejsca(int id, int count)
             => Ok(await parkingService.AddMiejsca(id,count));

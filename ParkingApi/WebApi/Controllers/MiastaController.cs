@@ -1,4 +1,5 @@
-﻿using BLL.IWorkServices;
+﻿using BLL.DTO;
+using BLL.IWorkServices;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Http;
@@ -17,13 +18,11 @@ namespace WebApi.Controllers
             this.miastoService = miastoService;
         }
 
-        [HttpGet("GetWszyskieMiasta")]
-        public async Task<IActionResult> GetAllMiasta()
-            => Ok(await miastoService.GetMiasta());
-
-        [HttpGet("GetMiastoById/{id?}")]
-        public async Task<IActionResult> GetMiastoById(int id)
-        => Ok(await miastoService.GetMiastoById(id));
+        [HttpGet]
+        public async Task<List<MiastoResponse>> GetAllMiasta()
+        { 
+            return await miastoService.GetMiastaResponse(); 
+        }
 
 
     }
