@@ -1,4 +1,5 @@
-﻿using BLL.IWorkServices;
+﻿using BLL.DTO;
+using BLL.IWorkServices;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using System;
@@ -51,6 +52,59 @@ namespace BLL.WorkServices
         {
             unitOfWork.MiejsceRepository.Update(miejsce);
             await unitOfWork.SaveAsync();
+        }
+
+        public async Task<IEnumerable<MiejsceResponse>> GetMiejscaResponse(int parkingId, DateTime od, DateTime @do)
+        {
+            // jako tako działa
+            //return (from miejsce in await unitOfWork.MiejsceRepository.GetAllAsync()
+            //              where miejsce.ParkingId == parkingId
+            //              join miejsceInwalidzkie in await unitOfWork.MiejsceInwalidzkieRepository.GetAllAsync()
+            //                  on miejsce.MiejsceInwalidzkieId equals miejsceInwalidzkie.Id into miejsceInwalidzkieGroup
+            //              from miejsceInwalidzkie in miejsceInwalidzkieGroup.DefaultIfEmpty()
+            //              select new MiejsceResponse
+            //              {
+            //                  Id = miejsce.Id,
+            //                  MiejsceInwalidzkieId = miejsceInwalidzkie != null ? miejsceInwalidzkie.Id : null,
+            //                  RozmiarMiejscaInwalidzkiego = miejsceInwalidzkie != null ? miejsceInwalidzkie.RozmiarMiejsca : 0
+            //              });
+
+            // jako tako mniej działa
+            //return (from miejsce in await unitOfWork.MiejsceRepository.GetAllAsync()
+            //         where miejsce.ParkingId == parkingId &&
+            //               (miejsce.Rezerwacje == null || !miejsce.Rezerwacje.Any(r => (r.Od >= od && r.Od <= @do) || (r.Do >= od && r.Do <= @do)))
+            //         join miejsceInwalidzkie in await unitOfWork.MiejsceInwalidzkieRepository.GetAllAsync()
+            //             on miejsce.MiejsceInwalidzkieId equals miejsceInwalidzkie.Id into miejsceInwalidzkieGroup
+            //         from miejsceInwalidzkie in miejsceInwalidzkieGroup.DefaultIfEmpty()
+            //         select new MiejsceResponse
+            //         {
+            //             Id = miejsce.Id,
+            //             MiejsceInwalidzkieId = miejsceInwalidzkie != null ? miejsceInwalidzkie.Id : 0,
+            //             RozmiarMiejscaInwalidzkiego = miejsceInwalidzkie != null ? miejsceInwalidzkie.RozmiarMiejsca : 0
+            //         });
+
+            var wolneMiejsca = (from miejsce in await unitOfWork.MiejsceRepository.GetAllAsync()
+                                      where miejsce.ParkingId == parkingId
+                                      join miejsceInwalidzkie in await unitOfWork.MiejsceInwalidzkieRepository.GetAllAsync()
+                                          on miejsce.MiejsceInwalidzkieId equals miejsceInwalidzkie.Id into miejsceInwalidzkieGroup
+                                      from miejsceInwalidzkie in miejsceInwalidzkieGroup.DefaultIfEmpty()
+                                      select new
+                                      {
+                                          Miejsce = miejsce,
+                                          MiejsceInwalidzkie = miejsceInwalidzkie
+                                      }).ToList();
+
+            var wolneMiejscaResponse = wolneMiejsca
+                .Where(item => item.Miejsce.Rezerwacje == null || !item.Miejsce.Rezerwacje.Any(r => (r.Od >= od && r.Od <= @do) || (r.Do >= od && r.Do <= @do)))
+                .Select(item => new MiejsceResponse
+                {
+                    Id = item.Miejsce.Id,
+                    MiejsceInwalidzkieId = item.MiejsceInwalidzkie != null ? item.MiejsceInwalidzkie.Id : 0,
+                    RozmiarMiejscaInwalidzkiego = item.MiejsceInwalidzkie != null ? item.MiejsceInwalidzkie.RozmiarMiejsca : 0
+                })
+                .ToList();
+
+            return wolneMiejscaResponse;
         }
     }
 }

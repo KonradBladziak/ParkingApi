@@ -25,6 +25,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IMiastoService, MiastoService>();
 builder.Services.AddScoped<IParkingService, ParkingService>();
 builder.Services.AddScoped<IOpiekunService, OpiekunService>();
+builder.Services.AddScoped<IMiejsceService, MiejsceService>();
 
 
 

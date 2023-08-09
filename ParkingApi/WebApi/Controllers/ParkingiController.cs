@@ -19,9 +19,9 @@ namespace WebApi.Controllers
             this.miastoService = miastoService; 
         }
 
-        [HttpGet("GetWszystkieParkingi")]
-        public async Task<IActionResult> GetAllParkingi()
-            => Ok(await parkingService.GetParkingi());
+        [HttpGet("GetWszystkieParkingiWMiescie/{id}")]
+        public async Task<IActionResult> GetAllParkingi(int id)
+        => Ok(await parkingService.GetParkingiResponse(id));
 
         [HttpGet("GetParkingById/{id?}")]
         public async Task<IActionResult> GetParkingById(int id)

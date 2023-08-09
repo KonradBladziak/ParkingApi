@@ -1,4 +1,5 @@
-﻿using BLL.IWorkServices;
+﻿using BLL.DTO;
+using BLL.IWorkServices;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.CodeAnalysis.Operations;
@@ -120,6 +121,18 @@ namespace BLL.WorkServices
             await unitOfWork.ParkingRepository.UsunOpiekuna(idParkingu, idOpiekuna);
 
             return GetParkingiById(idParkingu).Result.Opiekunowie;
+        }
+
+        public async Task<IEnumerable<ParkingResponse>> GetParkingiResponse(int miastoId)
+        {
+            return (from parking in await unitOfWork.ParkingRepository.GetAllAsync()
+                    where parking.IdMiasta == miastoId
+                    select new ParkingResponse
+                    {
+                        Id = parking.Id,
+                        Nazwa = parking.Nazwa,
+                        Adres = parking.Adres
+                    });
         }
     }
 }
