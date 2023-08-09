@@ -8,8 +8,8 @@ namespace BLL.DTO
 {
     public class MiastoResponse
     {
-        public int Id;
-        public string Nazwa;
-        public string Wojewodztwo;
+        public int Id { get; set; }
+        public string Nazwa { get; set; }
+        public string Wojewodztwo { get; set; }
     }
 }

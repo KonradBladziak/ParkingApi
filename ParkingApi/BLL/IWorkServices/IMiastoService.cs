@@ -16,6 +16,6 @@ namespace BLL.IWorkServices
         Task AddMiasto(Miasto miasto);
         Task DeleteMiasto(Miasto miasto);
         Task UpdateMiasto(Miasto miasto);
-        Task<List<MiastoResponse>> GetMiastaResponse();
+        Task<IEnumerable<MiastoResponse>> GetMiastaResponse();
     } 
 }

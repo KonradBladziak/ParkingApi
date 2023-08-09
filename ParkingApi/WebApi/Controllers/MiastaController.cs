@@ -19,10 +19,8 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<List<MiastoResponse>> GetAllMiasta()
-        { 
-            return await miastoService.GetMiastaResponse(); 
-        }
+        public async Task<IActionResult> GetAllMiasta()
+        =>Ok(await miastoService.GetMiastaResponse());
 
 
     }
