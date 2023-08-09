@@ -1,0 +1,10 @@
+miasta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+table mat-table{
+    width: 800px;
+}

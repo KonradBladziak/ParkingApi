@@ -1,1 +1,21 @@
-<p>miasto-list works!</p>
+<p>Wybierz miasto w którym szukasz parkingu</p>
+
+<div class="miasta">
+    <table mat-table [dataSource]="miasta" class="mat-elevation-z8">
+        <ng-container matColumnDef="Nazwa">
+          <th mat-header-cell *matHeaderCellDef> Nazwa </th>
+          <td mat-cell *matCellDef="let element"> {{element.nazwa}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="Wojewodztwo">
+          <th mat-header-cell *matHeaderCellDef> Wojewodztwo </th>
+          <td mat-cell *matCellDef="let element"> {{element.wojewodztwo}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+
+
