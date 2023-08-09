@@ -1,9 +1,11 @@
-﻿using BLL.IWorkServices;
+﻿using BLL.DTO;
+using BLL.IWorkServices;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -56,6 +58,18 @@ namespace BLL.WorkServices
             await unitOfWork.SaveAsync();
         }
 
+        public async Task<List<MiastoResponse>> GetMiastaResponse() 
+        {
+            var miasta = await unitOfWork.MiastoRepository.GetAllAsync();
+
+            return (from miasto in miasta.ToList()
+                    select new MiastoResponse
+                    {
+                        Id = miasto.Id,
+                        Nazwa = miasto.Nazwa,
+                        Wojewodztwo = miasto.Wojewodztwo
+                    }).ToList();
+        }
         
     }
 }

@@ -1,4 +1,5 @@
-﻿using DAL.Entity;
+﻿using BLL.DTO;
+using DAL.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace BLL.IWorkServices
         Task AddMiasto(Miasto miasto);
         Task DeleteMiasto(Miasto miasto);
         Task UpdateMiasto(Miasto miasto);
+        Task<List<MiastoResponse>> GetMiastaResponse();
     } 
 }
