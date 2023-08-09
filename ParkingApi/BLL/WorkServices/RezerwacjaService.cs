@@ -58,16 +58,21 @@ namespace BLL.WorkServices
             await unitOfWork.SaveAsync();
         }
 
-        public async Task<bool> CzyMoznaRezerwowac(int idMiejsca, DateTime Od, DateTime Do)
+        public async Task<bool> CzyMoznaRezerwowac(int idMiejsca, DateTime Od, DateTime Do,int? idRezerwacji = null)
         {
             List<Rezerwacja?> rezerwacje = await unitOfWork.RezerwacjaRepository.GetRezerwacjeByIdMiejsca(idMiejsca);
 
-            if (rezerwacje.Count() > 0) 
+            if (idRezerwacji != null) 
             {
-                DateTimeRange nowaRezerwacja = new DateTimeRange(Od,Do);
+                rezerwacje.Remove(rezerwacje.Find(x => x.Id == idRezerwacji));
+            }
+
+            if (rezerwacje.Count() > 0)
+            {
+                DateTimeRange nowaRezerwacja = new DateTimeRange(Od, Do);
                 foreach (var item in rezerwacje)
                 {
-                    DateTimeRange innaRezerwacja = new DateTimeRange(item.Od,item.Do);
+                    DateTimeRange innaRezerwacja = new DateTimeRange(item.Od, item.Do);
 
                     if (nowaRezerwacja.StartTime < innaRezerwacja.EndTime && innaRezerwacja.StartTime <= nowaRezerwacja.EndTime)
                     {

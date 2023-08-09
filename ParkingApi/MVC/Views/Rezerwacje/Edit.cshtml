@@ -37,7 +37,12 @@
         </form>
     </div>
 </div>
-
+@{
+    if (ViewBag.Message != null)
+    {
+        <p>@ViewBag.Message</p>
+    }
+}
 <div>
     <a asp-action="Index">Wróć</a>
 </div>

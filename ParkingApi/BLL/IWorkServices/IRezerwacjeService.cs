@@ -15,6 +15,7 @@ namespace BLL.IWorkServices
         Task AddRezerwacja(Rezerwacja rezerwacja);
         Task DeleteRezerwacja(Rezerwacja rezerwacja);
         Task UpdateRezerwacja(Rezerwacja rezerwacja);
-        Task<bool> CzyMoznaRezerwowac(int idMiejsca, DateTime Od, DateTime Do);
+        //Task<bool> CzyMoznaRezerwowac(int idMiejsca, DateTime Od, DateTime Do);
+        Task<bool> CzyMoznaRezerwowac(int idMiejsca, DateTime Od, DateTime Do, int? idRezerwacji = null);
     }
 }

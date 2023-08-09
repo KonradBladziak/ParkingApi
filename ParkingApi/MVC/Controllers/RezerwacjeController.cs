@@ -47,17 +47,32 @@ namespace MVC.Controllers
 
         public async Task<IActionResult> Edit(int id, [Bind("Id,Od,Do,IdMiejsca,Imie,Nazwisko")] Rezerwacja rezerwacja)
         {
-            if (id != rezerwacja.Id)
+            ViewBag.Message = null;
+
+            if (rezerwacja.IdMiejsca != null && rezerwacja.Od >= DateTime.Now && rezerwacja.Do > rezerwacja.Od)
             {
-                return NotFound();
+                if (await rezerwacjeService.CzyMoznaRezerwowac(rezerwacja.IdMiejsca, rezerwacja.Od, rezerwacja.Do,rezerwacja.Id))
+                {
+                    await rezerwacjeService.UpdateRezerwacja(rezerwacja);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Message = "Ta data koliduje z inną rezerwacją dla tego miejsca";
+                }
             }
 
-            if (ModelState.IsValid)
-            {
+            //if (id != rezerwacja.Id)
+            //{
+            //    return NotFound();
+            //}
 
-                await rezerwacjeService.UpdateRezerwacja(rezerwacja);
-                return RedirectToAction(nameof(Index));
-            }
+            //if (ModelState.IsValid)
+            //{
+
+            //    await rezerwacjeService.UpdateRezerwacja(rezerwacja);
+            //    return RedirectToAction(nameof(Index));
+            //}
             return View(await rezerwacjeService.GetRezerwacjaByIdDetails(id));
         }
         public async Task<IActionResult> Delete(int id)
