@@ -18,5 +18,7 @@ namespace DAL.IRepository
 
         void Update(Rezerwacja rezerwacja);
 
+        Task<List<Rezerwacja?>> GetRezerwacjeByIdMiejsca(int id);
+
     }
 }

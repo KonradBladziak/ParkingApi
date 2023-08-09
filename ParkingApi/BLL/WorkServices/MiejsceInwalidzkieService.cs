@@ -18,11 +18,11 @@ namespace BLL.WorkServices
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<MiejsceInwalidzkie>> GetMiejscaInwalidzkie()
+        public async Task<List<MiejsceInwalidzkie>> GetMiejscaInwalidzkie()
         {
             var res = await unitOfWork.MiejsceInwalidzkieRepository.GetAllAsync();
 
-            return res;
+            return res.ToList();
         }
 
         public async Task<MiejsceInwalidzkie> GetMiejsceInwalidzkieById(int id)

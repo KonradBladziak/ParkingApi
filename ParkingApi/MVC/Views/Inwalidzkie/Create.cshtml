@@ -10,7 +10,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="RozmiarMiejsca" class="control-label"></label>
+                <label asp-for="RozmiarMiejsca" class="control-label">Rozmiar miejsca [m2]</label>
                 <input asp-for="RozmiarMiejsca" class="form-control" />
             </div>
             <div class="form-group">
@@ -24,6 +24,13 @@
         </form>
     </div>
 </div>
+
+@{
+    if (ViewBag.Message != null)
+    {
+        <p>@ViewBag.Message</p>
+    }
+}
 
 <div>
     <a asp-action="Index">Wróć</a>

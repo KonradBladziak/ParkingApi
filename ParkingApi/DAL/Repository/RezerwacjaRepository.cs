@@ -16,7 +16,7 @@ namespace DAL.Repository
 
         public async Task<IEnumerable<Rezerwacja>> GetAllAsync()
         {
-            return await FindAll().OrderBy(x => x.Nazwisko).ToListAsync();
+            return await FindAll().Include(x => x.Miejsce).ThenInclude(x => x.Parking).OrderBy(x => x.Nazwisko).ToListAsync();
         }
 
         public async Task<Rezerwacja> GetByIdAsync(int id)
@@ -28,6 +28,11 @@ namespace DAL.Repository
         {
             return await FindByCondition(x => x.Id.Equals(id)).Include(x => x.Miejsce).ThenInclude(x => x.Parking).FirstOrDefaultAsync();
         }
+
+        public async Task<List<Rezerwacja?>> GetRezerwacjeByIdMiejsca(int id) 
+        {
+            return await FindByCondition(x => x.IdMiejsca.Equals(id)).ToListAsync();
+        } 
 
         public async Task Add(Rezerwacja rezerwacja)
         {

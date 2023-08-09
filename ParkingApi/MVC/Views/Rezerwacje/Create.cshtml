@@ -1,6 +1,8 @@
 ﻿@model DAL.Entity.Rezerwacja
 @{
     ViewData["Title"] = "Create";
+    Model.Od = DateTime.Now;
+    Model.Do = DateTime.Now;
 }
 
 <h1>Create</h1>
@@ -11,11 +13,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Od" class="control-label"></label>
-                <input asp-for="Od" class="form-control" />
+                <input asp-for="Od" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="Do" class="control-label"></label>
-                <input asp-for="Do" class="form-control" />
+                <input asp-for="Do" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="IdMiejsca" class="control-label"></label>
@@ -36,6 +38,13 @@
         </form>
     </div>
 </div>
+
+@{
+    if (ViewBag.Message != null)
+    {
+        <p>@ViewBag.Message</p>
+    }
+}
 
 <div>
     <a asp-action="Index">Wróć</a>
