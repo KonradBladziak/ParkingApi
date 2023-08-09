@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MiastoListComponent } from './Miasto/miasto-list/miasto-list.component';
 
 const routes: Routes = [
-  {path:'',component:}
+  {path:'',component:MiastoListComponent}
 ];
 
 @NgModule({

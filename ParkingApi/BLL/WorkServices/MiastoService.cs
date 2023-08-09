@@ -58,17 +58,15 @@ namespace BLL.WorkServices
             await unitOfWork.SaveAsync();
         }
 
-        public async Task<List<MiastoResponse>> GetMiastaResponse() 
+        public async Task<IEnumerable<MiastoResponse>> GetMiastaResponse()
         {
-            var miasta = await unitOfWork.MiastoRepository.GetAllAsync();
-
-            return (from miasto in miasta.ToList()
+            return (from miasto in await unitOfWork.MiastoRepository.GetAllAsync()
                     select new MiastoResponse
                     {
                         Id = miasto.Id,
                         Nazwa = miasto.Nazwa,
                         Wojewodztwo = miasto.Wojewodztwo
-                    }).ToList();
+                    });
         }
         
     }

@@ -4,6 +4,7 @@ using DAL.Repository;
 using DAL.UnitOfWork;
 using BLL.IWorkServices;
 using BLL.WorkServices;
+using BLL.DTO;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
