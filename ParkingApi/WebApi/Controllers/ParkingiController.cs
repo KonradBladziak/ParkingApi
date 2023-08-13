@@ -16,40 +16,45 @@ namespace WebApi.Controllers
         public ParkingiController(IParkingService parkingService, IMiastoService miastoService)
         {
             this.parkingService = parkingService;
-            this.miastoService = miastoService; 
+            this.miastoService = miastoService;
         }
 
-        [HttpGet("GetWszystkieParkingi")]
-        public async Task<IActionResult> GetAllParkingi()
-            => Ok(await parkingService.GetParkingi());
-
-        [HttpGet("GetParkingById/{id?}")]
-        public async Task<IActionResult> GetParkingById(int id)
-            => Ok(await parkingService.GetParkingiById(id));
+        [HttpGet("GetParkingiByIdMiasta/{id?}")]
+        public async Task<IActionResult> GetParkingiByIdMiasta(int id)
+            => Ok(await parkingService.GetParkingiResponse(id));
 
 
-        [HttpPost("DodajParking")]
-        public async Task<IActionResult> AddParking(string nazwaParkingu,string adres, int idMiasta, int idOpiekuna)
-        {
-            await parkingService.AddParking(nazwaParkingu, adres, idMiasta, idOpiekuna);
+        //[HttpGet("GetWszystkieParkingi")]
+        //public async Task<IActionResult> GetAllParkingi()
+        //    => Ok(await parkingService.GetParkingi());
 
-            return Ok("Dodano parking");
-        }
+        //[HttpGet("GetParkingById/{id?}")]
+        //public async Task<IActionResult> GetParkingById(int id)
+        //    => Ok(await parkingService.GetParkingiById(id));
 
 
-        [HttpDelete("UsunParking/{id?}")]
-        public async Task<IActionResult> DeleteParkingById(int id)
-        {
-            var parking = await parkingService.GetParkingiById(id);
+        //[HttpPost("DodajParking")]
+        //public async Task<IActionResult> AddParking(string nazwaParkingu,string adres, int idMiasta, int idOpiekuna)
+        //{
+        //    await parkingService.AddParking(nazwaParkingu, adres, idMiasta, idOpiekuna);
 
-            await parkingService.DeleteParking(parking);
+        //    return Ok("Dodano parking");
+        //}
+
+
+        //[HttpDelete("UsunParking/{id?}")]
+        //public async Task<IActionResult> DeleteParkingById(int id)
+        //{
+        //    var parking = await parkingService.GetParkingiById(id);
+
+        //    await parkingService.DeleteParking(parking);
             
-            return Ok("Usunieto");    
-        }
+        //    return Ok("Usunieto");    
+        //}
 
-        [HttpPost("AddMiejsca")]
-        public async Task<IActionResult> AddMiejsca(int id, int count)
-            => Ok(await parkingService.AddMiejsca(id,count));
+        //[HttpPost("AddMiejsca")]
+        //public async Task<IActionResult> AddMiejsca(int id, int count)
+        //    => Ok(await parkingService.AddMiejsca(id,count));
 
     }
 }

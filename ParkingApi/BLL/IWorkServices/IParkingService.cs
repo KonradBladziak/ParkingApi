@@ -1,4 +1,5 @@
-﻿using DAL.Entity;
+﻿using BLL.DTO;
+using DAL.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace BLL.IWorkServices
         Task<List<Parking>> GetParkingi();
         Task<Parking> GetParkingiById(int id);
         Task<Parking> GetParkingiByIdDetails(int id);
+        Task<IEnumerable<ParkingResponse>> GetParkingiResponse(int idMiasta);
         Task AddParking(Parking parking);
         Task AddParking(string nazwaParkingu, string adres, int idMiasta, int idOpiekuna);
         Task DeleteParking(Parking parking);

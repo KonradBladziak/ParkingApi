@@ -1,10 +1,13 @@
-﻿using BLL.IWorkServices;
+﻿using BLL.DTO;
+using BLL.IWorkServices;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.CodeAnalysis.Operations;
+using Nito.Disposables.Internals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -120,6 +123,19 @@ namespace BLL.WorkServices
             await unitOfWork.ParkingRepository.UsunOpiekuna(idParkingu, idOpiekuna);
 
             return GetParkingiById(idParkingu).Result.Opiekunowie;
+        }
+
+        public async Task<IEnumerable<ParkingResponse>> GetParkingiResponse(int idMiasta) 
+        {
+            return (from parking in await unitOfWork.ParkingRepository.GetByIdMiasta(idMiasta)
+                    select new ParkingResponse
+                    {
+                        Id = parking.Id,
+                        Nazwa = parking.Nazwa,
+                        Adres = parking.Adres,
+                        LiczbaMiejsc = parking.Miejsca.Count(),
+                        LiczbaMiejscInwalidzkich = parking.Miejsca.Where(x => x.MiejsceInwalidzkieId != null).Count()
+                    });
         }
     }
 }

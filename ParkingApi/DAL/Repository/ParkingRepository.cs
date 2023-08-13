@@ -17,7 +17,7 @@ namespace DAL.Repository
 
         public async Task<IEnumerable<Parking>> GetAllAsync()
         {
-            return await FindAll().Include(x=>x.Miasto).OrderBy(x => x.Nazwa).ToListAsync();
+            return await FindAll().Include(x => x.Miasto).OrderBy(x => x.Nazwa).ToListAsync();
         }
 
 
@@ -34,6 +34,11 @@ namespace DAL.Repository
                                          .Include(x => x.Opiekunowie)
                                          .Include(x => x.Miejsca)
                                          .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Parking>> GetByIdMiasta(int idMiasta)
+        {
+            return await FindByCondition(x => x.IdMiasta.Equals(idMiasta)).Include(x => x.Miejsca).ThenInclude(x => x.MiejsceInwalidzkie).ToListAsync();
         }
 
         public async Task Add(Parking parking)

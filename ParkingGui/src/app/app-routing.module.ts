@@ -4,7 +4,7 @@ import { MiastoListComponent } from './Miasto/miasto-list/miasto-list.component'
 
 const routes: Routes = [
   {path:'',component:MiastoListComponent},
-  {path:'123',component:MiastoListComponent}
+  {path:':id/parking',component:MiastoListComponent}
 ];
 
 @NgModule({
