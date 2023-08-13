@@ -1,5 +1,16 @@
-<h2>Serwis rezerwacji miejsca parkingowego<h2>
+<div class="page">
+    <mat-toolbar color="primary">
+        <span>ParkingGui</span>
+        <a mat-button routerLink="">Rezerwuj</a>
+        <a mat-button routerLink="/123">Twoje rezerwacje</a>
+    </mat-toolbar>
 
-<router-outlet></router-outlet>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+    
 
-
+    <mat-toolbar class="footer">
+        <span>Parking Gui © Czajkowski Bladziak</span>
+    </mat-toolbar>
+</div>

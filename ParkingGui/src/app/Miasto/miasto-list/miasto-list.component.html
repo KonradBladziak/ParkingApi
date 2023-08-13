@@ -1,21 +1,39 @@
-<p>Wybierz miasto w którym szukasz parkingu</p>
-
 <div class="miasta">
-    <table mat-table [dataSource]="miasta" class="mat-elevation-z8">
-        <ng-container matColumnDef="Nazwa">
-          <th mat-header-cell *matHeaderCellDef> Nazwa </th>
-          <td mat-cell *matCellDef="let element"> {{element.nazwa}} </td>
-        </ng-container>
-      
-        <!-- Name Column -->
-        <ng-container matColumnDef="Wojewodztwo">
-          <th mat-header-cell *matHeaderCellDef> Wojewodztwo </th>
-          <td mat-cell *matCellDef="let element"> {{element.wojewodztwo}} </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+  
+  <div class="tytul">
+    <mat-toolbar>
+      <span>Wybierz miasto</span>
+      <mat-form-field>
+        <mat-label>Województwo</mat-label>
+        <mat-select [(value)]="wybraneWojewodztwo" (valueChange)="filtrWojewodztwa($event)">
+          <mat-option>Wszystkie
+          </mat-option>
+          <mat-option *ngFor="let item of wojewodztwa" [value]="item">
+            {{item}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-toolbar>
+  </div>
+
+  <table mat-table [dataSource]="filtrWojewodztwa(wybraneWojewodztwo)" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="Nazwa">
+      <th mat-header-cell *matHeaderCellDef> Miasto</th>
+      <td mat-cell *matCellDef="let element"> {{element.nazwa}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Wojewodztwo">
+      <th mat-header-cell *matHeaderCellDef> Województwo </th>
+      <td mat-cell *matCellDef="let element"> {{element.wojewodztwo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Akcja">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
-
-

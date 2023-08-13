@@ -1,0 +1,30 @@
+.page{
+    background-image: url(./Images/background.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    display: inline-block;
+}
+
+.content{
+    width: 60%;
+    justify-content: center;
+    display: inline-block;
+}
+
+.footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: block;
+    background-color: gray;
+}

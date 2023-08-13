@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MiastoListComponent } from './Miasto/miasto-list/miasto-list.component';
 
 const routes: Routes = [
-  {path:'',component:MiastoListComponent}
+  {path:'',component:MiastoListComponent},
+  {path:'123',component:MiastoListComponent}
 ];
 
 @NgModule({
