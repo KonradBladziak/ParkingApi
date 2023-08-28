@@ -1,4 +1,6 @@
-﻿using BLL.IWorkServices;
+﻿using BLL.DTO;
+using BLL.IWorkServices;
+using Castle.Windsor.Installer;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using System;
@@ -51,6 +53,13 @@ namespace BLL.WorkServices
         {
             unitOfWork.MiejsceRepository.Update(miejsce);
             await unitOfWork.SaveAsync();
+        }
+
+        public async Task<IEnumerable<MiejsceResponse>> GetMiejscaResponse(int id)
+        {
+            
+
+            return new MiejsceResponse[] { };
         }
     }
 }

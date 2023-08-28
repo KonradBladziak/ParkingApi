@@ -1,4 +1,5 @@
-﻿using DAL.Entity;
+﻿using BLL.DTO;
+using DAL.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace BLL.IWorkServices
         Task DeleteRezerwacja(Rezerwacja rezerwacja);
         Task UpdateRezerwacja(Rezerwacja rezerwacja);
         Task<bool> CzyMoznaRezerwowac(int idMiejsca, DateTime Od, DateTime Do, int? idRezerwacji = null);
+        
     }
 }

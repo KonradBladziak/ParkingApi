@@ -4,5 +4,5 @@ export interface Parking{
     nazwa: string;
     adres: string;
     liczbaMiejsc: number;
-    liczbamiejscinwalidzkich?: number;
+    liczbaMiejscInwalidzkich?: number;
 }
