@@ -6,8 +6,7 @@
       <mat-form-field>
         <mat-label>Województwo</mat-label>
         <mat-select [(value)]="wybraneWojewodztwo" (valueChange)="filtrWojewodztwa($event)">
-          <mat-option>Wszystkie
-          </mat-option>
+          <mat-option>Wszystkie</mat-option>
           <mat-option *ngFor="let item of wojewodztwa" [value]="item">
             {{item}}
           </mat-option>
