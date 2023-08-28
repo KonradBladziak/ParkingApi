@@ -20,7 +20,7 @@ namespace BLL.IWorkServices
         Task UpdateParking(Parking parking);
         Task<ICollection<Miejsce>> AddMiejsca(int id, int count);
         Task<ICollection<Opiekun>> UsunOpiekuna(int idOpiekuna, int idParkingu);
-        Task<IEnumerable<ParkingResponse>> GetParkingiResponse(int miastoId);
+       // Task<IEnumerable<ParkingResponse>> GetParkingiResponse(int miastoId);
         Task Save();
     }
 }

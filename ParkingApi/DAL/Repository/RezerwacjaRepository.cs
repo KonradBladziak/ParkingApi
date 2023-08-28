@@ -49,6 +49,11 @@ namespace DAL.Repository
             Update(rezerwacja);
         }
 
-        
+        public async Task<IEnumerable<Rezerwacja>> GetRezerwacjeInTimeRange(int idMiejsca, DateTime Od, DateTime Do)
+        {
+            return await databaseContext.Rezerwacje
+                .Where(r => r.IdMiejsca == idMiejsca && r.Od <= Do && r.Do >= Od)
+                .ToListAsync();
+        }
     }
 }

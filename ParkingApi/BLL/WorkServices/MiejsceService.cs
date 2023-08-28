@@ -55,11 +55,24 @@ namespace BLL.WorkServices
             await unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<MiejsceResponse>> GetMiejscaResponse(int id)
+        public async Task<IEnumerable<MiejsceResponse>> GetMiejscaResponse(int parkingId, DateTime Od, DateTime Do)
         {
-            
 
-            return new MiejsceResponse[] { };
+            var miejsca = await unitOfWork.MiejsceRepository.GetAllAsync();
+            var rezerwacje = await unitOfWork.RezerwacjaRepository.GetRezerwacjeInTimeRange(parkingId, Od, Do);
+
+            return (from miejsce in await unitOfWork.MiejsceRepository.GetAllAsync()
+                    where miejsce.ParkingId == parkingId
+                    join miejsceInwalidzkie in await unitOfWork.MiejsceInwalidzkieRepository.GetAllAsync()
+                        on miejsce.MiejsceInwalidzkieId equals miejsceInwalidzkie.Id into miejsceInwalidzkieGroup
+                    from miejsceInwalidzkie in miejsceInwalidzkieGroup.DefaultIfEmpty()
+                    select new MiejsceResponse
+                    {
+                        IdMiejsca = miejsce.Id,
+                        IdMiejscaInwalidzkiego = miejsceInwalidzkie != null ? miejsceInwalidzkie.Id : null,
+                        RozmiarMiejscaInwalidzkiego = miejsceInwalidzkie != null ? miejsceInwalidzkie.RozmiarMiejsca : 0,
+                        CzyDostepne = !rezerwacje.Any(r => r.IdMiejsca == miejsce.Id && (r.Od <= Od && r.Do >= Do))
+                    });
         }
     }
 }

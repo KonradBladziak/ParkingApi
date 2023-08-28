@@ -9,9 +9,9 @@ namespace BLL.DTO
 {
     public class MiejsceResponse
     {
-        int IdMiejsca { get; set; }
-        int? IdMiejscaInwalidzkiego { get; set; }
-        decimal? RozmiarMiejscaInwalidzkiego { get; set; }
-        bool CzyDostepne { get; set; }
+        public int IdMiejsca { get; set; }
+        public int? IdMiejscaInwalidzkiego { get; set; }
+        public decimal? RozmiarMiejscaInwalidzkiego { get; set; }
+        public bool CzyDostepne { get; set; }
     }
 }
