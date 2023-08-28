@@ -1,0 +1,28 @@
+.parkingi {
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+.mat-column-Nazwa {
+    text-align: left;
+    font-size: large;
+}
+
+.mat-column-Adres {
+    text-align: left;
+    font-size: large;
+}
+
+.mat-column-Miejsca {
+    text-align: center;
+    font-size: large;
+}
+
+.mat-column-Miejsca-inwalidzkie {
+    text-align: center;
+    font-size: large;
+}

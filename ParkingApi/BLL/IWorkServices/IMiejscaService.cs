@@ -16,6 +16,6 @@ namespace BLL.IWorkServices
         Task AddMiejsce(Miejsce miejsce);
         Task DeleteMiejsce(Miejsce miejsce);
         Task UpdateMiejsce(Miejsce miejsce);
-        Task<IEnumerable<MiejsceResponse>> GetMiejscaResponse(int parkingId, DateTime od, DateTime @do);
+        Task<IEnumerable<MiejsceResponse>> GetMiejscaResponse(int id);
     }
 }

@@ -20,12 +20,14 @@ import { AppComponent } from './app.component';
 import { MiastoListComponent } from './Miasto/miasto-list/miasto-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ParkingListComponent } from './Parking/parking-list/parking-list.component';
+import { MiejscaListComponent } from './Miejsca/miejsca-list/miejsca-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MiastoListComponent,
-    ParkingListComponent
+    ParkingListComponent,
+    MiejscaListComponent
   ],
   imports: [
     MatFormFieldModule, MatSelectModule, NgFor, MatInputModule, FormsModule,

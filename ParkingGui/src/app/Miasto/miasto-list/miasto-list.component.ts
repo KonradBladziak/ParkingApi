@@ -14,6 +14,9 @@ export class MiastoListComponent implements OnInit{
   miasta: Miasto[] = [];
   wojewodztwa: string[] = [];
   displayedColumns: string[] = ['Nazwa','Wojewodztwo','Akcja'];
+
+
+  
   constructor(private miastoService: MiastoServiceService){
     this.getMiasta();
   }
