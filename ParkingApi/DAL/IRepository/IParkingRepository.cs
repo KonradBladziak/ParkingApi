@@ -15,6 +15,8 @@ namespace DAL.IRepository
 
         Task<Parking> GetByIdDetailsAsync(int id);
 
+        Task<IEnumerable<Parking>> GetByIdMiasta(int idMiasta);
+
         void Add(Parking parking);
 
         void Delete(Parking parking);

@@ -1,0 +1,58 @@
+.miasta {
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.tytul{
+    height: 100px;
+    display: inline;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+.tytul span{
+    width: 50%;
+    text-align: left;
+}
+
+.mat-mdc-form-field{
+    margin: auto;
+    width: 50%;
+}
+
+.mat-column-Akcja {
+    text-align: center;
+    width: 5%;
+    height: 100%;
+}
+
+.mat-column-Nazwa {
+    text-align: left;
+    font-size: large;
+}
+
+.mat-column-Wojewodztwo {
+    text-align: left;
+    font-size: large;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+    font-size: large;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+    background-color: lightgray;
+}
+
+/* .mat-mdc-header-row {
+    font-size;
+} */

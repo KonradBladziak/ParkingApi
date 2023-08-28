@@ -11,5 +11,7 @@ namespace BLL.DTO
         public int Id { get; set; }
         public string Nazwa { get; set; }
         public string Adres { get; set; }
+        public int LiczbaMiejsc { get; set; }
+        public int? LiczbaMiejscInwalidzkich { get; set; }
     }
 }
