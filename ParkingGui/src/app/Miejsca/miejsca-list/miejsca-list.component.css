@@ -1,0 +1,52 @@
+.miejscaParkingowe{
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.tytul{
+    height: auto;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+}
+
+.tytul span{
+    width: 50%;
+    text-align: left;
+}
+
+.czas{
+    /* background-color: #f5f5f5; */
+    background-color: wheat;
+    display:inline-table;
+    display: flex;
+    
+}
+
+.od{
+    width: 50%;
+}
+
+.do{
+    width: 50%;
+}
+
+
+
+.informacja{
+    font-size: small;
+}
+
+
+.miejsca{
+    padding-top: 10px;
+}
+
+.mat-grid-tile{
+    background-color: white;
+}
+

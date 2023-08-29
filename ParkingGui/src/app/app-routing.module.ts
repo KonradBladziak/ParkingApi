@@ -6,8 +6,12 @@ import { MiejscaListComponent } from './Miejsca/miejsca-list/miejsca-list.compon
 
 const routes: Routes = [
   {path:'',component:MiastoListComponent},
-  {path:':id/parking',component:ParkingListComponent},
-  {path:'id/miejsca',component:MiejscaListComponent}
+  {path:':id/parking',children:
+  [
+    {path:'',component:ParkingListComponent},
+    {path:':id/miejsca',component:MiejscaListComponent}
+  ]
+  }
 ];
 
 @NgModule({

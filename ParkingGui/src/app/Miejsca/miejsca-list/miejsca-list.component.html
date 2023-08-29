@@ -1,1 +1,40 @@
-<p>miejsca-list works!</p>
+<div class="miejscaParkingowe">
+
+    <div class="tytul">
+        <mat-toolbar>
+            <span>Wybierz miejsce parkingowe</span>
+            <span class="informacja">Kiedy wybierzesz datę dostępne miejsca mogą ulec zmianie</span>
+        </mat-toolbar>
+    </div>
+
+    <div class="czas">
+        123
+    </div>
+
+    <!-- <div class="czas">
+        <div class="od">
+            Od
+            <div class="godzina">
+                godzina
+            </div>
+            <div class="data">
+                data
+            </div>
+        </div>
+
+        <div class="do">
+            Do
+            <div class="godzina">
+                godzina
+            </div>
+            <div class="data">
+                data
+            </div>
+        </div>
+    </div> -->
+
+
+    <mat-grid-list cols="6" rowHeight="1%:1,5%" gutterSize="30px" class="miejsca">
+        <mat-grid-tile *ngFor="let item of miejsca">{{item.czyDostepne}}</mat-grid-tile>
+    </mat-grid-list>
+</div>
