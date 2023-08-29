@@ -8,7 +8,27 @@
     </div>
 
     <div class="czas">
-        123
+        <form [formGroup]="range" (ngSubmit)="SprawdzDate()">
+            <!-- <mat-form-field>
+                <mat-label>Enter a date range</mat-label> -->
+                <!-- <mat-date-range-input  [rangePicker]="picker" >
+                  <input matStartDate formControlName="start" placeholder="Start date">
+                  <input matEndDate formControlName="end" placeholder="End date">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY/hh/mm/ss – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              
+                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>-->
+                <label>Od:</label>
+                <input matInput type="datetime-local" formControlName="start">
+                <label>Do:</label>
+                <input matInput type="datetime-local" formControlName="end">
+                <button type=" submit" mat-button>Wybierz</button>
+              <!-- </mat-form-field>  -->
+              
+            </form>
     </div>
 
     <!-- <div class="czas">

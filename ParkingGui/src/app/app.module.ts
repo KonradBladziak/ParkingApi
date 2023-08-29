@@ -4,7 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSourcePaginator } from '@angular/material/table';
 import {Component} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {NgFor} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
@@ -42,6 +42,7 @@ import { MiejscaListComponent } from './Miejsca/miejsca-list/miejsca-list.compon
     HttpClientModule,
     BrowserAnimationsModule,
     MatIconModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
