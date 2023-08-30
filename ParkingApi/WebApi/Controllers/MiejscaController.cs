@@ -2,6 +2,7 @@
 using BLL.WorkServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Helper;
 
 namespace WebApi.Controllers
 {
@@ -16,8 +17,8 @@ namespace WebApi.Controllers
             _miejsceService = miejsceService;
         }
 
-        [HttpGet("GetWszystkieMiejscaNaParkingu/{id}")]
-        public async Task<IActionResult> GetAllMiejsca(int id, [FromQuery] DateTime od, [FromQuery] DateTime @do)
-        => Ok(await _miejsceService.GetMiejscaResponse(id, od ,@do));
+        [HttpPut("GetWszystkieMiejscaNaParkingu/{id}")]
+        public async Task<IActionResult> GetAllMiejsca(int id, [FromBody] Data data)
+        => Ok(await _miejsceService.GetMiejscaResponse(id, data.Start, data.End));
     }
 }

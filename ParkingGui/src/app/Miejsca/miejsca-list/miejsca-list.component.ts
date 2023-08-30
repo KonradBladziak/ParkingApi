@@ -12,35 +12,16 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class MiejscaListComponent {
 
   miejsca: Miejsce[] = [];
-  // minDate!: number;
-  // maxDate!: number;
-  // stepHour!: number;
-  // stepMinute!: number;
-  // stepSecond!: number;
-  // enableMeridian: boolean = true;
-  // showSpinners: boolean = true;
-
-  // data = new FormGroup({
-  //   minDate: new FormControl('', Validators.required),
-  //   maxDate: new FormControl('', Validators.required),
-  //   stepHour: new FormControl('', Validators.required),
-  //   stepMinute: new FormControl('', Validators.required),
-  //   stepSecond: new FormControl('', Validators.required),
-  //   wynagrodzenie: new FormControl('', Validators.required),
-  //   idZarzad: new FormControl('', Validators.required)
-  // });
-
+  id!: number;
   range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
+    start: new FormControl,
+    end: new FormControl,
   });
 
   constructor(private parkingService: MiejsceServiceService,activatedRoute: ActivatedRoute){
     activatedRoute.params.subscribe(params => {
-      const id = params['id'];
-      this.parkingService.getMiejscaParkingu(id).subscribe(res => {
-        this.miejsca = res;
-      })
+      this.id = params['id'];
+      this.SprawdzDate();
     })
     console.log(this.miejsca);
     console.log()
@@ -48,5 +29,8 @@ export class MiejscaListComponent {
 
   SprawdzDate(): void{
       console.log(this.range.value);
-  };
+      this.parkingService.getMiejscaParkingu(this.id, this.range.value).subscribe(res => {
+        this.miejsca = res;
+      })
+  }
 }

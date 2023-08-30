@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Miejsce } from '../Miejsca/Models/miejsce.model';
@@ -18,8 +18,7 @@ export class MiejsceServiceService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getMiejscaParkingu(id : number):Observable<Miejsce[]>{
-    return this.httpClient.get<Miejsce[]>(this.url + '/' + id);
+  getMiejscaParkingu(id : number, date: any):Observable<Miejsce[]>{
+    return this.httpClient.put<Miejsce[]>(this.url + '/' + id, date);
   }
-
 }
