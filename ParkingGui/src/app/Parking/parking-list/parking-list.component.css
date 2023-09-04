@@ -26,3 +26,8 @@
     text-align: center;
     font-size: large;
 }
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+    background-color: lightgray;
+}

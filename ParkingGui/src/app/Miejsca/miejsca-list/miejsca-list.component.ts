@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Miejsce } from '../Models/miejsce.model';
 import { MiejsceServiceService } from 'src/app/Services/miejsce-service.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -18,7 +18,7 @@ export class MiejscaListComponent {
     end: new FormControl,
   });
 
-  constructor(private parkingService: MiejsceServiceService,activatedRoute: ActivatedRoute){
+  constructor(private parkingService: MiejsceServiceService,activatedRoute: ActivatedRoute,private router: Router){
     activatedRoute.params.subscribe(params => {
       this.id = params['id'];
       this.SprawdzDate();
@@ -30,7 +30,11 @@ export class MiejscaListComponent {
   SprawdzDate(): void{
       console.log(this.range.value);
       this.parkingService.getMiejscaParkingu(this.id, this.range.value).subscribe(res => {
-        this.miejsca = res;
+        this.miejsca = res.filter(item => item.czyDostepne === true);
       })
+  }
+
+  rezerwacja(){
+    this.router.navigate([""]);
   }
 }
