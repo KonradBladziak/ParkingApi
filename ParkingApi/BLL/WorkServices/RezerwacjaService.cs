@@ -4,6 +4,7 @@ using BLL.IWorkServices;
 using DAL.Entity;
 using DAL.UnitOfWork;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,28 +62,7 @@ namespace BLL.WorkServices
 
         public async Task<bool> CzyMoznaRezerwowac(int idMiejsca, DateTime Od, DateTime Do,int? idRezerwacji = null)
         {
-            List<Rezerwacja?> rezerwacje = await unitOfWork.RezerwacjaRepository.GetRezerwacjeByIdMiejsca(idMiejsca);
-
-            if (idRezerwacji != null) 
-            {
-                rezerwacje.Remove(rezerwacje.Find(x => x.Id == idRezerwacji));
-            }
-
-            if (rezerwacje.Count() > 0)
-            {
-                DateTimeRange nowaRezerwacja = new DateTimeRange(Od, Do);
-                foreach (var item in rezerwacje)
-                {
-                    DateTimeRange innaRezerwacja = new DateTimeRange(item.Od, item.Do);
-
-                    if (nowaRezerwacja.StartTime < innaRezerwacja.EndTime && innaRezerwacja.StartTime <= nowaRezerwacja.EndTime)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
+            return await unitOfWork.RezerwacjaRepository.CzyMoznaRezerwowac(idMiejsca,Od,Do,idRezerwacji);
         }
 
         

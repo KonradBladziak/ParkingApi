@@ -1,4 +1,6 @@
-﻿using BLL.DTO;
+﻿using Abp.Extensions;
+using Abp.Timing;
+using BLL.DTO;
 using BLL.IWorkServices;
 using Castle.Windsor.Installer;
 using DAL.Entity;
@@ -58,21 +60,24 @@ namespace BLL.WorkServices
         public async Task<IEnumerable<MiejsceResponse>> GetMiejscaResponse(int parkingId, DateTime Od, DateTime Do)
         {
 
-            var miejsca = await unitOfWork.MiejsceRepository.GetAllAsync();
-            var rezerwacje = await unitOfWork.RezerwacjaRepository.GetRezerwacjeInTimeRange(parkingId, Od, Do);
+            var miejsca = await unitOfWork.MiejsceRepository.GetByParkingIdAsync(parkingId);
 
-            return (from miejsce in await unitOfWork.MiejsceRepository.GetAllAsync()
-                    where miejsce.ParkingId == parkingId
-                    join miejsceInwalidzkie in await unitOfWork.MiejsceInwalidzkieRepository.GetAllAsync()
-                        on miejsce.MiejsceInwalidzkieId equals miejsceInwalidzkie.Id into miejsceInwalidzkieGroup
-                    from miejsceInwalidzkie in miejsceInwalidzkieGroup.DefaultIfEmpty()
-                    select new MiejsceResponse
-                    {
-                        IdMiejsca = miejsce.Id,
-                        IdMiejscaInwalidzkiego = miejsceInwalidzkie != null ? miejsceInwalidzkie.Id : null,
-                        RozmiarMiejscaInwalidzkiego = miejsceInwalidzkie != null ? miejsceInwalidzkie.RozmiarMiejsca : 0,
-                        CzyDostepne = !rezerwacje.Any(r => r.IdMiejsca == miejsce.Id && (r.Od <= Od && r.Do >= Do))
-                    });
+            List<MiejsceResponse?> dostepneMiejsca = new List<MiejsceResponse?>();
+            
+            foreach(var item in miejsca) {
+
+                MiejsceResponse miejsceResponse = new MiejsceResponse { IdMiejsca = item.Id,CzyDostepne = await unitOfWork.RezerwacjaRepository.CzyMoznaRezerwowac(item.Id, Od, Do) };
+
+                if (item.MiejsceInwalidzkieId.HasValue) 
+                {
+                    miejsceResponse.IdMiejscaInwalidzkiego = item.MiejsceInwalidzkieId;
+                    miejsceResponse.RozmiarMiejscaInwalidzkiego = unitOfWork.MiejsceInwalidzkieRepository.GetByIdAsync((int)item.MiejsceInwalidzkieId).Result.RozmiarMiejsca;
+                }
+
+                dostepneMiejsca.Add(miejsceResponse);
+            }
+
+            return dostepneMiejsca;   
         }
     }
 }

@@ -19,6 +19,11 @@ namespace DAL.Repository
             return await FindAll().OrderBy(x => x.Id).Include(x => x.Parking).ToListAsync();
         }
 
+        public async Task<IEnumerable<Miejsce>> GetByParkingIdAsync(int idParkingu)
+        {
+            return await FindByCondition(x => x.ParkingId.Equals(idParkingu)).ToListAsync();
+        }
+
         public async Task<Miejsce> GetByIdAsync(int id)
         {
             return await FindByCondition(x => x.Id.Equals(id)).FirstOrDefaultAsync();
@@ -44,6 +49,6 @@ namespace DAL.Repository
             Update(miasto);
         }
 
-
+        
     }
 }

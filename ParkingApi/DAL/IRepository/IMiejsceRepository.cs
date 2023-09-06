@@ -10,6 +10,7 @@ namespace DAL.IRepository
     public interface IMiejsceRepository : IRepository<Miejsce>
     {
         Task<IEnumerable<Miejsce>> GetAllAsync();
+        Task<IEnumerable<Miejsce>> GetByParkingIdAsync(int idParkingu);
         Task<Miejsce> GetByIdAsync(int id);
         Task<Miejsce> GetByIdAsyncDetails(int id);
         void Add(Miejsce miejsce);
