@@ -22,13 +22,17 @@ import { MiastoListComponent } from './Miasto/miasto-list/miasto-list.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ParkingListComponent } from './Parking/parking-list/parking-list.component';
 import { MiejscaListComponent } from './Miejsca/miejsca-list/miejsca-list.component';
+import { RezerwacjaListComponent } from './Rezerwacja/rezerwacja-list/rezerwacja-list.component';
+import { DodajRezerwacjeComponent } from './Rezerwacja/dodaj-rezerwacje/dodaj-rezerwacje.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MiastoListComponent,
     ParkingListComponent,
-    MiejscaListComponent
+    MiejscaListComponent,
+    RezerwacjaListComponent,
+    DodajRezerwacjeComponent
   ],
   imports: [
     MatFormFieldModule, MatSelectModule, NgFor, MatInputModule, FormsModule,

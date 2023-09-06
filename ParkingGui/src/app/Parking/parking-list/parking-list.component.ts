@@ -16,7 +16,7 @@ export class ParkingListComponent {
 
   constructor(private parkingService: ParkingServiceService,activatedRoute: ActivatedRoute){
     activatedRoute.params.subscribe(params => {
-      const id = params['id'];
+      const id = params['idMiasta'];
       this.parkingService.getParkingiMiasta(id).subscribe(res => {
         this.parkingi = res;
       })

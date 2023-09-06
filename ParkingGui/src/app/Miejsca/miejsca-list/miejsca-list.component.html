@@ -1,5 +1,4 @@
 <div class="miejscaParkingowe">
-
     <div class="tytul">
         <mat-toolbar>
             <span>Wybierz miejsce parkingowe</span>
@@ -22,9 +21,9 @@
 
     </form>
 
-    <mat-grid-list cols="6" rowHeight="1%:1,5%" gutterSize="30px" class="miejsca">
-        <mat-grid-tile *ngFor="let item of miejsca" (click)="rezerwacja()">
-                    <p class="numer">{{item.idMiejsca}}</p>
+    <mat-grid-list cols="6" rowHeight="1%:1,5%" gutterSize="30px" class="miejsca" >
+        <mat-grid-tile *ngFor="let item of miejsca">
+                    <p class="numer"(click)="jakasMetoda(item.idMiejsca)">{{item.idMiejsca}}</p>
         </mat-grid-tile>
     </mat-grid-list>
 </div>
