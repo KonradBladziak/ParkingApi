@@ -19,7 +19,7 @@ namespace DAL.IRepository
         void Update(Rezerwacja rezerwacja);
 
         Task<List<Rezerwacja?>> GetRezerwacjeByIdMiejsca(int id);
-        Task<IEnumerable<Rezerwacja>> GetRezerwacjeInTimeRange(int idMiejsca, DateTime Od, DateTime Do);
+        Task<bool> CzyMoznaRezerwowac(int idMiejsca, DateTime Od, DateTime Do, int? idRezerwacji = null);
 
     }
 }
