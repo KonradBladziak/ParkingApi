@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/dotnet/sdk:6.0 as build-env
+WORKDIR /app
+COPY ./DAL/DAL.csproj ./DAL/
+COPY ./MVC/MVC.csproj ./MVC/
+COPY ./BLL/BLL.csproj ./BLL/
+RUN dotnet restore ./MVC/MVC.csproj
+COPY . ./
+RUN dotnet publish -c Release ./MVC/MVC.csproj -o /publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 as runtime
+WORKDIR /publish
+COPY --from=build-env /publish .
+ENV ASPNETCORE_URLS="http://0.0.0.0:8080"
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "MVC.dll"]
+
+
+# docker run -t -d -p 9999:8080 --name=mvc --restart=always mvc
