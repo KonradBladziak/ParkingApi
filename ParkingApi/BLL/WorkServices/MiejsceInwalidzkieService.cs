@@ -35,6 +35,16 @@ namespace BLL.WorkServices
             return await unitOfWork.MiejsceInwalidzkieRepository.GetByIdAsyncDetails(id);
         }
 
+        public async Task<bool> CzyToMiejsceInwalidzkie(int idMiejsca) 
+        {
+            if (await unitOfWork.MiejsceInwalidzkieRepository.GetByIdMiejsca(idMiejsca) != null) 
+            { 
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task AddMiejsceInwalidzkie(MiejsceInwalidzkie miejsce)
         {
             unitOfWork.MiejsceInwalidzkieRepository.Add(miejsce);

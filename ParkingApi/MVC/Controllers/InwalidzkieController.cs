@@ -21,16 +21,41 @@ namespace MVC.Controllers
             var miejsca = await miejscaInwalidzkieService.GetMiejscaInwalidzkie();
             return View(miejsca);
         }
+        //public async Task<IActionResult> Create([Bind("RozmiarMiejsca,IdMiejsca")] MiejsceInwalidzkie inwalidzkie)
+        //{
+        //    ViewBag.Message=null;
+
+        //    if (inwalidzkie.IdMiejsca != null && inwalidzkie.RozmiarMiejsca > 0) 
+        //    {
+        //        var miejsce = await miejscaService.GetMiejsceById(inwalidzkie.IdMiejsca);
+        //        if (miejsce.MiejsceInwalidzkie == null) 
+        //        {
+        //            miejsce.MiejsceInwalidzkieId = inwalidzkie.Id;
+        //            miejsce.MiejsceInwalidzkie = inwalidzkie;
+        //            await miejscaService.UpdateMiejsce(miejsce);
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Message = "To miejsce już jest inwalidzkie";
+        //        }
+        //    }
+
+        //    return View(inwalidzkie);
+        //}
+
         public async Task<IActionResult> Create([Bind("RozmiarMiejsca,IdMiejsca")] MiejsceInwalidzkie inwalidzkie)
         {
-            ViewBag.Message=null;
+            ViewBag.Message = null;
 
-            if (inwalidzkie.IdMiejsca != null && inwalidzkie.RozmiarMiejsca > 0) 
+            if (inwalidzkie.IdMiejsca != null && inwalidzkie.RozmiarMiejsca > 0)
             {
-                var miejsce = await miejscaService.GetMiejsceById(inwalidzkie.IdMiejsca);
-                if (miejsce.MiejsceInwalidzkie == null) 
+                if (await miejscaInwalidzkieService.CzyToMiejsceInwalidzkie(inwalidzkie.IdMiejsca) == false)
                 {
+                    await miejscaInwalidzkieService.AddMiejsceInwalidzkie(inwalidzkie);
+                    var miejsce = await miejscaService.GetMiejsceByIdDetails(inwalidzkie.IdMiejsca);
                     miejsce.MiejsceInwalidzkie = inwalidzkie;
+                    miejsce.MiejsceInwalidzkieId = inwalidzkie.Id;
                     await miejscaService.UpdateMiejsce(miejsce);
                     return RedirectToAction(nameof(Index));
                 }

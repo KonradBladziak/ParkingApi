@@ -1,0 +1,19 @@
+FROM mcr.microsoft.com/dotnet/sdk:6.0 as build-env
+WORKDIR /app
+COPY ./DAL/DAL.csproj ./DAL/
+COPY ./WebApi/WebApi.csproj ./WebApi/
+COPY ./BLL/BLL.csproj ./BLL/
+RUN dotnet restore ./WebApi/WebApi.csproj
+COPY . ./
+RUN dotnet publish -c Release ./WebApi/WebApi.csproj -o /publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 as runtime
+WORKDIR /publish
+COPY --from=build-env /publish .
+ENV ASPNETCORE_URLS="http://0.0.0.0:8080"
+ENV ASPNETCORE_ENVIRONMENT="Development"
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "WebApi.dll"]
+
+
+# docker run -t -d -p 5068:8080 --name=webapi --restart=always webapi
