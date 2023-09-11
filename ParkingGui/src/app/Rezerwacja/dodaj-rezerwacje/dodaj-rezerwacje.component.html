@@ -1,25 +1,24 @@
 <div class="rezerwacja">
-    <div class="tytul">
-        <mat-toolbar>
-            <span>Wpisz imię i nazwisko aby potwierdzić rezerwację miejsca</span>
-            <span class="informacja"></span>
-        </mat-toolbar>
-    </div>
+    <mat-toolbar>
+        Wpisz imię i nazwisko aby potwierdzić rezerwację miejsca
+    </mat-toolbar>
+
     <div class="imieNazwisko">
         <form>
-
-
             <div class="imie">
-                <mat-label>Imie</mat-label>
-                <input matInput type="text" formControlName="imie">
+                <mat-form-field>
+                    <mat-label>Imie</mat-label>
+                    <input matInput placeholder="Imie">
+                </mat-form-field>
             </div>
+
             <div class="nazwisko">
-                <mat-label>Nazwisko</mat-label>
-                <input matInput type="text" formControlName="nazwisko">
+                <mat-form-field>
+                    <mat-label>Nazwisko</mat-label>
+                    <input matInput placeholder="Nazwisko">
+                </mat-form-field>
             </div>
-
-
-
+            <button type="submit" mat-button>Rezerwuj</button>
         </form>
     </div>
 </div>

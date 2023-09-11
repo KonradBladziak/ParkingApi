@@ -7,33 +7,26 @@
     padding-bottom: 100px;
 }
 
-
-.tytul{
-    height: auto;
-    display: block;
-    text-align: left;
+mat-toolbar{
+    justify-content: center;
 }
 
-.tytul span{
-    width: 50%;
-}
 
 .imieNazwisko{
     background-color: wheat;
-    
+    text-align: center;
 }
 
-/* .imie{
-    width: 50%;
+.imie{
+    width: 40%;
+    display: inline-block;
 }
 
 .nazwisko{
-    width: 50%;
+    width: 40%;
+    display: inline-block;
 }
 
-
-
-.informacja{
-    font-size: medium;
-    padding-right: 40px;
-} */
+mat-form-field{
+    padding-top: 20px;
+}
