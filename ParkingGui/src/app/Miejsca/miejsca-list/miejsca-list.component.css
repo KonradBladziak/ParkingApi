@@ -52,10 +52,19 @@
     background-color: white;
     border-radius: 10px;
     border: solid 4px #673ab7;
+    background-image: url(../../Images/miejsce.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
 }
 
 .mat-grid-tile-inwalidzkie{
     border: solid 4px blue;
+    /* background-image: url(../../Images/inwalidzkie.jpg); */
+    background-image: url(../../Images/inwalidzkie2.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
 }
 
 .dateTimeInput {
@@ -70,6 +79,10 @@
 }
 
 .numer{
-    font-size:xx-large;
+    font-size:xxx-large;
+    color: yellowgreen;
+    font: bolder;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
+
 

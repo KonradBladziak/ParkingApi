@@ -21,7 +21,7 @@ namespace DAL.Repository
 
         public async Task<IEnumerable<Miejsce>> GetByParkingIdAsync(int idParkingu)
         {
-            return await FindByCondition(x => x.ParkingId.Equals(idParkingu)).ToListAsync();
+            return await FindByCondition(x => x.ParkingId.Equals(idParkingu)).Include(x => x.MiejsceInwalidzkie).ToListAsync();
         }
 
         public async Task<Miejsce> GetByIdAsync(int id)

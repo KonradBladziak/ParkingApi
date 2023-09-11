@@ -13,7 +13,7 @@ namespace DAL.IRepository
         Task<MiejsceInwalidzkie> GetByIdAsync(int id);
 
         Task<MiejsceInwalidzkie> GetByIdAsyncDetails(int id);
-
+        Task<MiejsceInwalidzkie?> GetByIdMiejsca(int idMiejsca);
         void Add(MiejsceInwalidzkie miejsce);
 
         void Delete(MiejsceInwalidzkie miejsce);

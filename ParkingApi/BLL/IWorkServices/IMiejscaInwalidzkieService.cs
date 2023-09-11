@@ -12,6 +12,7 @@ namespace BLL.IWorkServices
         Task<List<MiejsceInwalidzkie>> GetMiejscaInwalidzkie();
         Task<MiejsceInwalidzkie> GetMiejsceInwalidzkieById(int id);
         Task<MiejsceInwalidzkie> GetMiejsceInwalidzkieByIdDetails(int id);
+        Task<bool> CzyToMiejsceInwalidzkie(int idMiejsca);
         Task AddMiejsceInwalidzkie(MiejsceInwalidzkie miejsce);
         Task DeleteMiejsceInwalidzkie(MiejsceInwalidzkie miejsce);
         Task UpdateMiejsceInwalidzkie(MiejsceInwalidzkie miejsce);

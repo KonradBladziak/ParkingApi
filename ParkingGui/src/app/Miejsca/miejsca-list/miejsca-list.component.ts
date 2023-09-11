@@ -25,9 +25,6 @@ export class MiejscaListComponent {
       this.idMiasta = params['idMiasta'];
       this.SprawdzDate();
     })
-    console.log(this.miejsca);
-    console.log(this.idMiasta);
-    console.log(this.idParkingu);
   }
 
   SprawdzDate(): void{
@@ -35,6 +32,7 @@ export class MiejscaListComponent {
       this.parkingService.getMiejscaParkingu(this.idParkingu, this.range.value).subscribe(res => {
         this.miejsca = res.filter(item => item.czyDostepne === true);
       })
+      console.log(this.miejsca);
   }
   jakasMetoda(idMiejsca: number): void{
     this.router.navigate(['Miasta/' + this.idMiasta + '/Parkingi/' + this.idParkingu + '/Miejsca/' + idMiejsca], {
