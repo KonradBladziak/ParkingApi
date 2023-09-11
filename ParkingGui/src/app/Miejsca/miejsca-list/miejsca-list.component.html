@@ -21,12 +21,12 @@
 
     </form>
 
-    <mat-grid-list cols="6" rowHeight="1%:1,5%" gutterSize="30px" class="miejsca" >
-        <mat-grid-tile *ngFor="let item of miejsca" [ngClass]="{'mat-grid-tile-inwalidzkie': item.rozmiarMiejscaInwalidzkiego != null}">
-                <p class="numer"(click)="jakasMetoda(item.idMiejsca)" >{{item.idMiejsca}}</p>
-                <br><br>
-                <p> {{item.rozmiarMiejscaInwalidzkiego}}</p>
-
+    <mat-grid-list cols="6" rowHeight="1%:1,5%" gutterSize="30px" class="miejsca">
+        <mat-grid-tile *ngFor="let item of miejsca" [ngClass]="{'mat-grid-tile-inwalidzkie': item.rozmiarMiejscaInwalidzkiego != null}" (click)="jakasMetoda(item.idMiejsca)">
+            <div class="miejsce" >
+                <p class="numer">{{item.idMiejsca}}</p>
+                <p class="rozmiarMiejsca" *ngIf="item.rozmiarMiejscaInwalidzkiego > 0" >Rozmiar miejsca : {{item.rozmiarMiejscaInwalidzkiego}} m²</p>
+            </div>
         </mat-grid-tile>
     </mat-grid-list>
 </div>

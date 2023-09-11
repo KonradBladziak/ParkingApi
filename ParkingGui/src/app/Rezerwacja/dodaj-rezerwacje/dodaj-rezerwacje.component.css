@@ -1,0 +1,39 @@
+.rezerwacja{
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items:center;
+    text-align: center;
+    padding-bottom: 100px;
+}
+
+
+.tytul{
+    height: auto;
+    display: block;
+    text-align: left;
+}
+
+.tytul span{
+    width: 50%;
+}
+
+.imieNazwisko{
+    background-color: wheat;
+    
+}
+
+/* .imie{
+    width: 50%;
+}
+
+.nazwisko{
+    width: 50%;
+}
+
+
+
+.informacja{
+    font-size: medium;
+    padding-right: 40px;
+} */
