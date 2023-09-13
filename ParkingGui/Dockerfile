@@ -9,4 +9,4 @@ RUN npm run build
 FROM nginx:1.25-alpine
 COPY --from=build /usr/src/app/dist/parking-gui /usr/share/nginx/html
 
-#docker run -t -d -p 8080:80 --name=gui guidocke
+#ddocker run -t -d -p 4200:80 --name=gui gui

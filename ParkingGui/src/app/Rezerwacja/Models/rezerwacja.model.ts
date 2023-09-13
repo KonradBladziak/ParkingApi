@@ -1,9 +1,9 @@
 export interface Rezerwacja{
 
-    Od: Date;
-    Do: Date;
-    IdMiejsca: number;
-    Imie: string;
-    Nazwisko: string;
+    od: Date;
+    do: Date;
+    idMiejsca: number;
+    imie: string;
+    nazwisko: string;
     
 }

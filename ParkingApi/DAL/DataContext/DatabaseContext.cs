@@ -1,11 +1,14 @@
-﻿using DAL.Entity;
+﻿using Castle.Core.Internal;
+using DAL.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DAL.DataContext
 {
@@ -24,8 +27,7 @@ namespace DAL.DataContext
         public DatabaseContext(DbContextOptions<DatabaseContext> options):base(options){ }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Parking;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
-
+            optionsBuilder.UseSqlServer("Data Source=172.19.174.216;Initial Catalog=Parking;User ID=sa;Password=Password123;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

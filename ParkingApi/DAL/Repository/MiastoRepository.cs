@@ -14,7 +14,10 @@ namespace DAL.Repository
 {
     public class MiastoRepository : Repository<Miasto>, IMiastoRepository
     {
-        public MiastoRepository(DatabaseContext databaseContext):base(databaseContext) { }
+        public MiastoRepository(DatabaseContext databaseContext):base(databaseContext) 
+        { 
+
+        }
 
         public async Task<IEnumerable<Miasto>> GetAllAsync()
         {

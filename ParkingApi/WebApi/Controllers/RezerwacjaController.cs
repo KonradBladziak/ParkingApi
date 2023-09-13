@@ -17,9 +17,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("DodajRezerwacje")]
-        public async Task DodajRezerwacje(RezerwacjaRequest rezerwacjaRequest)
+        public async Task DodajRezerwacje(RezerwacjaRequest rezerwacja)
         {
-            await rezerwacjeService.AddRezerwacjaRequest(rezerwacjaRequest);
+            await rezerwacjeService.AddRezerwacjaRequest(rezerwacja);
         }
 
     }

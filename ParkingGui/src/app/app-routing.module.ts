@@ -11,7 +11,7 @@ const routes: Routes = [
   {path:'Miasta', component:MiastoListComponent},
   {path:'Miasta/:idMiasta/Parkingi',component:ParkingListComponent},
   {path:'Miasta/:idMiasta/Parkingi/:idParkingu/Miejsca',component:MiejscaListComponent},
-  {path:'Miasta/:idMiasta/Parkingi/:idParkingu/Miejsca/:id',component:DodajRezerwacjeComponent}
+  {path:'Miasta/:idMiasta/Parkingi/:idParkingu/Miejsca/:idMiejsca',component:DodajRezerwacjeComponent}
 ];
 
 @NgModule({
