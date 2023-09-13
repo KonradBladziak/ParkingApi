@@ -65,6 +65,19 @@ namespace BLL.WorkServices
             return await unitOfWork.RezerwacjaRepository.CzyMoznaRezerwowac(idMiejsca,Od,Do,idRezerwacji);
         }
 
+        public async Task AddRezerwacjaRequest(RezerwacjaRequest rezerwacjaRequest) 
+        {
+            Rezerwacja rezerwacja = new Rezerwacja
+            {
+                Od = rezerwacjaRequest.Od,
+                Do = rezerwacjaRequest.Do,
+                IdMiejsca = rezerwacjaRequest.IdMiejsca,
+                Imie = rezerwacjaRequest.Imie,
+                Nazwisko = rezerwacjaRequest.Nazwisko
+            };
+
+            await AddRezerwacja(rezerwacja);
+        }
         
     }
 }
