@@ -12,40 +12,51 @@ using System.Threading.Tasks;
 
 namespace TestBLL
 {
-    public class MiastoFakeRepo : Repository<Miasto>, IMiastoRepository
+    public class MiastoFakeRepo : IMiastoRepository
     { 
         private List<Miasto> miasta = new List<Miasto>();
 
-        public MiastoFakeRepo(DatabaseContext databaseContext) : base(databaseContext)
-        {
-        }
-
-        public async Task Add(Miasto miasto)
+        public void Add(Miasto miasto)
         {
             miasta.Add(miasto);
             return;
         }
 
-        public async Task Delete(Miasto miasto)
+        public void Delete(Miasto miasto)
         {
-            var _miasto = await Task.FromResult(miasta.Find(m => m.Id == miasto.Id));
+            var _miasto = miasta.Find(m => m.Id == miasto.Id);
             miasta.Remove(_miasto);
             return;
         }
 
+        public IQueryable<Miasto> FindAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Miasto> FindByCondition(Expression<Func<Miasto, bool>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Miasto>> GetAllAsync()
         {
-            var _miasta = await Task.FromResult(miasta);
+            var _miasta = Task.FromResult(miasta).Result.ToList();
             return _miasta;
         }
 
-        public async Task<Miasto> GetByIdAsync(int id)
+        public Task<Miasto> GetByIdAsync(int id)
         {
-            var miasto = await Task.FromResult(miasta.Find(m => m.Id == id));
+            var miasto = Task.FromResult(miasta.Find(m => m.Id == id));
             return miasto;
         }
 
-        public async Task Update(Miasto miasto)
+        public async Task<Miasto> GetByIdAsyncDetails(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async void Update(Miasto miasto)
         {
             var indexMiasta = await Task.FromResult(miasta.FindIndex(p => p.Id == miasto.Id));
             if (indexMiasta > 0)
@@ -53,12 +64,6 @@ namespace TestBLL
                 miasta[indexMiasta] = miasto;
             }
             return;
-        }
-
-        public async Task<Miasto> GetByIdAsyncDetails(int id)
-        {
-           var miasto = await Task.FromResult(FindByCondition(m => m.Id == id).Include(m => m.Parkingi));
-           return (Miasto)miasto;
         }
     }
 }

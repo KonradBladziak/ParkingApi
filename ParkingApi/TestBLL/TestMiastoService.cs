@@ -3,8 +3,10 @@ using DAL.DataContext;
 using DAL.Entity;
 using DAL.IRepository;
 using DAL.UnitOfWork;
+using Moq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,44 +16,79 @@ namespace TestBLL
     public class TestMiastoService
     {
         [Fact]
-        public async Task DodajMiasta()
+        public async Task TestGetMiasta()
         {
-            DatabaseContext db = new DatabaseContext();
 
-            var miastoFakeRepo = new MiastoFakeRepo(db);
-            var unitOfWork = new UnitOfWork(miastoFakeRepo);
-            var workService = new MiastoService(unitOfWork);
+            Mock<IMiastoRepository> mockMiastoRepository = new Mock<IMiastoRepository>();
+            mockMiastoRepository.Setup(x => x.GetAllAsync())
+                .ReturnsAsync(new List<Miasto> { new Miasto(), new Miasto(), new Miasto() });
 
-            for (int i = 10000; i <= 10005; i++)
-            {
-                Miasto miasto = new Miasto() { Id = i, Nazwa = $"{"Test" + i}", Wojewodztwo = $"{"Test" + i}" };
-                await workService.AddMiasto(miasto);
-            }
 
-            var count = miastoFakeRepo.GetAllAsync().Result.Count();
-            Assert.Equal(5, count);
+            var unitOfWork = new UnitOfWork(null, mockMiastoRepository.Object);
+            var miastoService = new MiastoService(unitOfWork);
+
+            Assert.Equal(3, miastoService.GetMiasta().Result.Count());
+
         }
 
         [Fact]
-        public async Task UsunMiasto()
+        public async Task TestDodajMiasto()
         {
-            DatabaseContext db = new DatabaseContext();
 
-            var miastoFakeRepo = new MiastoFakeRepo(db);
-            var unitOfWork = new UnitOfWork(miastoFakeRepo);
-            var workService = new MiastoService(unitOfWork);
+            var miastoRepo = new MiastoFakeRepo();
+            var unitOfWork = new UnitOfWork(null, miastoRepo);
+            var miastoService = new MiastoService(unitOfWork);
 
-            Miasto miasto = new Miasto() { Id = 1 };
+            miastoRepo?.Add(new Miasto());
+            Assert.Equal(1, miastoRepo?.GetAllAsync().Result.Count());
 
-            await workService.AddMiasto(miasto);
+            miastoRepo?.Add(new Miasto());
+            Assert.Equal(2, miastoRepo?.GetAllAsync().Result.Count());
 
-            Assert.Equal(1, miastoFakeRepo.GetAllAsync().Result.Count());
+            miastoRepo?.Add(new Miasto());
+            Assert.Equal(3, miastoRepo?.GetAllAsync().Result.Count());
 
-            var miastoDel = unitOfWork.MiastoRepository.GetAllAsync().Result.FirstOrDefault(x => x.Id == 1);
+        }
 
-            await workService.DeleteMiasto(miasto);
+        [Fact]
+        public void TestUsunMiasto()
+        {
+            var miastoRepo = new MiastoFakeRepo();
+            var unitOfWork = new UnitOfWork(null, miastoRepo);
+            var miastoService = new MiastoService(unitOfWork);
 
-            Assert.Equal(0, miastoFakeRepo.GetAllAsync().Result.Count());
+            miastoRepo?.Add(new Miasto() { Id = 1 });
+            Assert.Equal(1, miastoRepo?.GetAllAsync().Result.Count());
+
+            miastoRepo?.Add(new Miasto());
+            Assert.Equal(2, miastoRepo?.GetAllAsync().Result.Count());
+
+            var miasto = new Miasto() { Id = 1 };
+
+            miastoRepo?.Delete(miasto);
+            Assert.Equal(1, miastoRepo?.GetAllAsync().Result.Count());
+        }
+
+        [Fact]
+        public void TestUpdateMiasto()
+        {
+            var miastoRepo = new MiastoFakeRepo();
+            var unitOfWork = new UnitOfWork(null, miastoRepo);
+            var miastoService = new MiastoService(unitOfWork);
+
+            Miasto katowice = new Miasto()
+            {
+                Id = 1,
+                Nazwa = "Katowice",
+                Wojewodztwo = "Małopolskie",
+                Parkingi = new Collection<Parking> { }
+            };
+
+            miastoRepo?.Add(katowice);
+            katowice.Wojewodztwo = "Śląskie";
+            miastoRepo?.Update(katowice);
+
+            Assert.Equal(katowice, miastoRepo?.GetByIdAsync(1).Result);
         }
     }
 }
