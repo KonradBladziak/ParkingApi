@@ -1,1 +1,24 @@
-<p>dodaj-rezerwacje works!</p>
+<div class="rezerwacja">
+    <mat-toolbar>
+        Wpisz imię i nazwisko aby potwierdzić rezerwację miejsca
+    </mat-toolbar>
+
+    <div class="imieNazwisko">
+        <form [formGroup]="osoba" (ngSubmit)="Rezerwuj()">
+            <div class="imie">
+                <mat-form-field>
+                    <mat-label>Imie</mat-label>
+                    <input matInput formControlName="imie" placeholder="Imie">
+                </mat-form-field>
+            </div>
+
+            <div class="nazwisko">
+                <mat-form-field>
+                    <mat-label>Nazwisko</mat-label>
+                    <input matInput formControlName="nazwisko" placeholder="Nazwisko">
+                </mat-form-field>
+            </div>
+            <button type="submit" mat-button>Rezerwuj</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+.rezerwacja{
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items:center;
+    text-align: center;
+    padding-bottom: 100px;
+}
+
+mat-toolbar{
+    justify-content: center;
+}
+
+
+.imieNazwisko{
+    background-color: wheat;
+    text-align: center;
+}
+
+.imie{
+    width: 40%;
+    display: inline-block;
+}
+
+.nazwisko{
+    width: 40%;
+    display: inline-block;
+}
+
+mat-form-field{
+    padding-top: 20px;
+}

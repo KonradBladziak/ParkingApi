@@ -85,4 +85,15 @@
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
+.rozmiarMiejsca{
+    font-size:large;
+    color: greenyellow;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.miejsce{
+    display:inline;
+    align-items: center;
+    justify-content: center;
+}
 
