@@ -13,7 +13,7 @@ namespace DAL.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private DatabaseContext databaseContext;
-        
+
         private IMiastoRepository miastoRepository;
         private IParkingRepository parkingRepository;
         private IMiejsceRepository miejsceRepository;
@@ -21,14 +21,45 @@ namespace DAL.UnitOfWork
         private IMiejsceInwalidzkieRepository miejsceInwalidzkieRepository;
         private IRezerwacjaRepository rezerwacjaRepository;
 
-        public UnitOfWork(DatabaseContext databaseContext)
+        public UnitOfWork(DatabaseContext databaseContext, IMiastoRepository miastoRepository = null, IParkingRepository parkingRepository = null, IMiejsceRepository miejsceRepository = null, IOpiekunRepository opiekunRepository = null, IMiejsceInwalidzkieRepository miejsceInwalidzkieRepository = null, IRezerwacjaRepository rezerwacjaRepository = null)
         {
-            this.databaseContext = databaseContext;
+            if (databaseContext != null)
+            {
+                this.databaseContext = databaseContext;
+            }
+            else
+            {
+                if (miastoRepository != null)
+                {
+                    this.miastoRepository = miastoRepository;
+                }
+
+                if (parkingRepository != null)
+                {
+                    this.parkingRepository = parkingRepository;
+                }
+
+                if (miejsceRepository != null)
+                {
+                    this.miejsceRepository = miejsceRepository;
+                }
+
+                if (opiekunRepository != null)
+                {
+                    this.opiekunRepository = opiekunRepository;
+                }
+
+                if (miejsceInwalidzkieRepository != null)
+                {
+                    this.miejsceInwalidzkieRepository = miejsceInwalidzkieRepository;
+                }
+
+                if (rezerwacjaRepository != null)
+                {
+                    this.rezerwacjaRepository = rezerwacjaRepository;
+                }
+            }
         }
-        //public UnitOfWork(IMiastoRepository miastoRepo)
-        //{
-        //    this.miastoRepository = miastoRepo;
-        //}
 
         public IMiastoRepository MiastoRepository
         {
@@ -102,10 +133,11 @@ namespace DAL.UnitOfWork
             }
         }
 
-        public async Task SaveAsync() {
-            
+        public async Task SaveAsync()
+        {
+
             await databaseContext.SaveChangesAsync();
-        
+
         }
     }
 }

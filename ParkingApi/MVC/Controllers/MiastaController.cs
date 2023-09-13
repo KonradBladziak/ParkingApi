@@ -18,6 +18,7 @@ namespace MVC.Controllers
         public async Task<IActionResult> Index()
         {
             var miasta = await miastoService.GetMiasta();
+            ViewBag.Miasta = miasta;
             return View(miasta);
         }
 
@@ -73,6 +74,7 @@ namespace MVC.Controllers
             if (miasto != null)
             {
                 await miastoService.DeleteMiasto(miasto);
+                ViewBag.Miasto = miasto;
                 return RedirectToAction(nameof(Index));
             }
 
