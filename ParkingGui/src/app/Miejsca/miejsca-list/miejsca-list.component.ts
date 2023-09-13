@@ -23,7 +23,7 @@ export class MiejscaListComponent {
     activatedRoute.params.subscribe(params => {
       this.idParkingu = params['idParkingu'];
       this.idMiasta = params['idMiasta'];
-      this.SprawdzDate();
+      //this.SprawdzDate();
     })
   }
 
@@ -34,7 +34,7 @@ export class MiejscaListComponent {
       })
       console.log(this.miejsca);
   }
-  jakasMetoda(idMiejsca: number): void{
+  doRezerwacji(idMiejsca: number): void{
     this.router.navigate(['Miasta/' + this.idMiasta + '/Parkingi/' + this.idParkingu + '/Miejsca/' + idMiejsca], {
       state: {
         start: this.range.value.start,
